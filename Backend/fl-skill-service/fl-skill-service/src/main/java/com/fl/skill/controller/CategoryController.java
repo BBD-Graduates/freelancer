@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
-    @Autowired
+@Autowired
     private CategoryImpl catRepo;
     @RequestMapping("ping")
     public ResponseEntity<String> ping(){
