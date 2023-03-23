@@ -16,26 +16,26 @@ public class CategoryImpl implements CategoryRepository {
     private JdbcTemplate jdbcTemplate;
     @Override
     public int save(String category) {
-        return jdbcTemplate.update("INSERT INTO category (name) values (?)",new Object[]{category});
+        return jdbcTemplate.update("INSERT INTO categories (CategoryName) values (?)",new Object[]{category});
     }
 
     @Override
     public List<CategoryRes> getAll() {
-        return jdbcTemplate.query("select * from category", BeanPropertyRowMapper.newInstance(CategoryRes.class));
+        return jdbcTemplate.query("select * from categories", BeanPropertyRowMapper.newInstance(CategoryRes.class));
     }
 
     @Override
     public List<CategoryRes> getById(int id) {
-        return jdbcTemplate.query("select * from category where categoryId = ?", BeanPropertyRowMapper.newInstance(CategoryRes.class),id);
+        return jdbcTemplate.query("select * from categories where CategoryId = ?", BeanPropertyRowMapper.newInstance(CategoryRes.class),id);
     }
 
     @Override
     public int delete(int id) {
-        return jdbcTemplate.update("delete from category where categoryId = ?",id);
+        return jdbcTemplate.update("delete from categories where CategoryId = ?",id);
     }
 
     @Override
     public int update(Category category, int id) {
-        return jdbcTemplate.update("update category set name = ? where categoryId = ?",new Object[]{category.getName(),id});
+        return jdbcTemplate.update("update categories set CategoryName = ? where CategoryId = ?",new Object[]{category.getName(),id});
     }
 }
