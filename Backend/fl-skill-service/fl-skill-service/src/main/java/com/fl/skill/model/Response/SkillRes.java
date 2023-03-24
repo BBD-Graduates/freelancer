@@ -11,6 +11,6 @@ public class SkillRes {
 
     private int skillId;
     private String skillName;
-    private String categoryId;
+    private int categoryId;
     private String createdDate;
 }

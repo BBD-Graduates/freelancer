@@ -16,6 +16,7 @@ public class Skill {
     @Size(min=1, message = "Name Should not be blank")
 
     private String skillName;
-    private String categoryId;
+    @NotNull(message = "Please enter category")
+    private int categoryId;
 
 }

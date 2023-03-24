@@ -9,7 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CategoryRes {
     private  int categoryId;
-    private String name;
-    private String logoUrl;
-    private String createdDate;
+    private String categoryName;
+    private String logoURl;
+    private boolean IsDeleted;
+    private String CreatedDate;
 }
