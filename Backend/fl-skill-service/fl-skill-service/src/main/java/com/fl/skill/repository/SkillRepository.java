@@ -14,5 +14,4 @@ public interface SkillRepository {
     int update(Skill skill, int id);
     int delete(int id);
 
-
 }

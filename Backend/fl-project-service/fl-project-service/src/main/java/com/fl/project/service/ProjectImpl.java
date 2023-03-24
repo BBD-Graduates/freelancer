@@ -4,6 +4,7 @@ import com.fl.project.model.Request.Project;
 import com.fl.project.model.Response.ProjectRes;
 import com.fl.project.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +25,7 @@ public class ProjectImpl implements ProjectRepository {
 
     @Override
     public List<ProjectRes> getAll() {
-        return null;
+        return jdbcTemplate.query("select * from projects", BeanPropertyRowMapper.newInstance(ProjectRes.class));
     }
 
     @Override

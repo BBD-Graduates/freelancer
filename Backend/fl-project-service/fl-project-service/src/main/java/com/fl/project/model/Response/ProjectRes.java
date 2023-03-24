@@ -21,4 +21,5 @@ public class ProjectRes {
     private Float minPrice;
     private Float maxPrice;
     private Date createdDate;
+    private String status;
 }
