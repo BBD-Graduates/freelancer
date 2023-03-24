@@ -11,4 +11,5 @@ public interface CategoryRepository {
     List<CategoryRes> getById(int id);
     int delete(int id);
     int update(Category category,int id);
+    int updateLogoUrl(String url,int id);
 }

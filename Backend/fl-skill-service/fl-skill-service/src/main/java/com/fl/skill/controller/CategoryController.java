@@ -8,13 +8,16 @@ import com.fl.skill.model.Request.Category;
 import com.fl.skill.model.Response.CategoryList;
 import com.fl.skill.model.Response.CategoryRes;
 import com.fl.skill.service.CategoryImpl;
+import com.fl.skill.service.FileStorageService;
 
 import jakarta.validation.Valid;
 
+import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +25,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
-@Autowired
+    @Autowired
     private CategoryImpl catRepo;
+    
+    @Autowired
+    private Environment env;
+
+    @Autowired
+    private FileStorageService fileStorageService;
     @RequestMapping("ping")
     public ResponseEntity<String> ping(){
         return new ResponseEntity<>("Category microservice", HttpStatus.OK);
@@ -46,6 +55,13 @@ public class CategoryController {
 //            return  new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
             return new ResponseEntity<>(new CommonResponse<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR.value()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @RequestMapping(value = "/image/{id}", method = RequestMethod.POST, consumes = {"multipart/form-data"}/*, consumes = MediaType.MULTIPART_FORM_DATA_VALUE*/)
+    public String image(@RequestPart("img") MultipartFile img,@PathVariable("id") int id) {
+        String path=env.getProperty("app.file.upload-dir");
+        catRepo.updateLogoUrl(path+"/"+fileStorageService.storeFile(img),id) ;
+        return "file found";
     }
 
     @GetMapping("/")

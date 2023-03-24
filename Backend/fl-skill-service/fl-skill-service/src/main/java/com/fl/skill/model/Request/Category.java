@@ -13,7 +13,7 @@ import lombok.*;
 public class Category {
 
     @NotNull(message = "Please enter Skill")
-    @Size(min=5, message = "Name should be atleast 5 characters")
+    @Size(min=1, message = "Name should be atleast 5 characters")
     @NotBlank(message = "Please enter Skill")
     private String name;
 }

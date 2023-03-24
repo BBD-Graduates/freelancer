@@ -38,4 +38,9 @@ public class CategoryImpl implements CategoryRepository {
     public int update(Category category, int id) {
         return jdbcTemplate.update("update categories set CategoryName = ? where CategoryId = ?",new Object[]{category.getName(),id});
     }
+
+    @Override
+    public int updateLogoUrl(String url, int id) {
+        return jdbcTemplate.update("update categories set LogoURL = ? where CategoryId = ?",new Object[]{url,id});
+    }
 }
