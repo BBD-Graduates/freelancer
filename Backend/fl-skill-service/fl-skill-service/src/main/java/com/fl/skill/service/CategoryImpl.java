@@ -2,45 +2,65 @@ package com.fl.skill.service;
 
 import com.fl.skill.model.Request.Category;
 import com.fl.skill.model.Response.CategoryRes;
+import com.fl.skill.queries.CategoryQueries;
 import com.fl.skill.repository.CategoryRepository;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Repository
+
+@Getter
+@Component
+@RefreshScope
 public class CategoryImpl implements CategoryRepository {
+
+    @Autowired
+    CategoryQueries categoryQueries;
+    @Autowired
+    private Environment env;
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Override
-    public int save(String category) {
-        return jdbcTemplate.update("INSERT INTO categories (CategoryName) values (?)",new Object[]{category});
+    public int save(Category category) {
+        return jdbcTemplate.update(categoryQueries.getAddCategory(),category.getName());
     }
 
     @Override
     public List<CategoryRes> getAll() {
-        return jdbcTemplate.query("select * from categories", BeanPropertyRowMapper.newInstance(CategoryRes.class));
+        return jdbcTemplate.query(categoryQueries.getCategories(), BeanPropertyRowMapper.newInstance(CategoryRes.class));
     }
 
     @Override
     public List<CategoryRes> getById(int id) {
-        return jdbcTemplate.query("select * from categories where CategoryId = ?", BeanPropertyRowMapper.newInstance(CategoryRes.class),id);
+
+        return jdbcTemplate.query(categoryQueries.getCategory(), BeanPropertyRowMapper.newInstance(CategoryRes.class),id);
     }
 
     @Override
     public int delete(int id) {
-        return jdbcTemplate.update("delete from categories where CategoryId = ?",id);
+
+        return jdbcTemplate.update(categoryQueries.getRemoveCategory(),id);
     }
 
     @Override
     public int update(Category category, int id) {
-        return jdbcTemplate.update("update categories set CategoryName = ? where CategoryId = ?",new Object[]{category.getName(),id});
+
+        return jdbcTemplate.update(categoryQueries.getUpdateCategory(),category.getName(),id);
     }
 
     @Override
     public int updateLogoUrl(String url, int id) {
-        return jdbcTemplate.update("update categories set LogoURL = ? where CategoryId = ?",new Object[]{url,id});
+        return jdbcTemplate.update(categoryQueries.getUpdateCategoryLogo(),url,id);
     }
 }

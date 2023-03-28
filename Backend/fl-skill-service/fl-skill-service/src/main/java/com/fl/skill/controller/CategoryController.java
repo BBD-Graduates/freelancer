@@ -10,6 +10,7 @@ import com.fl.skill.service.FileStorageService;
 
 import jakarta.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,10 +26,9 @@ import java.util.List;
 public class CategoryController {
     @Autowired
     private CategoryImpl catRepo;
-    
-    @Autowired
-    private Environment env;
 
+    @Autowired
+    Environment env;
     @Autowired
     private FileStorageService fileStorageService;
     @RequestMapping("ping")
@@ -39,7 +39,7 @@ public class CategoryController {
     @PostMapping("/add")
     public ResponseEntity<Object> createCategory(@Valid @RequestBody Category category){
         try {
-            int ins = catRepo.save(category.getName());
+            int ins = catRepo.save(category);
             if(ins>0){
                 return new ResponseEntity<>(new CommonResponse<String>("Inserted",HttpStatus.CREATED.value()),HttpStatus.OK);
             }

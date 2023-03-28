@@ -6,7 +6,7 @@ import com.fl.skill.model.Response.CategoryRes;
 import java.util.List;
 
 public interface CategoryRepository {
-    int save (String category);
+    int save (Category category);
     List<CategoryRes> getAll();
     List<CategoryRes> getById(int id);
     int delete(int id);

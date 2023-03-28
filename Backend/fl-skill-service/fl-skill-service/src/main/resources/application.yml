@@ -1,0 +1,9 @@
+db:
+  queries:
+    categories:
+      selectAllCategories: SELECT * FROM categories WHERE isDeleted=0
+      selectCategoryById: SELECT * FROM categories WHERE isDeleted=0 and CategoryId = ?
+      insertCategory: INSERT INTO categories (CategoryName) values (?)
+      updateCategory: UPDATE categories set CategoryName = ? WHERE CategoryId = ?
+      updateCategoryLogo: UPDATE categories set LogoURL = ? WHERE CategoryId = ?
+      removeCategory: UPDATE categories set isDeleted = 1 WHERE CategoryId = ?

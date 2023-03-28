@@ -1,13 +1,12 @@
 package com.fl.skill.model.Response;
 
+import jakarta.ws.rs.DefaultValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-
-import jakarta.ws.rs.DefaultValue;
 
 @Getter
 @Setter
