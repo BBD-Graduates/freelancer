@@ -34,3 +34,10 @@ db:
       updateCategory: UPDATE categories set CategoryName = ? WHERE CategoryId = ?
       updateCategoryLogo: UPDATE categories set LogoURL = ? WHERE CategoryId = ?
       removeCategory: UPDATE categories set isDeleted = 1 WHERE CategoryId = ?
+    skills:
+      insertSkill: INSERT into skills(SkillName,CategoryId) values(?,?)
+      selectAllSkills: SELECT * from skills
+      selectSkillById: SELECT * from skills WHERE SkillId = ?
+      selectSkillByCategory: SELECT * from skills WHERE CategoryId=?
+      updateSkill: UPDATE skills set SkillName = ? WHERE SkillId= ?
+      removeSkill: UPDATE skills set isDeleted = 1 WHERE skillId = ?

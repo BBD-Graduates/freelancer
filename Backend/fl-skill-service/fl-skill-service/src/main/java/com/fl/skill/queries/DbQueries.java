@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Setter
 @Component
 @RefreshScope
-public class CategoryQueries {
+public class DbQueries {
     @Value("${db.queries.categories.insertCategory}")
     private  String addCategory;
 
