@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -25,25 +24,20 @@ public class CategorySkillController {
     @Autowired
     private SkillImpl skillRepo;
     @GetMapping("/categorysubcategory")
-    public ResponseEntity<CommonResponse> getAllCategorySubCategory(){
+    public ResponseEntity<Object> getAllCategorySubCategory(){
         try {
-            List<CategoryRes> category = new ArrayList<CategoryRes>();
+            List<CategoryRes> category = new ArrayList<>();
             catRepo.getAll().forEach(category::add);
-            List<CategorySkillList> lst = new ArrayList<CategorySkillList>();
+            List<CategorySkillList> lst = new ArrayList<>();
             if(!category.isEmpty()){
                 for(int i = 0;i<category.size();i++){
 
-                    CategorySkillList cs = new CategorySkillList();
-                    List<SkillRes> skillRes = new ArrayList<SkillRes>();
+                    CategorySkillList cs;
+                    List<SkillRes> skillRes = new ArrayList<>();
 
                     CategoryRes obj = category.get(i);
-                    cs.setCategoryId(obj.getCategoryId());
-                    cs.setCategoryName(obj.getCategoryName());
-                    cs.setLogoURl(obj.getLogoURl());
-                    cs.setIsDeleted(obj.isIsDeleted());
-                    cs.setCreatedDate(obj.getCreatedDate());
                     skillRepo.getByCategoryId(obj.getCategoryId()).forEach(skillRes::add);
-                    cs.setSkillRes(skillRes);
+                    cs=new CategorySkillList(obj.getCategoryId(),obj.getCategoryName(),obj.getLogoURl(),obj.isDeleted(),obj.getCreatedDate(),skillRes);
                     lst.add(cs);
                 }
                 return new ResponseEntity<>(new CommonResponse<List<CategorySkillList>>(lst,HttpStatus.ACCEPTED.value()),HttpStatus.OK);

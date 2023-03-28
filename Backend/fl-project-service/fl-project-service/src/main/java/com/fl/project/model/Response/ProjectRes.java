@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,4 +23,10 @@ public class ProjectRes {
     private Float maxPrice;
     private Date createdDate;
     private String status;
+    private List<Skill> skills;
+
+    public void setSkill(List<Skill> skills){
+        this.skills = skills;
+    }
+
 }

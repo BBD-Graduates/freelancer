@@ -11,6 +11,6 @@ public class CategoryRes {
     private  int categoryId;
     private String categoryName;
     private String logoURl;
-    private boolean IsDeleted;
-    private String CreatedDate;
+    private boolean isDeleted;
+    private String createdDate;
 }

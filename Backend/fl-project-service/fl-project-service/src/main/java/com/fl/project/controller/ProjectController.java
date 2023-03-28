@@ -5,19 +5,28 @@ import com.fl.project.model.Request.Project;
 import com.fl.project.model.Response.CommonResponse;
 import com.fl.project.model.Response.ProjectList;
 import com.fl.project.model.Response.ProjectRes;
+import com.fl.project.model.Response.ProjectSkill;
+import com.fl.project.model.Response.Skill;
 import com.fl.project.service.ProjectImpl;
 import jakarta.validation.Valid;
+import lombok.var;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/projects")
 public class ProjectController {
+    
+    @Autowired
+    private RestTemplate restTemplate;
+
     @Autowired
     private ProjectImpl projectrepo;
 
@@ -35,17 +44,20 @@ public class ProjectController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<CommonResponse> getAllProjects()
+    public ResponseEntity<Object> getAllProjects()
     {
         try {
-                List<ProjectRes> projects=new ArrayList<>();
-                projects=projectrepo.getAll();
+                List<ProjectRes> projects=projectrepo.getAll();
+                // List<ProjectSkill> apiRes = restTemplate.getForObject("http://host.docker.internal:8082/project-skills/", List.class);
                 if(!projects.isEmpty())
                 {
-                    ProjectList res=new ProjectList();
-                    res.setProjects(projects);
-
-                    return new ResponseEntity<>(new CommonResponse<ProjectList>(res,HttpStatus.ACCEPTED.value()),HttpStatus.OK);
+                    for(int i=0;i<projects.size();i++){
+                        String url = "http://divyeshg.bbdnet.bbd.co.za:8082/project-skills/skill/"+projects.get(i).getProjectId();
+                        List<Skill> apiRes = restTemplate.getForObject(url, List.class);
+                        System.out.println(apiRes);
+                        projects.get(i).setSkill(apiRes);
+                    }
+                    return new ResponseEntity<>(projects,HttpStatus.OK);
                 }
                 else
                 {
@@ -56,5 +68,4 @@ public class ProjectController {
             return new ResponseEntity<>(new CommonResponse<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR.value()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

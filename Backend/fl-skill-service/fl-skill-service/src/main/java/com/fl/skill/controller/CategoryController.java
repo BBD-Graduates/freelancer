@@ -1,10 +1,8 @@
 package com.fl.skill.controller;
 
-//import com.fl.skill.config.ResponseEntity;
 import com.fl.skill.config.Constant;
 import com.fl.skill.model.CommonResponse;
 import com.fl.skill.model.Request.Category;
-//import com.fl.skill.model.Response;
 import com.fl.skill.model.Response.CategoryList;
 import com.fl.skill.model.Response.CategoryRes;
 import com.fl.skill.service.CategoryImpl;
@@ -39,20 +37,17 @@ public class CategoryController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<CommonResponse> createCategory(@Valid @RequestBody Category category){
+    public ResponseEntity<Object> createCategory(@Valid @RequestBody Category category){
         try {
             int ins = catRepo.save(category.getName());
             if(ins>0){
                 return new ResponseEntity<>(new CommonResponse<String>("Inserted",HttpStatus.CREATED.value()),HttpStatus.OK);
             }
-//                return new ResponseEntity<>("Inserted",HttpStatus.CREATED);
             else{
-                return new ResponseEntity<>(new CommonResponse<String>("Something went wrong",HttpStatus.INTERNAL_SERVER_ERROR.value()),HttpStatus.OK);
+                return new ResponseEntity<>(new CommonResponse<String>("Something went wrong",HttpStatus.BAD_REQUEST.value()),HttpStatus.OK);
             }
-//                return new ResponseEntity<>("Something went wrong",HttpStatus.INTERNAL_SERVER_ERROR);
         }
         catch (Exception e){
-//            return  new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
             return new ResponseEntity<>(new CommonResponse<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR.value()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -65,14 +60,12 @@ public class CategoryController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<CommonResponse> getAllCategory(){
+    public ResponseEntity<Object> getAllCategory(){
         try {
-            List<CategoryRes> category = new ArrayList<CategoryRes>();
-            catRepo.getAll().forEach(category::add);
-            CategoryList res = new CategoryList();
+            List<CategoryRes> category = catRepo.getAll();
+           
             if(!category.isEmpty()){
-                res.setCategories(category);
-                return new ResponseEntity<>(new CommonResponse<CategoryList>(res,HttpStatus.ACCEPTED.value()),HttpStatus.OK);
+                return new ResponseEntity<>(new CommonResponse<List<CategoryRes>>(category,HttpStatus.ACCEPTED.value()),HttpStatus.OK);
             }
             else
             {
@@ -86,11 +79,10 @@ public class CategoryController {
     }
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<CommonResponse> updateCategory(@PathVariable("id") int id,@Valid @RequestBody Category category){
+    public ResponseEntity<Object> updateCategory(@PathVariable("id") int id,@Valid @RequestBody Category category){
         try {
-            List<CategoryRes> lstcategory = new ArrayList<CategoryRes>();
+            List<CategoryRes> lstcategory = new ArrayList<>();
             catRepo.getById(id).forEach(lstcategory::add);
-            CategoryList res = new CategoryList();
             if(!lstcategory.isEmpty()){
                 int updated = catRepo.update(category,id);
                 if(updated!=0)
@@ -107,7 +99,7 @@ public class CategoryController {
 
     }
     @GetMapping("/{id}")
-    public ResponseEntity<CommonResponse> getCategoryById(@PathVariable("id") int id){
+    public ResponseEntity<Object> getCategoryById(@PathVariable("id") int id){
         try {
             List<CategoryRes> category = new ArrayList<CategoryRes>();
             catRepo.getById(id).forEach(category::add);
@@ -128,7 +120,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CommonResponse> deleteCategory(@PathVariable("id") int id){
+    public ResponseEntity<Object> deleteCategory(@PathVariable("id") int id){
         try{
             int deleted = catRepo.delete(id);
             if(deleted == 0){

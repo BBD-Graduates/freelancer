@@ -1,7 +1,6 @@
 package com.fl.skill.service;
 
 import com.fl.skill.model.Request.Skill;
-import com.fl.skill.model.Response.CategorySkillList;
 import com.fl.skill.model.Response.SkillRes;
 import com.fl.skill.repository.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,8 @@ public class SkillImpl implements SkillRepository {
     private JdbcTemplate jdbcTemplate;
     @Override
     public int save(Skill skill) {
-        return jdbcTemplate.update("Insert into skills(SkillName,CategoryId) values(?,?)",
-                new Object[] {skill.getSkillName(),skill.getCategoryId()});
+        String qry = "Insert into skills(SkillName,CategoryId) values(?,?)";
+        return jdbcTemplate.update(qry,skill.getSkillName(),skill.getCategoryId());
     }
 
     @Override
@@ -39,9 +38,11 @@ public class SkillImpl implements SkillRepository {
 
     @Override
     public int update(Skill skill, int id) {
+        String updateQuery = "update skills set SkillName = ? where SkillId= ?";
 
-        return jdbcTemplate.update("update skills set SkillName = ? where SkillId= ? "
-                ,new Object[]{skill.getSkillName(),id});
+        // return jdbcTemplate.update("update skills set SkillName = ? where SkillId= ? "
+        //         ,new Object[]{skill.getSkillName(),id});
+        return jdbcTemplate.update(updateQuery,skill.getSkillName(),id);
     }
 
     @Override
@@ -49,11 +50,4 @@ public class SkillImpl implements SkillRepository {
 
         return jdbcTemplate.update("delete from skills where SkillId = ?",id);
     }
-
-    public void getSkillByCategory()
-    {
-         SkillImpl skill =new SkillImpl();
-
-    }
-
 }

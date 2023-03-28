@@ -1,6 +1,5 @@
 package com.fl.skill.model.Response;
 
-import com.fl.skill.model.Request.Skill;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

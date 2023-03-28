@@ -2,10 +2,7 @@ package com.fl.skill.controller;
 
 import com.fl.skill.config.Constant;
 import com.fl.skill.model.CommonResponse;
-import com.fl.skill.model.Request.Category;
 import com.fl.skill.model.Request.Skill;
-import com.fl.skill.model.Response.CategoryList;
-import com.fl.skill.model.Response.CategoryRes;
 import com.fl.skill.model.Response.SkillList;
 import com.fl.skill.model.Response.SkillRes;
 import com.fl.skill.service.SkillImpl;
@@ -31,10 +28,13 @@ public class SkillController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<CommonResponse> createSkills(@Valid @RequestBody Skill skill) {
+    public ResponseEntity<Object> createSkills(@Valid @RequestBody Skill skill) {
         try {
             int ins = skillrepo.save(skill);
-            return new ResponseEntity<>(new CommonResponse<String>(Constant.INSERTED_SUCCESSFULLY, HttpStatus.CREATED.value()), HttpStatus.OK);
+            if(ins > 0)
+                return new ResponseEntity<>(new CommonResponse<String>(Constant.INSERTED_SUCCESSFULLY, HttpStatus.CREATED.value()), HttpStatus.OK);
+            else
+                return new ResponseEntity<>(new CommonResponse<String>(Constant.CANT_PROCESS_REQUEST, HttpStatus.BAD_REQUEST.value()), HttpStatus.OK);
         } catch (Exception e)
         {
             return new ResponseEntity<>(new CommonResponse<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -44,7 +44,7 @@ public class SkillController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<CommonResponse> getSkills()
+    public ResponseEntity<Object> getSkills()
     {
         try {
             List<SkillRes> skills=new ArrayList<>();
@@ -66,7 +66,7 @@ public class SkillController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CommonResponse> getSkillById(@PathVariable("id") int id)
+    public ResponseEntity<Object> getSkillById(@PathVariable("id") int id)
     {
         try{
             List<SkillRes> skills=new ArrayList<>();
@@ -90,7 +90,7 @@ public class SkillController {
     }
 
     @GetMapping("/category/{id}")
-    public ResponseEntity<CommonResponse> getSkillByCategoryId(@PathVariable("id") int id)
+    public ResponseEntity<Object> getSkillByCategoryId(@PathVariable("id") int id)
     {
         try{
             List<SkillRes> skills=new ArrayList<>();
@@ -114,18 +114,17 @@ public class SkillController {
     }
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<CommonResponse> updateSkill(@PathVariable("id") int id,@Valid @RequestBody Skill skill)
+    public ResponseEntity<Object> updateSkill(@PathVariable("id") int id,@Valid @RequestBody Skill skill)
     {
         try{
             List<SkillRes> lstskill = new ArrayList<>();
             skillrepo.getById(id).forEach(lstskill::add);
-            SkillList res = new SkillList();
             if(!lstskill.isEmpty()){
                 int updated = skillrepo.update(skill,id);
                 if(updated!=0)
                     return new ResponseEntity<>(new CommonResponse<String>(Constant.UPDATED_SUCCESSFULLY,HttpStatus.OK.value()),HttpStatus.OK);
                 else
-                    return new ResponseEntity<>(new CommonResponse<String>(Constant.CANT_PROCESS_REQUEST,HttpStatus.OK.value()),HttpStatus.OK);
+                    return new ResponseEntity<>(new CommonResponse<String>(Constant.CANT_PROCESS_REQUEST,HttpStatus.BAD_REQUEST.value()),HttpStatus.OK);
             }
             else
                 return new ResponseEntity<>(new CommonResponse<String>(Constant.NO_RECORD_FOUND,HttpStatus.OK.value()),HttpStatus.OK);
@@ -138,7 +137,7 @@ public class SkillController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CommonResponse> deleteSkill(@PathVariable("id") int id)
+    public ResponseEntity<Object> deleteSkill(@PathVariable("id") int id)
     {
         try
         {
