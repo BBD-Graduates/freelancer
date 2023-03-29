@@ -6,10 +6,10 @@ import com.fl.skill.model.Response.CategoryRes;
 import java.util.List;
 
 public interface CategoryRepository {
-    int save (Category category);
+    String save (Category category);
     List<CategoryRes> getAll();
     List<CategoryRes> getById(int id);
-    int delete(int id);
-    int update(Category category,int id);
+    String delete(int id);
+    String update(Category category, int id);
     int updateLogoUrl(String url,int id);
 }

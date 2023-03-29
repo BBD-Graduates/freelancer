@@ -4,6 +4,7 @@ import com.fl.skill.config.Constant;
 import com.fl.skill.model.CommonResponse;
 import com.fl.skill.model.Request.ProjectSkillsReq;
 import com.fl.skill.model.Response.*;
+import com.fl.skill.repository.ProjectSkillsRepository;
 import com.fl.skill.service.ProjectSkillsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ import java.util.List;
 public class ProjectSkillController {
 
     @Autowired
-    ProjectSkillsImpl projectSkillsRepo;
+    ProjectSkillsRepository projectSkillsRepo;
 
     @PostMapping("/add")
     public ResponseEntity<ProjectSkillsReq> addProjectSkills(@RequestBody ProjectSkillsReq projectSkillsReq)
@@ -29,33 +30,7 @@ public class ProjectSkillController {
     @GetMapping("/")
     public ResponseEntity<Object> getProjectSkills()
     {
-        try {
-            List<ProjectSkills> projects = new ArrayList<>();
-            projectSkillsRepo.getAllProjectId().forEach(projects::add);
-            List<ProjectSkillList> lst = new ArrayList<>();
-            if(!projects.isEmpty())
-            {
-                for(int i=0;i<projects.size();i++)
-                {
-                    ProjectSkillList ps;
-                    List<ProjectSkills> skillRes=new ArrayList<>();
-                    ProjectSkills obj = projects.get(i);
-                    projectSkillsRepo.getByProjectId(obj.getProjectId()).forEach(skillRes::add);
-                    ps=new ProjectSkillList(obj.getProjectId(), skillRes);
-                    lst.add(ps);
-                }
-                // return new ResponseEntity<>(new CommonResponse<List<ProjectSkillList>>(lst,HttpStatus.ACCEPTED.value()),HttpStatus.OK);
-                return new ResponseEntity<>(lst, HttpStatus.OK);
-            }
-            else
-            {
-                return new ResponseEntity<>(new CommonResponse<String>(Constant.NO_RECORD_FOUND, HttpStatus.ACCEPTED.value()),HttpStatus.OK);
-            }
-
-        }
-        catch (Exception e){
-            return new ResponseEntity<>(new CommonResponse<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR.value()),HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return new ResponseEntity<>(projectSkillsRepo.getall(),HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
