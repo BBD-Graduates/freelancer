@@ -1,4 +1,4 @@
-package com.fl.skill.model.Response;
+package com.fl.skill.model.response;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,8 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProjectSkills {
-    private int projectId;
+public class SkillRes {
+
     private int skillId;
+    private String skillName;
+    private int categoryId;
     private String createdDate;
 }

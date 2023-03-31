@@ -1,17 +1,16 @@
-package com.fl.skill.model.Response;
+package com.fl.skill.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectSkillList {
-
+public class ProjectSkills {
     private int projectId;
-    private List<ProjectSkills> skills;
+    private int skillId;
+    private String createdDate;
 }

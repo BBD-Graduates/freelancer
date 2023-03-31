@@ -35,9 +35,20 @@ db:
       updateCategoryLogo: UPDATE categories set LogoURL = ? WHERE CategoryId = ? and IsDeleted=0
       removeCategory: UPDATE categories set isDeleted = 1 WHERE CategoryId = ?
     skills:
-      insertSkill: INSERT into skills(SkillName,CategoryId) values(?,?)
+      insertSkill: INSERT INTO skills(SkillName,CategoryId) values(?,?)
       selectAllSkills: SELECT * from skills WHERE IsDeleted=0
       selectSkillById: SELECT * from skills WHERE IsDeleted=0 and SkillId = ?
       selectSkillByCategory: SELECT * from skills WHERE IsDeleted=0 and CategoryId=?
       updateSkill: UPDATE skills set SkillName = ?, CategoryId=? WHERE SkillId= ? and IsDeleted=0
       removeSkill: UPDATE skills set isDeleted = 1 WHERE skillId = ?
+    projectSkills:
+      insertProjectSkills: INSERT INTO projectskills (ProjectId,SkillId) values(?,?)
+      selectProjectSkillsById: SELECT * from projectskills where ProjectId=?
+      selectAllProjectId: SELECT  DISTINCT(ProjectId) from projectskills
+      selectProjectId: SELECT  DISTINCT(ProjectId) from projectskills where ProjectId=?
+    userSkills:
+      insertUserSkills: INSERT INTO userskills (UserId,SkillId) values(?,?)
+      selectUserSkillsById: SELECT * from userskills where UserId=?
+      selectAllUserId: SELECT  DISTINCT(UserId) from userskills
+      selectUserId: SELECT  DISTINCT(UserId) from userskills where UserId=?
+

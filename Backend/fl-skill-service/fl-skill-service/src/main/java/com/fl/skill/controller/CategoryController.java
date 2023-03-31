@@ -1,65 +1,73 @@
 package com.fl.skill.controller;
 
-import com.fl.skill.model.Request.Category;
-import com.fl.skill.repository.CategoryRepository;
+import com.fl.skill.exceptions.CategoryNotFoundException;
+import com.fl.skill.model.FlResponse;
+import com.fl.skill.model.request.Category;
+import com.fl.skill.model.response.CategoryRes;
+import com.fl.skill.service.serviceInterface.CategoryService;
 import com.fl.skill.service.FileStorageService;
 
+import com.fl.skill.util.FlResponseUtil;
 import jakarta.validation.Valid;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/categories")
+@RequiredArgsConstructor
 public class CategoryController {
-    @Autowired
-    private CategoryRepository catRepo;
 
+    private final CategoryService categoryService;
+    private final Environment env;
+    private final FileStorageService fileStorageService;
+    private final FlResponseUtil flResponseUtil;
 
-    @Autowired
-    Environment env;
-    @Autowired
-    private FileStorageService fileStorageService;
+    @PostMapping
+    public ResponseEntity<String> createCategory(@Valid @RequestBody Category category) {
 
-    @RequestMapping("ping")
-    public ResponseEntity<String> ping() {
-        return new ResponseEntity<>("Category microservice", HttpStatus.OK);
+        return new ResponseEntity<>(categoryService.insertCatgories(category), HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Object> createCategory(@Valid @RequestBody Category category) {
-
-        return new ResponseEntity<>(catRepo.save(category), HttpStatus.OK);
-
-    }
-
-    @RequestMapping(value = "/image/{id}", method = RequestMethod.POST, consumes = {"multipart/form-data"}/*, consumes = MediaType.MULTIPART_FORM_DATA_VALUE*/)
-    public String image(@RequestPart("img") MultipartFile img, @PathVariable("id") int id) {
+    @RequestMapping(value = "/image/{id}", method = RequestMethod.POST, consumes = {"multipart/form-data"})
+    public String image(@RequestPart("img") MultipartFile img, @PathVariable("id") int id)
+    {
         String path = env.getProperty("app.file.upload-dir");
-        catRepo.updateLogoUrl(path + "/" + fileStorageService.storeFile(img), id);
+        categoryService.updateCategoryLogoUrl(path + "/" + fileStorageService.storeFile(img), id);
         return "file found";
     }
 
-    @GetMapping("/categoryId={categoryId}")
-    public ResponseEntity<Object> getCategories(@RequestParam(defaultValue = "0", required = false) Integer categoryId) {
-        if (!categoryId.equals(0)) {
-            return new ResponseEntity<>(catRepo.getById(categoryId), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(catRepo.getAll(), HttpStatus.OK);
-        }
+    //change response to categorySkills
+    @GetMapping
+    public ResponseEntity<FlResponse<List<CategoryRes>>> getCategories(@RequestParam(defaultValue = "0", required = false,name = "categoryId") Integer categoryId) throws CategoryNotFoundException {
+//        try {
+            if (!categoryId.equals(0)) {
+                return flResponseUtil.getResponseEntity(HttpStatus.OK,categoryService.getCategoryById(categoryId),"Categories fetched");
+            } else {
+                return flResponseUtil.getResponseEntity(HttpStatus.OK,categoryService.getAllCategories(),"Categories fetched");
+            }
+//        }
+//        catch(CategoryNotFoundException e) {
+//           return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,null,e.getMessage());
+//
+//        }
     }
 
-    @PostMapping("/edit/{id}")
-    public ResponseEntity<Object> updateCategory(@PathVariable("id") Integer id, @Valid @RequestBody Category category) {
-        return new ResponseEntity<>(catRepo.update(category, id), HttpStatus.OK);
+
+
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<String> updateCategory(@PathVariable("categoryId") Integer categoryId, @Valid @RequestBody Category category) {
+        return new ResponseEntity<>(categoryService.updateCategory(category, categoryId), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteCategory(@PathVariable("id") int id) {
-        return new ResponseEntity<>(catRepo.delete(id), HttpStatus.OK);
+    @DeleteMapping("/{categoryId}")
+    public ResponseEntity<String> deleteCategory(@PathVariable("categoryId") int categoryId) {
+        return new ResponseEntity<>(categoryService.deleteCategory(categoryId), HttpStatus.OK);
     }
 }

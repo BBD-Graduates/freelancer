@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @OpenAPIDefinition
 @Configuration
-public class SpringFoxConfig {
+public class SwaggerConfig {
 
     @Bean
     public OpenAPI baseOpenApi() {

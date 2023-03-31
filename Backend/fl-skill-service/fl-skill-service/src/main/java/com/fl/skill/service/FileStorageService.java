@@ -1,10 +1,9 @@
 package com.fl.skill.service;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Repository;
-//import org.apache.commons
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.io.IOException;
@@ -13,7 +12,7 @@ import java.nio.file.Path;
 import java.util.Date;
 
 
-@Repository
+@Service
 public class FileStorageService {
     private final Path fileStorageLocation;
     @Autowired

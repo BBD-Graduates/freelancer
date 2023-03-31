@@ -1,4 +1,4 @@
-package com.fl.skill.model.Request;
+package com.fl.skill.model.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

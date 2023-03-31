@@ -1,15 +1,15 @@
-package com.fl.skill.model.Request;
+package com.fl.skill.model.request;
 
-import com.fl.skill.model.Response.ProjectSkills;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@SuperBuilder
 public class ProjectSkillsReq {
     private int projectId;
-    private List<ProjectSkills> skills;
+    private int skillId;
 }

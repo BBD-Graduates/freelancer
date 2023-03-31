@@ -1,63 +1,54 @@
 package com.fl.skill.controller;
 
-import com.fl.skill.model.Request.Skill;
-import com.fl.skill.repository.SkillRepository;
+import com.fl.skill.model.request.Skill;
+import com.fl.skill.model.response.CategorySkills;
+import com.fl.skill.model.response.SkillRes;
+import com.fl.skill.service.serviceInterface.SkillService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/skills")
+@RequiredArgsConstructor
 public class SkillController {
 
-    @Autowired
-    private SkillRepository skillrepo;
+    private final SkillService skillService;
 
-    @RequestMapping("/ping")
-    public ResponseEntity<String> ping() {
-        return new ResponseEntity<>("Skills service", HttpStatus.OK);
+    @PostMapping
+    public ResponseEntity<String> createSkills(@Valid @RequestBody Skill skill) {
+        return new ResponseEntity<>(skillService.insertSkills(skill), HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Object> createSkills(@Valid @RequestBody Skill skill) {
-        return new ResponseEntity<>(skillrepo.save(skill), HttpStatus.OK);
-    }
+    @GetMapping
+    public ResponseEntity<List<SkillRes>> getSkills(@RequestParam(defaultValue = "0", required = false, name = "skillId") Integer skillId, @RequestParam(defaultValue = "0", required = false, name = "categoryId") Integer categoryId) {
+        if (!skillId.equals(0)) {
+            return new ResponseEntity<>(skillService.getSkillBySkillId(skillId), HttpStatus.OK);
+        } else if (!categoryId.equals(0)) {
 
-    @GetMapping("/skillId={skillId}/categoryId={categoryId}")
-    public ResponseEntity<Object> getSkills(@RequestParam(defaultValue = "0",required = false) Integer skillId,@RequestParam(defaultValue = "0",required = false) Integer categoryId)
-    {
-            if(!skillId.equals(0))
-            {
-                return new ResponseEntity<>(skillrepo.getById(skillId),HttpStatus.OK);
-            }
-            else if(!categoryId.equals(0))
-            {
-
-                return new ResponseEntity<>(skillrepo.getByCategoryId(categoryId),HttpStatus.OK);
-            }
-            else
-            {
-                return new ResponseEntity<>(skillrepo.getAll(),HttpStatus.OK);
-            }
+            return new ResponseEntity<>(skillService.getSkillByCategoryId(categoryId), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(skillService.getAllSkills(), HttpStatus.OK);
         }
-
-    @GetMapping("/categoryskills")
-    public ResponseEntity<Object> getAllCategoryskills(){
-        return new ResponseEntity<>(skillrepo.getAllCategorySkills(),HttpStatus.OK);
     }
 
-    @PostMapping("/edit/{id}")
-    public ResponseEntity<Object> updateSkill(@PathVariable("id") Integer id,@Valid @RequestBody Skill skill)
-    {
-        return new ResponseEntity<>(skillrepo.update(skill,id), HttpStatus.OK);
+    @GetMapping("/categories")
+    public ResponseEntity<List<CategorySkills>> getAllCategorySkills() {
+        return new ResponseEntity<>(skillService.getAllCategorySkills(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteSkill(@PathVariable("id") Integer id)
-    {
-        return new ResponseEntity<>(skillrepo.delete(id), HttpStatus.OK);
+    @PutMapping("/{skillId}")
+    public ResponseEntity<String> updateSkill(@PathVariable("skillId") Integer skillId, @Valid @RequestBody Skill skill) {
+        return new ResponseEntity<>(skillService.updateSkill(skill, skillId), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{skillId}")
+    public ResponseEntity<String> deleteSkill(@PathVariable("skillId") Integer skillId) {
+        return new ResponseEntity<>(skillService.deleteSkill(skillId), HttpStatus.OK);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.fl.skill.queries;
+package com.fl.skill.repository;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,7 +33,7 @@ public class DbQueries {
     private  String addSkill;
 
     @Value("${db.queries.skills.selectAllSkills}")
-    private  String Skills;
+    private  String skills;
 
     @Value("${db.queries.skills.selectSkillById}")
     private  String skill;
@@ -46,5 +46,29 @@ public class DbQueries {
 
     @Value("${db.queries.skills.removeSkill}")
     private  String removeSkill;
+
+    @Value("${db.queries.projectSkills.insertProjectSkills}")
+    private  String addProjectSkills;
+
+    @Value("${db.queries.projectSkills.selectProjectSkillsById}")
+    private  String projectSkills;
+
+    @Value("${db.queries.projectSkills.selectAllProjectId}")
+    private  String allProjectId;
+
+    @Value("${db.queries.projectSkills.selectProjectId}")
+    private  String projectId;
+
+    @Value("${db.queries.userSkills.insertUserSkills}")
+    private String addUserSkills;
+
+    @Value("${db.queries.userSkills.selectUserSkillsById}")
+    private String userSkills;
+
+    @Value("${db.queries.userSkills.selectAllUserId}")
+    private String allUserId;
+
+    @Value("${db.queries.userSkills.selectUserId}")
+    private String userId;
 
 }
