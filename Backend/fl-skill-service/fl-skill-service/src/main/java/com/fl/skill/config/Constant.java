@@ -7,4 +7,7 @@ public class Constant {
     public static String CANT_PROCESS_REQUEST = "Can't process request";
     public static String INSERTED_SUCCESSFULLY = "Inserted Successfully";
 
+    private Constant(){
+
+    }
 }

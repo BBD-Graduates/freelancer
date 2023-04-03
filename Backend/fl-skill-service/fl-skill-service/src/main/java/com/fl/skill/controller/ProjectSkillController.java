@@ -1,9 +1,14 @@
 package com.fl.skill.controller;
 
+import com.fl.skill.exceptions.ProjectNotFoundException;
+import com.fl.skill.model.FlResponse;
 import com.fl.skill.model.request.ProjectSkillsReq;
 import com.fl.skill.model.response.ProjectSkills;
 import com.fl.skill.service.serviceInterface.ProjectSkillsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fl.skill.util.FlResponseUtil;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,27 +17,28 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/project-skills")
+@RequiredArgsConstructor
 public class ProjectSkillController {
 
-    @Autowired
-    ProjectSkillsService projectSkillsService;
+    private final ProjectSkillsService projectSkillsService;
+    private final FlResponseUtil flResponseUtil;
 
     @PostMapping
-    public ResponseEntity<String> addProjectSkills(@RequestBody List<ProjectSkillsReq> projectSkillReqList)
+    public ResponseEntity<FlResponse<String>> addProjectSkills(@RequestBody List<ProjectSkillsReq> projectSkillReqList) throws ProjectNotFoundException
     {
-        return new ResponseEntity<>(projectSkillsService.insertProjectSkills(projectSkillReqList),HttpStatus.OK);
+        return new FlResponseUtil().getResponseEntity(HttpStatus.OK,projectSkillsService.insertProjectSkills(projectSkillReqList),null);
 
     }
 
     @GetMapping
-    public ResponseEntity<List<ProjectSkills>> getProjectSkills(@RequestParam(defaultValue = "0",required = false) Integer projectId)
+    public ResponseEntity<FlResponse<List<ProjectSkills>>> getProjectSkills(@RequestParam(defaultValue = "0",required = false) Integer projectId) throws ProjectNotFoundException
     {
         if(!projectId.equals(0))
         {
-            return new ResponseEntity<>(projectSkillsService.projectSkillsBySkillId(projectId),HttpStatus.OK);
+            return flResponseUtil.getResponseEntity(HttpStatus.OK,projectSkillsService.projectSkillsBySkillId(projectId),null);
         }
         else {
-            return new ResponseEntity<>(projectSkillsService.getallProjectSkills(),HttpStatus.OK);
+            return flResponseUtil.getResponseEntity(HttpStatus.OK,projectSkillsService.getallProjectSkills(),null);
         }
 
     }

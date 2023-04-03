@@ -30,44 +30,39 @@ public class CategoryController {
     private final FlResponseUtil flResponseUtil;
 
     @PostMapping
-    public ResponseEntity<String> createCategory(@Valid @RequestBody Category category) {
+    public ResponseEntity<FlResponse<String>> createCategory(@Valid @RequestBody Category category)
+            throws CategoryNotFoundException {
 
-        return new ResponseEntity<>(categoryService.insertCatgories(category), HttpStatus.OK);
+        return flResponseUtil.getResponseEntity(HttpStatus.OK,categoryService.insertCatgories(category),null );
     }
 
-    @RequestMapping(value = "/image/{id}", method = RequestMethod.POST, consumes = {"multipart/form-data"})
+    @RequestMapping(value = "/image/{id}", method = RequestMethod.POST, consumes = { "multipart/form-data" })
     public String image(@RequestPart("img") MultipartFile img, @PathVariable("id") int id)
-    {
+            throws CategoryNotFoundException {
         String path = env.getProperty("app.file.upload-dir");
         categoryService.updateCategoryLogoUrl(path + "/" + fileStorageService.storeFile(img), id);
         return "file found";
     }
 
-    //change response to categorySkills
+    // change response to categorySkills
     @GetMapping
-    public ResponseEntity<FlResponse<List<CategoryRes>>> getCategories(@RequestParam(defaultValue = "0", required = false,name = "categoryId") Integer categoryId) throws CategoryNotFoundException {
-//        try {
-            if (!categoryId.equals(0)) {
-                return flResponseUtil.getResponseEntity(HttpStatus.OK,categoryService.getCategoryById(categoryId),"Categories fetched");
-            } else {
-                return flResponseUtil.getResponseEntity(HttpStatus.OK,categoryService.getAllCategories(),"Categories fetched");
-            }
-//        }
-//        catch(CategoryNotFoundException e) {
-//           return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,null,e.getMessage());
-//
-//        }
+    public ResponseEntity<FlResponse<List<CategoryRes>>> getCategories(
+            @RequestParam(defaultValue = "0", required = false, name = "categoryId") Integer categoryId)
+            throws CategoryNotFoundException {
+
+        return flResponseUtil.getResponseEntity(HttpStatus.OK, categoryService.getCategories(categoryId),
+                "Categories fetched");
     }
 
-
-
     @PutMapping("/{categoryId}")
-    public ResponseEntity<String> updateCategory(@PathVariable("categoryId") Integer categoryId, @Valid @RequestBody Category category) {
-        return new ResponseEntity<>(categoryService.updateCategory(category, categoryId), HttpStatus.OK);
+    public ResponseEntity<FlResponse<String>> updateCategory(@PathVariable("categoryId") Integer categoryId,
+            @Valid @RequestBody Category category) throws CategoryNotFoundException {
+        return flResponseUtil.getResponseEntity(HttpStatus.OK,categoryService.updateCategory(category, categoryId),"");
     }
 
     @DeleteMapping("/{categoryId}")
-    public ResponseEntity<String> deleteCategory(@PathVariable("categoryId") int categoryId) {
-        return new ResponseEntity<>(categoryService.deleteCategory(categoryId), HttpStatus.OK);
+    public ResponseEntity<FlResponse<String>> deleteCategory(@PathVariable("categoryId") int categoryId)
+            throws CategoryNotFoundException {
+        return flResponseUtil.getResponseEntity(HttpStatus.OK,categoryService.deleteCategory(categoryId),"");
     }
 }
