@@ -9,8 +9,6 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 public class FlResponse<T> {
-
     private T response;
-
     private String message;
 }

@@ -33,13 +33,7 @@ public class ProjectSkillController {
     @GetMapping
     public ResponseEntity<FlResponse<List<ProjectSkills>>> getProjectSkills(@RequestParam(defaultValue = "0",required = false) Integer projectId) throws ProjectNotFoundException
     {
-        if(!projectId.equals(0))
-        {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK,projectSkillsService.projectSkillsBySkillId(projectId),null);
-        }
-        else {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK,projectSkillsService.getallProjectSkills(),null);
-        }
+        return flResponseUtil.getResponseEntity(HttpStatus.OK,projectSkillsService.getAllProjectSkills(projectId),null);
 
     }
 

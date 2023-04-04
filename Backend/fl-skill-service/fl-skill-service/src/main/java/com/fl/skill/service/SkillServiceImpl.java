@@ -42,7 +42,7 @@ public class SkillServiceImpl implements SkillService {
                 return Constant.CANT_PROCESS_REQUEST;
             }
         } catch (Exception e) {
-            throw new SkillNotFoundException("Error to insert Skills " + e);
+            throw new SkillNotFoundException("Error inserting Skills " + e);
         }
     }
 
@@ -51,44 +51,44 @@ public class SkillServiceImpl implements SkillService {
 
         try {
             if (!skillId.equals(0)) {
-                return jdbcTemplate.query(dbQueries.getSkillsByCategoryId(),
+                return jdbcTemplate.query(dbQueries.getSkillBySkillId(),
                 BeanPropertyRowMapper.newInstance(SkillRes.class), categoryId);
             } else if (!categoryId.equals(0)) {
-                return jdbcTemplate.query(dbQueries.getSelectSkillBySkillId(), BeanPropertyRowMapper.newInstance(SkillRes.class), skillId);
+                return jdbcTemplate.query(dbQueries.getSkillByCategoryId(), BeanPropertyRowMapper.newInstance(SkillRes.class), skillId);
             } else {
-                return jdbcTemplate.query(dbQueries.getSkills(), BeanPropertyRowMapper.newInstance(SkillRes.class));
+                return jdbcTemplate.query(dbQueries.getAllSkills(), BeanPropertyRowMapper.newInstance(SkillRes.class));
             }
         } catch (Exception e) {
-            throw new SkillNotFoundException("Error to fetch Skills " + e);
+            throw new SkillNotFoundException("Error fetching Skills " + e);
         }
     }
 
     @Override
-    public String updateSkill(Skill skill, int id) throws SkillNotFoundException {
+    public String updateSkill(Skill skill, int skillId) throws SkillNotFoundException {
         try {
             int updateStatus = jdbcTemplate.update(dbQueries.getUpdateSkill(), skill.getSkillName(),
-                    skill.getCategoryId(), id);
+                    skill.getCategoryId(), skillId);
             if (updateStatus > 0) {
                 return Constant.UPDATED_SUCCESSFULLY;
             } else {
                 return Constant.CANT_PROCESS_REQUEST;
             }
         } catch (Exception e) {
-            throw new SkillNotFoundException("Error to update Skill " + e);
+            throw new SkillNotFoundException("Error updating Skill " + e);
         }
     }
 
     @Override
-    public String deleteSkill(int id) throws SkillNotFoundException {
+    public String deleteSkill(int skillId) throws SkillNotFoundException {
         try {
-            int removeStatus = jdbcTemplate.update(dbQueries.getRemoveSkillBySkillId(), id);
+            int removeStatus = jdbcTemplate.update(dbQueries.getRemoveSkill(), skillId);
             if (removeStatus > 0) {
                 return Constant.DELETED_SUCCESSFULLY;
             } else {
                 return Constant.CANT_PROCESS_REQUEST;
             }
         } catch (Exception e) {
-            throw new SkillNotFoundException("Error delete skill " + e);
+            throw new SkillNotFoundException("Error deleting skill " + e);
         }
     }
 

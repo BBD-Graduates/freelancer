@@ -7,9 +7,9 @@ import com.fl.skill.model.response.CategoryRes;
 import java.util.List;
 
 public interface CategoryService {
-    String insertCatgories(Category category) throws CategoryNotFoundException;
+    String insertCategories(Category category) throws CategoryNotFoundException;
     List<CategoryRes> getCategories(Integer categoryId) throws CategoryNotFoundException;
-    String deleteCategory(int id) throws CategoryNotFoundException;
-    String updateCategory(Category category, int id) throws CategoryNotFoundException;
-    int updateCategoryLogoUrl(String url, int id) throws CategoryNotFoundException;
+    String deleteCategory(int categoryId) throws CategoryNotFoundException;
+    String updateCategory(Category category, int categoryId) throws CategoryNotFoundException;
+    int updateCategoryLogoUrl(String url, int categoryId) throws CategoryNotFoundException;
 }

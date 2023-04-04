@@ -23,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public String insertCatgories(Category category) throws CategoryNotFoundException {
+    public String insertCategories(Category category) throws CategoryNotFoundException {
         try {
             int insertStatus = jdbcTemplate.update(dbQueries.getAddCategory(), category.getName());
             if (insertStatus > 0) {
@@ -42,10 +42,10 @@ public class CategoryServiceImpl implements CategoryService {
 
         try {
             if (!categoryId.equals(0))
-                return jdbcTemplate.query(dbQueries.getSelectCategoryByCategoryId(), BeanPropertyRowMapper.newInstance(CategoryRes.class),
+                return jdbcTemplate.query(dbQueries.getCategoryByCategoryId(), BeanPropertyRowMapper.newInstance(CategoryRes.class),
                         categoryId);
             else
-                return jdbcTemplate.query(dbQueries.getSelectAllCategories(),
+                return jdbcTemplate.query(dbQueries.getAllCategories(),
                         BeanPropertyRowMapper.newInstance(CategoryRes.class));
 
         } catch (DataAccessException e) {
@@ -56,7 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public String deleteCategory(int categoryId) throws CategoryNotFoundException {
         try {
-            int deleteStatus = jdbcTemplate.update(dbQueries.getRemoveCategoryByCategoryId(), categoryId);
+            int deleteStatus = jdbcTemplate.update(dbQueries.getRemoveCategory(), categoryId);
             if (deleteStatus > 0) {
                 return Constant.DELETED_SUCCESSFULLY;
             } else {

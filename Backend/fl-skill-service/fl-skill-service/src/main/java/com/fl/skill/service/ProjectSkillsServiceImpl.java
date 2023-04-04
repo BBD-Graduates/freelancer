@@ -9,7 +9,6 @@ import com.fl.skill.service.serviceInterface.ProjectSkillsService;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -27,17 +26,9 @@ public class ProjectSkillsServiceImpl implements ProjectSkillsService {
     @Override
     public String insertProjectSkills(List<ProjectSkillsReq> projectSkillReqList) throws ProjectNotFoundException {
         try {
-
-            // List<ProjectSkillsReq> dataToInsert =
-            // projectSkillReqList.stream().map(projectSkillsReq ->
-            // ProjectSkillsReq.builder().
-            // skillId(projectSkillsReq.getSkillId()).
-            // projectId(projectSkillsReq.getProjectId()).build()).collect(Collectors.toList());
-            // jdbcTemplate.batchUpdate(dbQueries.getAddProjectSkills(), dataToInsert);
-
             int insertStatus = 0;
             for (ProjectSkillsReq projectSkillsReq : projectSkillReqList) {
-                insertStatus += jdbcTemplate.update(dbQueries.getAddProjectSkills(), projectSkillsReq.getProjectId(),
+                insertStatus += jdbcTemplate.update(dbQueries.getAddProjectSkill(), projectSkillsReq.getProjectId(),
                         projectSkillsReq.getSkillId());
             }
             if (insertStatus > 0) {
@@ -47,67 +38,60 @@ public class ProjectSkillsServiceImpl implements ProjectSkillsService {
             }
 
         } catch (Exception e) {
-            throw new ProjectNotFoundException("Error to insert project " + e);
+            throw new ProjectNotFoundException("Error inserting project skills " + e);
         }
 
     }
 
     @Override
-    public List<ProjectSkills> getallProjectSkills() throws ProjectNotFoundException {
+    public List<ProjectSkills> getAllProjectSkills(Integer projectId) throws ProjectNotFoundException {
         try {
-            int size = 0;
-            List<ProjectSkills> projectSkillList = getAllProjectId();
-            if (!projectSkillList.isEmpty()) {
-                size = projectSkillList.size();
-                for (int i = 0; i < size; i++) {
-                    ProjectSkills projectSkills = projectSkillList.get(i);
-                    projectSkillsByProjectId(projectSkills.getProjectId()).forEach(projectSkillList::add);
+            if(!projectId.equals(0))
+            {
+                List<ProjectSkills> projectSkillList = getProjectId(projectId);
+                List<ProjectSkills> skillRes = new ArrayList<>();
+                if (!projectSkillList.isEmpty()) {
+                    for (int i = 0; i < projectSkillList.size(); i++) {
+                        ProjectSkills projectSkills = projectSkillList.get(i);
+                        projectSkillsByProjectId(projectSkills.getProjectId()).forEach(skillRes::add);
+                    }
                 }
+                return skillRes;
             }
-            return projectSkillList.subList(size, projectSkillList.size());
-        } catch (Exception e) {
-            throw new ProjectNotFoundException("Error to fetch projects " + e);
-        }
-    }
+            else {
+                int size = 0;
+                List<ProjectSkills> projectSkillList = getAllProjectId();
+                if (!projectSkillList.isEmpty()) {
+                    size = projectSkillList.size();
+                    for (int i = 0; i < size; i++) {
+                        ProjectSkills projectSkills = projectSkillList.get(i);
+                        projectSkillsByProjectId(projectSkills.getProjectId()).forEach(projectSkillList::add);
+                    }
+                }
+                return projectSkillList.subList(size, projectSkillList.size());
+            }
 
-    @Override
-    public List<ProjectSkills> projectSkillsBySkillId(Integer skillId) throws ProjectNotFoundException {
-        try {
-            List<ProjectSkills> projectSkillList = new ArrayList<>();
-            getProjectId(skillId).forEach(projectSkillList::add);
-            List<ProjectSkills> skillRes = new ArrayList<>();
-            if (!projectSkillList.isEmpty()) {
-                for (int i = 0; i < projectSkillList.size(); i++) {
-                    ProjectSkills projectSkills = projectSkillList.get(i);
-                    projectSkillsByProjectId(projectSkills.getProjectId()).forEach(skillRes::add);
-                }
-            }
-            return skillRes;
         } catch (Exception e) {
-            throw new ProjectNotFoundException("Error to fetch projects " + e);
+            throw new ProjectNotFoundException("Error fetching project skills " + e);
         }
     }
 
     @Override
     public List<ProjectSkills> projectSkillsByProjectId(Integer projectId) throws ProjectNotFoundException {
-        try {
-            return jdbcTemplate.query(dbQueries.getSelectProjectSkillsByProjectId(),
+
+            return jdbcTemplate.query(dbQueries.getProjectSkillsByProjectId(),
                     BeanPropertyRowMapper.newInstance(ProjectSkills.class),
                     projectId);
-        } catch (Exception e) {
-            throw new ProjectNotFoundException("Error to get projects " + e);
-        }
-
     }
 
     @Override
     public List<ProjectSkills> getAllProjectId() throws ProjectNotFoundException {
-        return jdbcTemplate.query(dbQueries.getSelectAllProject(), BeanPropertyRowMapper.newInstance(ProjectSkills.class));
+        return jdbcTemplate.query(dbQueries.getAllProjectId(), BeanPropertyRowMapper.newInstance(ProjectSkills.class));
     }
 
     @Override
-    public List<ProjectSkills> getProjectId(int id) throws ProjectNotFoundException {
-        return jdbcTemplate.query(dbQueries.getSelectProjectByProjectId(), BeanPropertyRowMapper.newInstance(ProjectSkills.class), id);
+    public List<ProjectSkills> getProjectId(int projectId) throws ProjectNotFoundException {
+        return jdbcTemplate.query(dbQueries.getProjectId(), BeanPropertyRowMapper.newInstance(ProjectSkills.class), projectId);
 
     }
 }

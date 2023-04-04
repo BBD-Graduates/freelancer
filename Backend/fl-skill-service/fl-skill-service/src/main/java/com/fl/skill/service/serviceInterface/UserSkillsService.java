@@ -9,9 +9,8 @@ import java.util.List;
 public interface UserSkillsService {
 
     String insertUserSkills(List<UserSkillsReq> userSkillReqList) throws UserSkillNotFoundException;
-    List<UserSkills> getallUserSkills();
-    List<UserSkills> getUserSkills(Integer id) throws UserSkillNotFoundException;
-    List<UserSkills> getSkillsByUserId(int id);
-    List<UserSkills> getAllUniqUserId();
-    List<UserSkills> getUniqUserIdByUserId(int id);
+    List<UserSkills> getUserSkills(Integer userId) throws UserSkillNotFoundException;
+    List<UserSkills> getSkillsByUserId(int userId) throws UserSkillNotFoundException;
+    List<UserSkills> getAllUserId();
+    List<UserSkills> getUserId(int userId);
 }

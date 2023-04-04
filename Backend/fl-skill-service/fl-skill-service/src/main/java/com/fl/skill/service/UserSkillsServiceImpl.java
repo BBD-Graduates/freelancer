@@ -28,12 +28,8 @@ public class UserSkillsServiceImpl implements UserSkillsService {
     public String insertUserSkills(List<UserSkillsReq> userSkillReqList) throws UserSkillNotFoundException {
         try {
             int insertStatus = 0;
-            for (int i = 0; i < userSkillReqList.size(); i++) {
-                UserSkillsReq userSkillsReq = new UserSkillsReq();
-                UserSkillsReq obj = userSkillReqList.get(i);
-                userSkillsReq.setUserId(obj.getUserId());
-                userSkillsReq.setSkillId(obj.getSkillId());
-                insertStatus = jdbcTemplate.update(dbQueries.getAddUserSkills(), userSkillsReq.getUserId(),
+            for (UserSkillsReq userSkillsReq:userSkillReqList) {
+                insertStatus += jdbcTemplate.update(dbQueries.getAddUserSkill(), userSkillsReq.getUserId(),
                         userSkillsReq.getSkillId());
             }
             if (insertStatus > 0) {
@@ -43,37 +39,20 @@ public class UserSkillsServiceImpl implements UserSkillsService {
             }
 
         } catch (Exception e) {
-            throw new UserSkillNotFoundException("Error to insert user skill ");
+            throw new UserSkillNotFoundException("Error inserting user skills ");
         }
 
     }
 
-    @Override
-    public List<UserSkills> getallUserSkills() {
-        try {
-            List<UserSkills> users = new ArrayList<>();
-            getAllUniqUserId().forEach(users::add);
-            List<UserSkills> skillRes = new ArrayList<>();
-            if (!users.isEmpty()) {
-                for (int i = 0; i < users.size(); i++) {
-                    UserSkills obj = users.get(i);
-                    getSkillsByUserId(obj.getUserId()).forEach(skillRes::add);
-                }
-            }
-            return skillRes;
-        } catch (DataAccessException e) {
-            throw e;
-        }
-    }
 
     @Override
-    public List<UserSkills> getUserSkills(Integer id) throws UserSkillNotFoundException {
+    public List<UserSkills> getUserSkills(Integer userId) throws UserSkillNotFoundException {
         try {
             List<UserSkills> users = new ArrayList<>();
-            if (!id.equals(0)) {
-                getUniqUserIdByUserId(id).forEach(users::add);
+            if (!userId.equals(0)) {
+                getUserId(userId).forEach(users::add);
             } else {
-                getAllUniqUserId().forEach(users::add);
+                getAllUserId().forEach(users::add);
             }
             List<UserSkills> skillRes = new ArrayList<>();
             if (!users.isEmpty()) {
@@ -84,24 +63,24 @@ public class UserSkillsServiceImpl implements UserSkillsService {
             }
             return skillRes;
         } catch (DataAccessException e) {
-            throw new UserSkillNotFoundException("Error to fetch user skill " + e);
+            throw new UserSkillNotFoundException("Error fetching user skills " + e);
         }
     }
 
     @Override
-    public List<UserSkills> getSkillsByUserId(int id) {
-        return jdbcTemplate.query(dbQueries.getSelectUserSkillsByUserId(),
-                BeanPropertyRowMapper.newInstance(UserSkills.class), id);
+    public List<UserSkills> getSkillsByUserId(int userId) {
+        return jdbcTemplate.query(dbQueries.getUserSkillsByUserId(),
+                BeanPropertyRowMapper.newInstance(UserSkills.class), userId);
     }
 
     @Override
-    public List<UserSkills> getAllUniqUserId() {
-        return jdbcTemplate.query(dbQueries.getSelectUniqUserId(), BeanPropertyRowMapper.newInstance(UserSkills.class));
+    public List<UserSkills> getAllUserId() {
+        return jdbcTemplate.query(dbQueries.getAllUserId(), BeanPropertyRowMapper.newInstance(UserSkills.class));
     }
 
     @Override
-    public List<UserSkills> getUniqUserIdByUserId(int id) {
-        return jdbcTemplate.query(dbQueries.getSelectUniqUserIdByUserId(),
-                BeanPropertyRowMapper.newInstance(UserSkills.class), id);
+    public List<UserSkills> getUserId(int userId) {
+        return jdbcTemplate.query(dbQueries.getUserId(),
+                BeanPropertyRowMapper.newInstance(UserSkills.class), userId);
     }
 }

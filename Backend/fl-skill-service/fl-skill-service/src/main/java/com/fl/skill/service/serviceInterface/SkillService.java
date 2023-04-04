@@ -12,7 +12,7 @@ public interface SkillService {
 
     String insertSkills(Skill skill) throws SkillNotFoundException;
     List<SkillRes> getSkills(Integer skillId,Integer categoryId) throws SkillNotFoundException;
-    String updateSkill(Skill skill, int id) throws SkillNotFoundException;
-    String deleteSkill(int id) throws SkillNotFoundException;
+    String updateSkill(Skill skill, int skillId) throws SkillNotFoundException;
+    String deleteSkill(int skillId) throws SkillNotFoundException;
     List<CategorySkills> getAllCategorySkills() throws SkillNotFoundException,CategoryNotFoundException; 
 }

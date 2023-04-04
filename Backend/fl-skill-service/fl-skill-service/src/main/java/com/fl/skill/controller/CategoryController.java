@@ -32,8 +32,8 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<FlResponse<String>> createCategory(@Valid @RequestBody Category category)
             throws CategoryNotFoundException {
+        return flResponseUtil.getResponseEntity(HttpStatus.OK,categoryService.insertCategories(category),null );
 
-        return flResponseUtil.getResponseEntity(HttpStatus.OK,categoryService.insertCatgories(category),null );
     }
 
     @RequestMapping(value = "/image/{id}", method = RequestMethod.POST, consumes = { "multipart/form-data" })
@@ -44,14 +44,11 @@ public class CategoryController {
         return "file found";
     }
 
-    // change response to categorySkills
     @GetMapping
     public ResponseEntity<FlResponse<List<CategoryRes>>> getCategories(
             @RequestParam(defaultValue = "0", required = false, name = "categoryId") Integer categoryId)
             throws CategoryNotFoundException {
-
-        return flResponseUtil.getResponseEntity(HttpStatus.OK, categoryService.getCategories(categoryId),
-                "Categories fetched");
+        return flResponseUtil.getResponseEntity(HttpStatus.OK, categoryService.getCategories(categoryId),"Categories fetched");
     }
 
     @PutMapping("/{categoryId}")
