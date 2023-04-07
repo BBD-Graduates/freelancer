@@ -14,11 +14,11 @@ public class DbQueries {
     @Value("${db.queries.categories.insertCategory}")
     private  String addCategory;
 
-    @Value("${db.queries.categories.selectAllCategories}")
-    private  String allCategories;
+    @Value("${db.queries.categories.selectAllCategorySkills}")
+    private  String allCategorySkills;
 
-    @Value("${db.queries.categories.selectCategoryByCategoryId}")
-    private  String categoryByCategoryId;
+    @Value("${db.queries.categories.selectCategorySkillsByCategoryId}")
+    private  String categorySkillsByCategoryId;
 
     @Value("${db.queries.categories.updateCategory}")
     private  String updateCategory;
@@ -50,25 +50,19 @@ public class DbQueries {
     @Value("${db.queries.projectSkills.insertProjectSkill}")
     private  String addProjectSkill;
 
-    @Value("${db.queries.projectSkills.selectProjectSkillsByProjectId}")
-    private  String projectSkillsByProjectId;
+    @Value("${db.queries.projectSkills.selectProjectSkillDetails}")
+    private String projectSkillDetails;
 
-    @Value("${db.queries.projectSkills.selectAllProjectId}")
-    private  String allProjectId;
-
-    @Value("${db.queries.projectSkills.selectProjectId}")
-    private  String projectId;
+    @Value("${db.queries.projectSkills.selectProjectSkillDetailsByProjectId}")
+    private String projectSkillDetailsByProjectId;
 
     @Value("${db.queries.userSkills.insertUserSkill}")
     private String addUserSkill;
 
-    @Value("${db.queries.userSkills.selectUserSkillsByUserId}")
-    private String userSkillsByUserId;
+    @Value("${db.queries.userSkills.selectUserSkillDetails}")
+    private String userSkillDetails;
 
-    @Value("${db.queries.userSkills.selectAllUserId}")
-    private String allUserId;
-
-    @Value("${db.queries.userSkills.selectUserId}")
-    private String UserId;
+    @Value("${db.queries.userSkills.selectUserSkillDetailsByUserId}")
+    private String userSkillDetailsByUserId;
 
 }

@@ -1,17 +1,15 @@
 package com.fl.skill.model.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserSkills {
 
     private int userId;
     private int skillId;
-    private String createdDate;
+    private String skillName;
+    private int CategoryId;
 }

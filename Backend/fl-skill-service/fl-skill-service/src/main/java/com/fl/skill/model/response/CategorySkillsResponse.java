@@ -3,20 +3,19 @@ package com.fl.skill.model.response;
 import jakarta.ws.rs.DefaultValue;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CategorySkills {
+public class CategorySkillsResponse {
 
     private int categoryId;
     private String categoryName;
     @DefaultValue("")
     private String logoURl;
-    private boolean IsDeleted;
-    private String CreatedDate;
-    private List<SkillRes> skillRes;
+    @Builder.Default
+    List<SkillRes> skills =new ArrayList<>();
 }

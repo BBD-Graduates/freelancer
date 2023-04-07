@@ -1,11 +1,7 @@
 package com.fl.skill.service;
 
 import com.fl.skill.config.Constant;
-import com.fl.skill.exceptions.CategoryNotFoundException;
-import com.fl.skill.exceptions.SkillNotFoundException;
 import com.fl.skill.model.request.Skill;
-import com.fl.skill.model.response.CategoryRes;
-import com.fl.skill.model.response.CategorySkills;
 import com.fl.skill.model.response.SkillRes;
 import com.fl.skill.repository.DbQueries;
 import com.fl.skill.service.serviceInterface.CategoryService;
@@ -13,11 +9,13 @@ import com.fl.skill.service.serviceInterface.SkillService;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,46 +23,55 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SkillServiceImpl implements SkillService {
 
-    
     private final DbQueries dbQueries;
     private final CategoryService catService;
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public String insertSkills(Skill skill) throws SkillNotFoundException {
+    public String insertSkills(List<Skill> skillList) {
         try {
+            int[] insertStatus = jdbcTemplate.batchUpdate(dbQueries.getAddSkill(),
+                    new BatchPreparedStatementSetter() {
+                        @Override
+                        public void setValues(PreparedStatement ps, int row) throws SQLException {
+                            ps.setString(1, skillList.get(row).getSkillName());
+                            ps.setInt(2, skillList.get(row).getCategoryId());
+                        }
 
-            int insertStatus = jdbcTemplate.update(dbQueries.getAddSkill(), skill.getSkillName(),
-                    skill.getCategoryId());
-            if (insertStatus > 0) {
+                        @Override
+                        public int getBatchSize() {
+                            return skillList.size();
+                        }
+                    });
+            if (insertStatus.length > 0) {
                 return Constant.INSERTED_SUCCESSFULLY;
             } else {
                 return Constant.CANT_PROCESS_REQUEST;
             }
         } catch (Exception e) {
-            throw new SkillNotFoundException("Error inserting Skills " + e);
+            throw e;
         }
     }
 
     @Override
-    public List<SkillRes> getSkills(Integer skillId, Integer categoryId) throws SkillNotFoundException {
+    public List<SkillRes> getSkills(Integer skillId, Integer categoryId) {
 
         try {
             if (!skillId.equals(0)) {
                 return jdbcTemplate.query(dbQueries.getSkillBySkillId(),
-                BeanPropertyRowMapper.newInstance(SkillRes.class), categoryId);
+                        BeanPropertyRowMapper.newInstance(SkillRes.class), categoryId);
             } else if (!categoryId.equals(0)) {
                 return jdbcTemplate.query(dbQueries.getSkillByCategoryId(), BeanPropertyRowMapper.newInstance(SkillRes.class), skillId);
             } else {
                 return jdbcTemplate.query(dbQueries.getAllSkills(), BeanPropertyRowMapper.newInstance(SkillRes.class));
             }
         } catch (Exception e) {
-            throw new SkillNotFoundException("Error fetching Skills " + e);
+            throw e;
         }
     }
 
     @Override
-    public String updateSkill(Skill skill, int skillId) throws SkillNotFoundException {
+    public String updateSkill(Skill skill, int skillId) {
         try {
             int updateStatus = jdbcTemplate.update(dbQueries.getUpdateSkill(), skill.getSkillName(),
                     skill.getCategoryId(), skillId);
@@ -74,12 +81,12 @@ public class SkillServiceImpl implements SkillService {
                 return Constant.CANT_PROCESS_REQUEST;
             }
         } catch (Exception e) {
-            throw new SkillNotFoundException("Error updating Skill " + e);
+            throw e;
         }
     }
 
     @Override
-    public String deleteSkill(int skillId) throws SkillNotFoundException {
+    public String deleteSkill(int skillId) {
         try {
             int removeStatus = jdbcTemplate.update(dbQueries.getRemoveSkill(), skillId);
             if (removeStatus > 0) {
@@ -88,26 +95,8 @@ public class SkillServiceImpl implements SkillService {
                 return Constant.CANT_PROCESS_REQUEST;
             }
         } catch (Exception e) {
-            throw new SkillNotFoundException("Error deleting skill " + e);
-        }
-    }
-
-    @Override
-    public List<CategorySkills> getAllCategorySkills() throws SkillNotFoundException, CategoryNotFoundException {
-        try {
-            List<CategoryRes> categoryList = catService.getCategories(0);
-            List<CategorySkills> categorySkillList = new ArrayList<>();
-            if (!categoryList.isEmpty()) {
-                for (CategoryRes category : categoryList) {
-                    List<SkillRes> skillRes = getSkills(0,category.getCategoryId());
-                    CategorySkills categorySkills = new CategorySkills(category.getCategoryId(), category.getCategoryName(), category.getLogoURl(),
-                    category.isDeleted(), category.getCreatedDate(), skillRes);
-                    categorySkillList.add(categorySkills);
-                }
-            }
-            return categorySkillList;
-        } catch (DataAccessException e) {
-            throw new SkillNotFoundException("Error fetching CategorySkills " + e);
+            throw e;
         }
     }
 }
+

@@ -1,14 +1,12 @@
 package com.fl.skill.model.request;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @SuperBuilder
+@AllArgsConstructor
 public class ProjectSkillsReq {
     private int projectId;
     private int skillId;

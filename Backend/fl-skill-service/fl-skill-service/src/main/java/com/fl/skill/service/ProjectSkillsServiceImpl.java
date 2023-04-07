@@ -1,97 +1,91 @@
 package com.fl.skill.service;
 
 import com.fl.skill.config.Constant;
-import com.fl.skill.exceptions.ProjectNotFoundException;
 import com.fl.skill.model.request.ProjectSkillsReq;
 import com.fl.skill.model.response.ProjectSkills;
+import com.fl.skill.model.response.ProjectSkillsResponse;
+import com.fl.skill.model.response.SkillRes;
 import com.fl.skill.repository.DbQueries;
 import com.fl.skill.service.serviceInterface.ProjectSkillsService;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ProjectSkillsServiceImpl implements ProjectSkillsService {
-    
+
     private final JdbcTemplate jdbcTemplate;
     private final DbQueries dbQueries;
 
     @Override
-    public String insertProjectSkills(List<ProjectSkillsReq> projectSkillReqList) throws ProjectNotFoundException {
+    public String insertProjectSkills(List<ProjectSkillsReq> projectSkillReqList) {
         try {
-            int insertStatus = 0;
-            for (ProjectSkillsReq projectSkillsReq : projectSkillReqList) {
-                insertStatus += jdbcTemplate.update(dbQueries.getAddProjectSkill(), projectSkillsReq.getProjectId(),
-                        projectSkillsReq.getSkillId());
-            }
-            if (insertStatus > 0) {
+            int[] insertStatus = jdbcTemplate.batchUpdate(dbQueries.getAddProjectSkill(),
+                    new BatchPreparedStatementSetter() {
+                        @Override
+                        public void setValues(PreparedStatement ps, int row) throws SQLException {
+                            ps.setInt(1,projectSkillReqList.get(row).getProjectId());
+                            ps.setInt(2,projectSkillReqList.get(row).getSkillId());
+                        }
+                        @Override
+                        public int getBatchSize() {
+                            return projectSkillReqList.size() ;
+                        }
+                    });
+
+            if (insertStatus.length > 0) {
                 return Constant.INSERTED_SUCCESSFULLY;
             } else {
                 return Constant.CANT_PROCESS_REQUEST;
             }
 
         } catch (Exception e) {
-            throw new ProjectNotFoundException("Error inserting project skills " + e);
+            throw e;
         }
 
     }
 
     @Override
-    public List<ProjectSkills> getAllProjectSkills(Integer projectId) throws ProjectNotFoundException {
+    public List<ProjectSkillsResponse> getProjectSkills(Integer projectId) {
+
         try {
-            if(!projectId.equals(0))
-            {
-                List<ProjectSkills> projectSkillList = getProjectId(projectId);
-                List<ProjectSkills> skillRes = new ArrayList<>();
-                if (!projectSkillList.isEmpty()) {
-                    for (int i = 0; i < projectSkillList.size(); i++) {
-                        ProjectSkills projectSkills = projectSkillList.get(i);
-                        projectSkillsByProjectId(projectSkills.getProjectId()).forEach(skillRes::add);
-                    }
-                }
-                return skillRes;
+            List<ProjectSkillsResponse> projectSkillDetails = new ArrayList<>();
+            String query;
+            List<ProjectSkills> projectSkills;
+            if (!projectId.equals(0)) {
+                query = dbQueries.getProjectSkillDetailsByProjectId();
+                projectSkills = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ProjectSkills.class), projectId);
+            } else {
+                query = dbQueries.getProjectSkillDetails();
+                projectSkills = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ProjectSkills.class));
             }
-            else {
-                int size = 0;
-                List<ProjectSkills> projectSkillList = getAllProjectId();
-                if (!projectSkillList.isEmpty()) {
-                    size = projectSkillList.size();
-                    for (int i = 0; i < size; i++) {
-                        ProjectSkills projectSkills = projectSkillList.get(i);
-                        projectSkillsByProjectId(projectSkills.getProjectId()).forEach(projectSkillList::add);
-                    }
-                }
-                return projectSkillList.subList(size, projectSkillList.size());
+            List<Integer> projectIdList = projectSkills.stream().map(ProjectSkills::getProjectId).distinct().collect(Collectors.toList());
+            for (Integer fetchProjectId : projectIdList) {
+                ProjectSkillsResponse projectSkillsResponse = new ProjectSkillsResponse();
+                projectSkillsResponse.setProjectId(fetchProjectId);
+                projectSkills.stream().filter(projectSkill -> projectSkill.getProjectId() == fetchProjectId)
+                        .forEach(projectSkill -> projectSkillsResponse.getSkills()
+                        .add(SkillRes.builder().skillId(projectSkill.getSkillId()).skillName(projectSkill.getSkillName()).categoryId(projectSkill.getCategoryId())
+                                .build()));
+                projectSkillDetails.add(projectSkillsResponse);
             }
+            return projectSkillDetails;
+
 
         } catch (Exception e) {
-            throw new ProjectNotFoundException("Error fetching project skills " + e);
+            throw e;
         }
     }
 
-    @Override
-    public List<ProjectSkills> projectSkillsByProjectId(Integer projectId) throws ProjectNotFoundException {
-
-            return jdbcTemplate.query(dbQueries.getProjectSkillsByProjectId(),
-                    BeanPropertyRowMapper.newInstance(ProjectSkills.class),
-                    projectId);
-    }
-
-    @Override
-    public List<ProjectSkills> getAllProjectId() throws ProjectNotFoundException {
-        return jdbcTemplate.query(dbQueries.getAllProjectId(), BeanPropertyRowMapper.newInstance(ProjectSkills.class));
-    }
-
-    @Override
-    public List<ProjectSkills> getProjectId(int projectId) throws ProjectNotFoundException {
-        return jdbcTemplate.query(dbQueries.getProjectId(), BeanPropertyRowMapper.newInstance(ProjectSkills.class), projectId);
-
-    }
 }

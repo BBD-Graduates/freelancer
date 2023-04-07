@@ -29,11 +29,14 @@ db:
   queries:
     categories:
       insertCategory: INSERT INTO categories (CategoryName) values (?)
-      selectAllCategories: SELECT * FROM categories WHERE IsDeleted=0
-      selectCategoryByCategoryId: SELECT * FROM categories WHERE IsDeleted=0 and CategoryId = ?
+      selectAllCategorySkills: SELECT c.CategoryId, c.CategoryName,c.LogoUrl, s.SkillId, s.SkillName,s.CategoryId,s.CreatedDate,s.isDeleted FROM categories c INNER JOIN skills s
+                               ON c.CategoryId=s.CategoryId and c.IsDeleted=0 and s.IsDeleted=0 ORDER BY c.CategoryId ;
+      selectCategorySkillsByCategoryId: SELECT c.CategoryId, c.CategoryName,c.LogoUrl, s.SkillId, s.SkillName,s.CategoryId, s.CreatedDate,s.isDeleted FROM categories c INNER JOIN skills s
+                                        ON c.CategoryId=s.CategoryId and c.IsDeleted=0 and s.IsDeleted=0 and c.CategoryId=? ORDER BY c.CategoryId ;
       updateCategory: UPDATE categories set CategoryName = ? WHERE CategoryId = ? and IsDeleted=0
       updateCategoryLogo: UPDATE categories set LogoURL = ? WHERE CategoryId = ? and IsDeleted=0
       removeCategory: UPDATE categories set isDeleted = 1 WHERE CategoryId = ?
+
     skills:
       insertSkill: INSERT INTO skills(SkillName,CategoryId) values(?,?)
       selectAllSkills: SELECT * from skills WHERE IsDeleted=0
@@ -41,14 +44,18 @@ db:
       selectSkillByCategoryId: SELECT * from skills WHERE IsDeleted=0 and CategoryId=?
       updateSkill: UPDATE skills set SkillName = ?, CategoryId=? WHERE SkillId= ? and IsDeleted=0
       removeSkill: UPDATE skills set isDeleted = 1 WHERE skillId = ?
+
     projectSkills:
       insertProjectSkill: INSERT INTO projectskills (ProjectId,SkillId) values(?,?)
-      selectProjectSkillsByProjectId: SELECT * from projectskills where ProjectId=?
-      selectAllProjectId: SELECT  DISTINCT(ProjectId) from projectskills
-      selectProjectId: SELECT  DISTINCT(ProjectId) from projectskills where ProjectId=?
+      selectProjectSkillDetails: SELECT  ps.ProjectId, s.SkillId, s.SkillName, s.CategoryId from projectskills ps INNER JOIN
+                                 skills s on ps.SkillId=s.SkillId
+      selectProjectSkillDetailsByProjectId: SELECT  ps.ProjectId, s.SkillId, s.SkillName, s.CategoryId from projectskills ps INNER JOIN 
+                                            skills s on ps.SkillId=s.SkillId and ProjectId=?
+
     userSkills:
       insertUserSkill: INSERT INTO userskills (UserId,SkillId) values(?,?)
-      selectUserSkillsByUserId: SELECT * from userskills where UserId=?
-      selectAllUserId: SELECT  DISTINCT(UserId) from userskills
-      selectUserId: SELECT  DISTINCT(UserId) from userskills where UserId=?
+      selectUserSkillDetails: SELECT us.UserId,s.SkillId,s.SkillName,s.categoryId from userskills us INNER JOIN 
+                    skills s on us.SkillId = s.SkillId
+      selectUserSkillDetailsByUserId: SELECT us.UserId,s.SkillId,s.SkillName,s.categoryId from userskills us INNER JOIN
+                                      skills s on us.SkillId = s.SkillId and UserId=?
 

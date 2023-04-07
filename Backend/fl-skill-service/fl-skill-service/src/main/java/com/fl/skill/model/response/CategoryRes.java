@@ -1,15 +1,14 @@
 package com.fl.skill.model.response;
 
 import jakarta.ws.rs.DefaultValue;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CategoryRes {
     private  int categoryId;
     private String categoryName;
@@ -17,6 +16,7 @@ public class CategoryRes {
     private String logoURl;
     private boolean isDeleted;
     private String createdDate;
-    private List<SkillRes> skillRes;
+    private int skillId;
+    private String skillName;
 
 }

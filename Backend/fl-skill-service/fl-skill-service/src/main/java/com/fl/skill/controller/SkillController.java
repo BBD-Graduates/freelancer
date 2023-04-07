@@ -1,10 +1,8 @@
 package com.fl.skill.controller;
 
-import com.fl.skill.exceptions.CategoryNotFoundException;
-import com.fl.skill.exceptions.SkillNotFoundException;
 import com.fl.skill.model.FlResponse;
 import com.fl.skill.model.request.Skill;
-import com.fl.skill.model.response.CategorySkills;
+import com.fl.skill.model.response.CategorySkillsResponse;
 import com.fl.skill.model.response.SkillRes;
 import com.fl.skill.service.serviceInterface.SkillService;
 import com.fl.skill.util.FlResponseUtil;
@@ -17,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.fl.skill.config.Constant.*;
+
 @RestController
 @RequestMapping("/skills")
 @RequiredArgsConstructor
@@ -26,33 +26,41 @@ public class SkillController {
     private final FlResponseUtil flResponseUtil;
 
     @PostMapping
-    public ResponseEntity<FlResponse<String>> createSkills(@Valid @RequestBody Skill skill) throws SkillNotFoundException {
-        return flResponseUtil.getResponseEntity(HttpStatus.OK,skillService.insertSkills(skill),null );
+    public ResponseEntity<FlResponse<String>> createSkills(@Valid @RequestBody List<Skill> skillList) {
+        try {
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, skillService.insertSkills(skillList), String.format("%s" + INSERTED_SUCCESSFULLY, SKILL));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping
     public ResponseEntity<FlResponse<List<SkillRes>>> getSkills(
             @RequestParam(defaultValue = "0", required = false, name = "skillId") Integer skillId,
-            @RequestParam(defaultValue = "0", required = false, name = "categoryId") Integer categoryId)
-            throws SkillNotFoundException {
-        return flResponseUtil.getResponseEntity(HttpStatus.OK,skillService.getSkills(skillId, categoryId), null);
-    }
-
-    @GetMapping("/categories")
-    public ResponseEntity<FlResponse<List<CategorySkills>>> getAllCategorySkills()
-            throws SkillNotFoundException, CategoryNotFoundException {
-        return flResponseUtil.getResponseEntity(HttpStatus.OK,skillService.getAllCategorySkills(),null );
+            @RequestParam(defaultValue = "0", required = false, name = "categoryId") Integer categoryId) {
+        try {
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, skillService.getSkills(skillId, categoryId), String.format("%s" + FETCHED_SUCCESSFULLY, SKILL));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @PutMapping("/{skillId}")
-    public ResponseEntity<FlResponse<String>> updateSkill(@PathVariable("skillId") Integer skillId, @Valid @RequestBody Skill skill)
-            throws SkillNotFoundException {
-        return flResponseUtil.getResponseEntity(HttpStatus.OK,skillService.updateSkill(skill, skillId),null);
+    public ResponseEntity<FlResponse<String>> updateSkill(@PathVariable("skillId") Integer skillId, @Valid @RequestBody Skill skill) {
+        try {
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, skillService.updateSkill(skill, skillId), String.format("%s" + UPDATED_SUCCESSFULLY, SKILL));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @DeleteMapping("/{skillId}")
-    public ResponseEntity<FlResponse<String>> deleteSkill(@PathVariable("skillId") Integer skillId) throws SkillNotFoundException {
-        return flResponseUtil.getResponseEntity(HttpStatus.OK,skillService.deleteSkill(skillId),null );
+    public ResponseEntity<FlResponse<String>> deleteSkill(@PathVariable("skillId") Integer skillId) {
+        try {
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, skillService.deleteSkill(skillId), String.format("%s" + DELETED_SUCCESSFULLY, SKILL));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
