@@ -28,7 +28,7 @@ public class ProjectSkillController {
         try {
             return new FlResponseUtil().getResponseEntity(HttpStatus.OK, projectSkillsService.insertProjectSkills(projectSkillReqList), String.format("%s" + INSERTED_SUCCESSFULLY, PROJECT_SKILLS));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + INSERTION_FAILED, PROJECT_SKILLS));
         }
     }
 
@@ -37,7 +37,7 @@ public class ProjectSkillController {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, projectSkillsService.getProjectSkills(projectId), String.format("%s" + FETCHED_SUCCESSFULLY, PROJECT_SKILLS));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + NO_RECORD_FOUND));
         }
     }
 }

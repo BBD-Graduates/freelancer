@@ -30,7 +30,7 @@ public class SkillController {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, skillService.insertSkills(skillList), String.format("%s" + INSERTED_SUCCESSFULLY, SKILL));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + INSERTION_FAILED, SKILL));
         }
     }
 
@@ -41,7 +41,7 @@ public class SkillController {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, skillService.getSkills(skillId, categoryId), String.format("%s" + FETCHED_SUCCESSFULLY, SKILL));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + NO_RECORD_FOUND));
         }
     }
 
@@ -50,7 +50,7 @@ public class SkillController {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, skillService.updateSkill(skill, skillId), String.format("%s" + UPDATED_SUCCESSFULLY, SKILL));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+        return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + UPDATION_FAILED, SKILL));
         }
     }
 
@@ -59,7 +59,7 @@ public class SkillController {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, skillService.deleteSkill(skillId), String.format("%s" + DELETED_SUCCESSFULLY, SKILL));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + DELETION_FAILED, SKILL));
         }
     }
 

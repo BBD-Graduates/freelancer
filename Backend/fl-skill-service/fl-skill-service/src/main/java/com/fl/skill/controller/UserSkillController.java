@@ -2,6 +2,7 @@ package com.fl.skill.controller;
 
 import com.fl.skill.model.FlResponse;
 import com.fl.skill.model.request.UserSkillsReq;
+import com.fl.skill.model.response.UserSkills;
 import com.fl.skill.model.response.UserSkillsResponse;
 import com.fl.skill.service.serviceInterface.UserSkillsService;
 import com.fl.skill.util.FlResponseUtil;
@@ -30,7 +31,7 @@ public class UserSkillController {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, userSkillsService.insertUserSkills(userSkillsReqsList), String.format("%s" + INSERTED_SUCCESSFULLY, USER_SKILLS));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + INSERTION_FAILED, USER_SKILLS));
         }
     }
 
@@ -39,7 +40,7 @@ public class UserSkillController {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, userSkillsService.getUserSkills(userId), String.format("%s" + FETCHED_SUCCESSFULLY, USER_SKILLS));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + NO_RECORD_FOUND));
         }
     }
 }
