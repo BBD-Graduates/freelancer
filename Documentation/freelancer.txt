@@ -1,0 +1,62 @@
+Create table UserMstr(
+  UserId int identity(1,1) not null primary key,
+  FirstName varchar(16),
+  LastName varchar(16),
+  UserName varchar(16) not null unique,
+  UserPassword varchar(32),
+  Company varchar(256),
+  Email varchar(64) unique,
+  PhNo varchar(13) unique,
+  IsVerified bit,
+  PhotoUrl varchar(255),
+  UserRole char(6),
+  CreatedDate datetime,
+  ModifiedDate datetime,
+)
+
+
+Create table ProjectStatusMstr (
+	ProjectStatusId int primary key identity (1,1),
+	ProjectStatusName varchar(32) 
+)
+
+Create table ProjectMstr(
+  ProjectId int primary key identity(1,1),
+  ClientId int references UserMstr(UserId),
+  ProjectName varchar(32),
+  ProjectDescription varchar(232),
+  IsConfidential bit,
+  PaymentType varchar(16),
+  BidStartDate datetime,
+  BidEndDate datetime,
+  MinPrice decimal,
+  MaxPrice decimal,
+  StatusId int references ProjectStatusMstr (ProjectStatusId),
+  CreatedDate datetime,
+  ModifiedDate datetime,
+)
+
+Create table CountryMstr(
+  CountryId int primary key identity(1,1),
+  CountryName varchar(32) 
+)
+
+Create table StateMstr(
+  StateId int primary key identity(1,1),
+  StateName varchar(32),
+  CountryId int references CountryMstr(CountryId)
+)
+
+Create table CityMstr(
+  CityId int primary key identity(1,1),
+  CityName varchar(32),
+  StateId int references StateMstr(StateId)
+)
+
+Create table UserLocationMstr(
+	UserId int references UserMstr(UserId) primary key,
+	CityId int references CityMstr(CityId),		
+	Pincode varchar(6),
+	CreatedDate datetime,
+	ModifiedDate datetime
+)
