@@ -2,8 +2,15 @@
 database
 https://dbdiagram.io/d
 
-
-https://app.diagrams.net/
+dbdiagram link
+https://dbdiagram.io/d/63f6f3d5296d97641d831867
 
 signup designs
 https://www.figma.com/community/file/1112098897788975788
+
+
+stack name :- FreelanceFordge,GP23Sql
+dbinstance :- GP23,GP23Sql
+Password   :- .P@ssword!
+dbUser     :- root
+=======

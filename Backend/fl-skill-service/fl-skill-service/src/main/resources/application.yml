@@ -1,0 +1,61 @@
+server:
+  port : 8082
+
+#microservices configuration
+spring:
+  application:
+    name: fl-skill-service
+  #database configuration:mysql
+  datasource:
+    url: jdbc:mysql://localhost:3306/fl_skills?useSSL=false
+    username: root
+    password: 
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/
+
+
+
+
+app:
+  file:
+    upload-dir: ./fl-skill-service/uploads/files
+    storage:
+      mapping: file:~/fl-skill-service/uploads/
+
+db:
+  queries:
+    categories:
+      insertCategory: INSERT INTO categories (CategoryName) values (?)
+      selectAllCategorySkills: SELECT c.CategoryId, c.CategoryName,c.LogoUrl, s.SkillId, s.SkillName,s.CategoryId,s.CreatedDate,s.isDeleted FROM categories c INNER JOIN skills s
+                               ON c.CategoryId=s.CategoryId and c.IsDeleted=0 and s.IsDeleted=0 ORDER BY c.CategoryId ;
+      selectCategorySkillsByCategoryId: SELECT c.CategoryId, c.CategoryName,c.LogoUrl, s.SkillId, s.SkillName,s.CategoryId, s.CreatedDate,s.isDeleted FROM categories c INNER JOIN skills s
+                                        ON c.CategoryId=s.CategoryId and c.IsDeleted=0 and s.IsDeleted=0 and c.CategoryId=? ORDER BY c.CategoryId ;
+      updateCategory: UPDATE categories set CategoryName = ? WHERE CategoryId = ? and IsDeleted=0
+      updateCategoryLogo: UPDATE categories set LogoURL = ? WHERE CategoryId = ? and IsDeleted=0
+      removeCategory: UPDATE categories set isDeleted = 1 WHERE CategoryId = ?
+
+    skills:
+      insertSkill: INSERT INTO skills(SkillName,CategoryId) values(?,?)
+      selectAllSkills: SELECT * from skills WHERE IsDeleted=0
+      selectSkillBySkillId: SELECT * from skills WHERE IsDeleted=0 and SkillId = ?
+      selectSkillByCategoryId: SELECT * from skills WHERE IsDeleted=0 and CategoryId=?
+      updateSkill: UPDATE skills set SkillName = ?, CategoryId=? WHERE SkillId= ? and IsDeleted=0
+      removeSkill: UPDATE skills set isDeleted = 1 WHERE skillId = ?
+
+    projectSkills:
+      insertProjectSkill: INSERT INTO projectskills (ProjectId,SkillId) values(?,?)
+      selectProjectSkillDetails: SELECT  ps.ProjectId, s.SkillId, s.SkillName, s.CategoryId from projectskills ps INNER JOIN
+                                 skills s on ps.SkillId=s.SkillId
+      selectProjectSkillDetailsByProjectId: SELECT  ps.ProjectId, s.SkillId, s.SkillName, s.CategoryId from projectskills ps INNER JOIN 
+                                            skills s on ps.SkillId=s.SkillId and ProjectId=?
+
+    userSkills:
+      insertUserSkill: INSERT INTO userskills (UserId,SkillId) values(?,?)
+      selectUserSkillDetails: SELECT us.UserId,s.SkillId,s.SkillName,s.categoryId from userskills us INNER JOIN 
+                    skills s on us.SkillId = s.SkillId
+      selectUserSkillDetailsByUserId: SELECT us.UserId,s.SkillId,s.SkillName,s.categoryId from userskills us INNER JOIN
+                                      skills s on us.SkillId = s.SkillId and UserId=?
+
