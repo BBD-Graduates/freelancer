@@ -2,14 +2,11 @@ package com.fl.project.model.Request;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.Date;
-
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Project {
     private int clientId;
