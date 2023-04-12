@@ -50,7 +50,7 @@ public class SkillController {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, skillService.updateSkill(skill, skillId), String.format("%s" + UPDATED_SUCCESSFULLY, SKILL));
         } catch (Exception e) {
-        return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + UPDATION_FAILED, SKILL));
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + UPDATION_FAILED, SKILL));
         }
     }
 

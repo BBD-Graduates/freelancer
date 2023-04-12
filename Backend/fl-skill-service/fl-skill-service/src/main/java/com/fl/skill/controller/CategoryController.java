@@ -30,7 +30,7 @@ public class CategoryController {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, categoryService.insertCategories(category), String.format("%s " + INSERTED_SUCCESSFULLY, CATEGORY));
         } catch (Exception e) {
-    return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + INSERTION_FAILED, CATEGORY));
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + INSERTION_FAILED, CATEGORY));
         }
 
     }
@@ -41,7 +41,7 @@ public class CategoryController {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, categoryService.getCategoryWithSkills(categoryId), String.format("%s " + FETCHED_SUCCESSFULLY, CATEGORY));
         } catch (Exception e) {
-            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " +NO_RECORD_FOUND));
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + NO_RECORD_FOUND));
         }
     }
 
