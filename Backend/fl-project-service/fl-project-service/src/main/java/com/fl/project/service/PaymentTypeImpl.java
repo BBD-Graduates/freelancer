@@ -6,8 +6,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import com.fl.project.model.Request.PaymentTypeRequest;
-import com.fl.project.model.Response.PaymentTypeResponse;
+import com.fl.project.model.request.PaymentTypeRequest;
+import com.fl.project.model.response.PaymentTypeResponse;
 import com.fl.project.repository.DbQueries;
 import com.fl.project.service.serviceInterface.PaymentTypeService;
 

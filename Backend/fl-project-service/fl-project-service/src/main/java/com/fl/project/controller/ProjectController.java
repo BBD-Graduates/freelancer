@@ -1,8 +1,8 @@
 package com.fl.project.controller;
 
 import com.fl.project.model.FlResponse;
-import com.fl.project.model.Request.Project;
-import com.fl.project.model.Response.ProjectRes;
+import com.fl.project.model.request.ProjectRequest;
+import com.fl.project.model.response.ProjectResponse;
 import com.fl.project.service.serviceInterface.ProjectService;
 
 import jakarta.validation.Valid;
@@ -25,7 +25,7 @@ public class ProjectController {
     private final FlResponseUtil flResponseUtil;
 
     @PostMapping
-    public ResponseEntity<FlResponse<String>> createProject(@Valid @RequestBody Project project) {
+    public ResponseEntity<FlResponse<String>> createProject(@Valid @RequestBody ProjectRequest project) {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.saveProject(project),
                     PROJECT+INSERTED_SUCCESSFULLY);
@@ -36,7 +36,7 @@ public class ProjectController {
     }
 
     @GetMapping
-    public ResponseEntity<FlResponse<List<ProjectRes>>> getAllProjects(
+    public ResponseEntity<FlResponse<List<ProjectResponse>>> getAllProjects(
             @RequestParam(defaultValue = "0", required = false, name = "ProjectId") Integer ProjectId) {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.getProject(ProjectId),
@@ -49,7 +49,7 @@ public class ProjectController {
 
     @PutMapping("/{projectId}")
     public ResponseEntity<FlResponse<String>> updateProject(@PathVariable("projectId") int projectId,
-            @Valid @RequestBody Project project) {
+            @Valid @RequestBody ProjectRequest project) {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.updateProject(project, projectId),
                     String.format("%s" + UPDATED_SUCCESSFULLY, PROJECT));

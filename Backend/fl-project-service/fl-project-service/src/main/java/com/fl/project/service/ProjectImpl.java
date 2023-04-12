@@ -2,10 +2,10 @@ package com.fl.project.service;
 
 import com.fl.project.feignClient.ProjectSkillService;
 import com.fl.project.model.FlResponse;
-import com.fl.project.model.Request.Project;
-import com.fl.project.model.Response.ProjectRes;
-import com.fl.project.model.Response.ProjectSkillsResponse;
-import com.fl.project.model.Response.Skill;
+import com.fl.project.model.request.ProjectRequest;
+import com.fl.project.model.response.ProjectResponse;
+import com.fl.project.model.response.ProjectSkillsResponse;
+import com.fl.project.model.response.Skill;
 import com.fl.project.repository.DbQueries;
 import com.fl.project.service.serviceInterface.ProjectService;
 
@@ -29,7 +29,7 @@ public class ProjectImpl implements ProjectService {
     private final ProjectSkillService projectSkillService;
 
     @Override
-    public String saveProject(Project project) {
+    public String saveProject(ProjectRequest project) {
         int isInserted = jdbcTemplate.update(
                 dbQueries.getAddProject(), project.getClientId(), project.getProjectName(),
                 project.getProjectDescription(), project.getIsConfidential(), project.getPaymentTypeId(),
@@ -42,15 +42,15 @@ public class ProjectImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectRes> getProject(Integer ProjectId) {
-        List<ProjectRes> projects;
+    public List<ProjectResponse> getProject(Integer ProjectId) {
+        List<ProjectResponse> projects;
         try {
             if (ProjectId.equals(0)) {
                 projects = jdbcTemplate.query(dbQueries.getSelectAllProject(),
-                        BeanPropertyRowMapper.newInstance(ProjectRes.class));
+                        BeanPropertyRowMapper.newInstance(ProjectResponse.class));
             } else {
                 projects = jdbcTemplate.query(dbQueries.getSelectProjectByProjectId(),
-                        BeanPropertyRowMapper.newInstance(ProjectRes.class), ProjectId);
+                        BeanPropertyRowMapper.newInstance(ProjectResponse.class), ProjectId);
             }
             if (!projects.isEmpty()) {
                 projects.stream().forEach(project -> {
@@ -74,7 +74,7 @@ public class ProjectImpl implements ProjectService {
     }
 
     @Override
-    public String updateProject(Project project, int projectId) {
+    public String updateProject(ProjectRequest project, int projectId) {
         try {
             int isUpdated = jdbcTemplate.update(dbQueries.getUpdateProjectByProjectid(),
                     project.getProjectName(), project.getProjectDescription(), project.getPaymentTypeId(),

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fl.project.model.FlResponse;
-import com.fl.project.model.Request.PaymentTypeRequest;
-import com.fl.project.model.Response.PaymentTypeResponse;
+import com.fl.project.model.request.PaymentTypeRequest;
+import com.fl.project.model.response.PaymentTypeResponse;
 import com.fl.project.service.serviceInterface.PaymentTypeService;
 import com.fl.project.util.FlResponseUtil;
 

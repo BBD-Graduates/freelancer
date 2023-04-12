@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fl.project.model.FlResponse;
-import com.fl.project.model.Request.RatingReq;
-import com.fl.project.model.Response.RatingResponse;
+import com.fl.project.model.request.RatingRequest;
+import com.fl.project.model.response.RatingResponse;
 import com.fl.project.service.serviceInterface.RatingService;
 import com.fl.project.util.FlResponseUtil;
 
@@ -32,7 +32,7 @@ public class RatingController {
     private final FlResponseUtil flResponseUtil;
 
     @PostMapping
-    public ResponseEntity<FlResponse<String>> createRating(@Valid @RequestBody RatingReq rating) {
+    public ResponseEntity<FlResponse<String>> createRating(@Valid @RequestBody RatingRequest rating) {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, ratingService.insertRating(rating),
                     RATING + INSERTED_SUCCESSFULLY);
@@ -58,7 +58,7 @@ public class RatingController {
 
     @PutMapping
     public ResponseEntity<FlResponse<String>> updateRaing(@RequestParam("ratingId") Integer ratingId,
-            @RequestBody() RatingReq ratingReq) {
+            @RequestBody() RatingRequest ratingReq) {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, ratingService.updateRating(ratingId, ratingReq),
                     RATING + UPDATED_SUCCESSFULLY);

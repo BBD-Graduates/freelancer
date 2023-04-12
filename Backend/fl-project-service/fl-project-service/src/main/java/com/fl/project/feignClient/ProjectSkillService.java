@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fl.project.model.FlResponse;
-import com.fl.project.model.Response.ProjectSkillsResponse;
+import com.fl.project.model.response.ProjectSkillsResponse;
 
 @FeignClient(name = "FL-SKILL-SERVICE/project-skills")
 @Service

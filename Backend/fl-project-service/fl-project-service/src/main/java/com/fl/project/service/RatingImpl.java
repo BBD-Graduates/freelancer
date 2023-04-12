@@ -4,8 +4,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import com.fl.project.model.Request.RatingReq;
-import com.fl.project.model.Response.RatingResponse;
+import com.fl.project.model.request.RatingRequest;
+import com.fl.project.model.response.RatingResponse;
 import com.fl.project.repository.DbQueries;
 import com.fl.project.service.serviceInterface.RatingService;
 
@@ -21,7 +21,7 @@ public class RatingImpl implements RatingService {
     private final DbQueries dbQueries;
 
     @Override
-    public String insertRating(RatingReq rating) {
+    public String insertRating(RatingRequest rating) {
         try {
             int inserted = jdbcTemplate.update(dbQueries.getAddRating(), rating.getUserId(), rating.getProjectId(),
                     rating.getRatingDescription(), rating.getRating());
@@ -57,7 +57,7 @@ public class RatingImpl implements RatingService {
     }
 
     @Override
-    public String updateRating(Integer ratingId, RatingReq rating) {
+    public String updateRating(Integer ratingId, RatingRequest rating) {
         try {
             int updated = jdbcTemplate.update(dbQueries.getUpdateRatingByratingId(), rating.getRatingDescription(),
                     rating.getRating(), ratingId);
