@@ -29,7 +29,7 @@ public class ProjectImpl implements ProjectService {
     private final ProjectSkillService projectSkillService;
 
     @Override
-    public String save(Project project) {
+    public String saveProject(Project project) {
         int isInserted = jdbcTemplate.update(
                 dbQueries.getAddProject(), project.getClientId(), project.getProjectName(),
                 project.getProjectDescription(), project.getIsConfidential(), project.getPaymentTypeId(),
@@ -74,7 +74,7 @@ public class ProjectImpl implements ProjectService {
     }
 
     @Override
-    public String update(Project project, int projectId) {
+    public String updateProject(Project project, int projectId) {
         try {
             int isUpdated = jdbcTemplate.update(dbQueries.getUpdateProjectByProjectid(),
                     project.getProjectName(), project.getProjectDescription(), project.getPaymentTypeId(),
@@ -89,7 +89,7 @@ public class ProjectImpl implements ProjectService {
     }
 
     @Override
-    public String delete(int projectId) {
+    public String deleteProject(int projectId) {
         try {
             int isDeleted = jdbcTemplate.update(dbQueries.getDeleteProjectByProjectid(), projectId);
             if (isDeleted > 0)

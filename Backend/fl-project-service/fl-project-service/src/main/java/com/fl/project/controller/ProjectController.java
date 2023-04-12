@@ -27,7 +27,7 @@ public class ProjectController {
     @PostMapping
     public ResponseEntity<FlResponse<String>> createProject(@Valid @RequestBody Project project) {
         try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.save(project),
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.saveProject(project),
                     PROJECT+INSERTED_SUCCESSFULLY);
         } catch (Exception e) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,
@@ -51,7 +51,7 @@ public class ProjectController {
     public ResponseEntity<FlResponse<String>> updateProject(@PathVariable("projectId") int projectId,
             @Valid @RequestBody Project project) {
         try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.update(project, projectId),
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.updateProject(project, projectId),
                     String.format("%s" + UPDATED_SUCCESSFULLY, PROJECT));
         } catch (Exception ex) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,
@@ -62,7 +62,7 @@ public class ProjectController {
     @DeleteMapping("/{projectId}")
     public ResponseEntity<FlResponse<String>> deleteProject(@PathVariable("projectId") int projectId) {
         try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.delete(projectId),
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.deleteProject(projectId),
                     String.format("%s" + DELETED_SUCCESSFULLY, PROJECT));
         } catch (Exception ex) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,

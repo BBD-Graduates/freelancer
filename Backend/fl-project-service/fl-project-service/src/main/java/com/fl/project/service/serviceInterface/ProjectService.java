@@ -6,8 +6,8 @@ import com.fl.project.model.Response.ProjectRes;
 import java.util.List;
 
 public interface ProjectService {
-    String save(Project project);
+    String saveProject(Project project);
     List<ProjectRes> getProject(Integer ProjectId);
-    String update(Project project, int projectId);
-    String delete(int projectId);
+    String updateProject(Project project, int projectId);
+    String deleteProject(int projectId);
 }

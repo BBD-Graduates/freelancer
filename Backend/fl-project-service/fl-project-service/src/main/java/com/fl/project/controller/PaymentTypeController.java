@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fl.project.model.FlResponse;
-import com.fl.project.model.PaymentTypeRequest;
+import com.fl.project.model.Request.PaymentTypeRequest;
 import com.fl.project.model.Response.PaymentTypeResponse;
 import com.fl.project.service.serviceInterface.PaymentTypeService;
 import com.fl.project.util.FlResponseUtil;
@@ -31,7 +31,7 @@ public class PaymentTypeController {
     @GetMapping
     public ResponseEntity<FlResponse<List<PaymentTypeResponse>>> getAllPaymentType() {
         try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, paymentTypeRepo.getAll(),
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, paymentTypeRepo.getAllPaymentType(),
                     String.format("%s" + FETCHED_SUCCESSFULLY, PAYMENT_TYPE));
         } catch (Exception e) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,
@@ -43,7 +43,7 @@ public class PaymentTypeController {
     public ResponseEntity<FlResponse<String>> addPaymentType(
             @Valid @RequestBody PaymentTypeRequest paymentTypeRequest) {
         try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, paymentTypeRepo.save(paymentTypeRequest),
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, paymentTypeRepo.savePaymentType(paymentTypeRequest),
                     String.format("%s" + INSERTED_SUCCESSFULLY, PAYMENT_TYPE));
 
         } catch (Exception e) {

@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import com.fl.project.model.PaymentTypeRequest;
+import com.fl.project.model.Request.PaymentTypeRequest;
 import com.fl.project.model.Response.PaymentTypeResponse;
 import com.fl.project.repository.DbQueries;
 import com.fl.project.service.serviceInterface.PaymentTypeService;
@@ -22,7 +22,7 @@ public class PaymentTypeImpl implements PaymentTypeService {
     private final DbQueries dbQueries;
 
     @Override
-    public String save(PaymentTypeRequest project) {
+    public String savePaymentType(PaymentTypeRequest project) {
         try {
             int i = jdbcTemplate.update(dbQueries.getAddPaymentType(), project.getPaymentType());
             if (i > 0)
@@ -36,7 +36,7 @@ public class PaymentTypeImpl implements PaymentTypeService {
     }
 
     @Override
-    public List<PaymentTypeResponse> getAll() {
+    public List<PaymentTypeResponse> getAllPaymentType() {
         try {
             return jdbcTemplate.query(dbQueries.getSelectAllPaymentType(),
                     BeanPropertyRowMapper.newInstance(PaymentTypeResponse.class));
