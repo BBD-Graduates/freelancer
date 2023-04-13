@@ -1,4 +1,4 @@
-package com.fl.project.model.Response;
+package com.fl.project.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectRes {
+public class ProjectResponse {
     private Integer projectId;
     private int clientId;
     private String projectName;

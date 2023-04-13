@@ -1,4 +1,4 @@
-package com.fl.project.model.Request;
+package com.fl.project.model.request;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 @Data
 @NoArgsConstructor
-public class Project {
+public class projectRequest {
     private int clientId;
     @NotNull(message = "Please enter project name")
     private String projectName;

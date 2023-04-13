@@ -1,4 +1,4 @@
-package com.fl.project.model.Response;
+package com.fl.project.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

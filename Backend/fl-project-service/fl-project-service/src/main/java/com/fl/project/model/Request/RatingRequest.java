@@ -1,4 +1,4 @@
-package com.fl.project.model.Request;
+package com.fl.project.model.request;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RatingReq {
+public class RatingRequest {
 
     @NotNull(message = "Please enter userId")
     private int userId;

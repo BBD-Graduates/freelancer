@@ -1,4 +1,4 @@
-package com.fl.project.model.Response;
+package com.fl.project.model.response;
 
 import java.util.ArrayList;
 import java.util.List;
