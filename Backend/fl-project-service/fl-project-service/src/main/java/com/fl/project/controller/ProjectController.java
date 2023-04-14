@@ -1,71 +1,72 @@
 package com.fl.project.controller;
 
-import com.fl.project.config.Constant;
-import com.fl.project.model.Request.Project;
-import com.fl.project.model.Response.CommonResponse;
-import com.fl.project.model.Response.ProjectList;
-import com.fl.project.model.Response.ProjectRes;
-import com.fl.project.model.Response.ProjectSkill;
-import com.fl.project.model.Response.Skill;
-import com.fl.project.service.ProjectImpl;
-import jakarta.validation.Valid;
-import lombok.var;
+import com.fl.project.model.FlResponse;
+import com.fl.project.model.request.ProjectRequest;
+import com.fl.project.model.response.ProjectResponse;
+import com.fl.project.service.serviceInterface.ProjectService;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import com.fl.project.util.FlResponseUtil;
+import static com.fl.project.config.Constant.*;
 
 @RestController
 @RequestMapping("/projects")
+@RequiredArgsConstructor
 public class ProjectController {
-    
-    @Autowired
-    private RestTemplate restTemplate;
 
-    @Autowired
-    private ProjectImpl projectrepo;
+    private final ProjectService projectService;
+    private final FlResponseUtil flResponseUtil;
 
-    @RequestMapping("/ping")
-    public ResponseEntity<String> ping(){return new ResponseEntity<>("Project Service", HttpStatus.OK);}
-
-    @PostMapping("/add")
-    public ResponseEntity<CommonResponse> createProject(@Valid @RequestBody Project project){
+    @PostMapping
+    public ResponseEntity<FlResponse<String>> createProject(@Valid @RequestBody ProjectRequest project) {
         try {
-            int ins = projectrepo.save(project);
-            return new ResponseEntity<>(new CommonResponse<String>(Constant.INSERTED_SUCCESSFULLY,HttpStatus.CREATED.value()),HttpStatus.OK);
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.saveProject(project),
+                    PROJECT+INSERTED_SUCCESSFULLY);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CommonResponse<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR.value()),HttpStatus.INTERNAL_SERVER_ERROR);
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,
+                    String.format("%s " + INSERTION_FAILED, PROJECT));
         }
     }
 
-    @GetMapping("/")
-    public ResponseEntity<Object> getAllProjects()
-    {
+    @GetMapping
+    public ResponseEntity<FlResponse<List<ProjectResponse>>> getAllProjects(
+            @RequestParam(defaultValue = "0", required = false, name = "ProjectId") Integer ProjectId) {
         try {
-                List<ProjectRes> projects=projectrepo.getAll();
-                // List<ProjectSkill> apiRes = restTemplate.getForObject("http://host.docker.internal:8082/project-skills/", List.class);
-                if(!projects.isEmpty())
-                {
-                    for(int i=0;i<projects.size();i++){
-                        String url = "http://divyeshg.bbdnet.bbd.co.za:8082/project-skills/skill/"+projects.get(i).getProjectId();
-                        List<Skill> apiRes = restTemplate.getForObject(url, List.class);
-                        System.out.println(apiRes);
-                        projects.get(i).setSkill(apiRes);
-                    }
-                    return new ResponseEntity<>(projects,HttpStatus.OK);
-                }
-                else
-                {
-                    return new ResponseEntity<>(new CommonResponse<String>(Constant.NO_RECORD_FOUND,HttpStatus.ACCEPTED.value()),HttpStatus.OK);
-                }
-        } catch (Exception e)
-        {
-            return new ResponseEntity<>(new CommonResponse<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR.value()),HttpStatus.INTERNAL_SERVER_ERROR);
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.getProject(ProjectId),
+                    String.format("%s" + FETCHED_SUCCESSFULLY, PROJECT));
+        } catch (Exception e) {
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,
+                    String.format(NO_RECORD_FOUND));
+        }
+    }
+
+    @PutMapping("/{projectId}")
+    public ResponseEntity<FlResponse<String>> updateProject(@PathVariable("projectId") int projectId,
+            @Valid @RequestBody ProjectRequest project) {
+        try {
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.updateProject(project, projectId),
+                    String.format("%s" + UPDATED_SUCCESSFULLY, PROJECT));
+        } catch (Exception ex) {
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,
+                    String.format("%s " + UPDATION_FAILED, PROJECT));
+        }
+    }
+
+    @DeleteMapping("/{projectId}")
+    public ResponseEntity<FlResponse<String>> deleteProject(@PathVariable("projectId") int projectId) {
+        try {
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.deleteProject(projectId),
+                    String.format("%s" + DELETED_SUCCESSFULLY, PROJECT));
+        } catch (Exception ex) {
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,
+                    String.format("%s " + DELETION_FAILED, PROJECT));
         }
     }
 }
