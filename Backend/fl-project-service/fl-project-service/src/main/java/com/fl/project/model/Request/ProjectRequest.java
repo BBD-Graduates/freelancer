@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 @Data
 @NoArgsConstructor
-public class projectRequest {
+public class ProjectRequest {
     private int clientId;
     @NotNull(message = "Please enter project name")
     private String projectName;
