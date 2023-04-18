@@ -2,7 +2,6 @@ package com.fl.skill.controller;
 
 import com.fl.skill.model.FlResponse;
 import com.fl.skill.model.request.Skill;
-import com.fl.skill.model.response.CategorySkillsResponse;
 import com.fl.skill.model.response.SkillRes;
 import com.fl.skill.service.serviceInterface.SkillService;
 import com.fl.skill.util.FlResponseUtil;

@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,7 +36,6 @@ public class SkillServiceImpl implements SkillService {
                             ps.setString(1, skillList.get(row).getSkillName());
                             ps.setInt(2, skillList.get(row).getCategoryId());
                         }
-
                         @Override
                         public int getBatchSize() {
                             return skillList.size();
@@ -59,9 +57,9 @@ public class SkillServiceImpl implements SkillService {
         try {
             if (!skillId.equals(0)) {
                 return jdbcTemplate.query(dbQueries.getSkillBySkillId(),
-                        BeanPropertyRowMapper.newInstance(SkillRes.class), categoryId);
+                        BeanPropertyRowMapper.newInstance(SkillRes.class), skillId);
             } else if (!categoryId.equals(0)) {
-                return jdbcTemplate.query(dbQueries.getSkillByCategoryId(), BeanPropertyRowMapper.newInstance(SkillRes.class), skillId);
+                return jdbcTemplate.query(dbQueries.getSkillByCategoryId(), BeanPropertyRowMapper.newInstance(SkillRes.class), categoryId);
             } else {
                 return jdbcTemplate.query(dbQueries.getAllSkills(), BeanPropertyRowMapper.newInstance(SkillRes.class));
             }
