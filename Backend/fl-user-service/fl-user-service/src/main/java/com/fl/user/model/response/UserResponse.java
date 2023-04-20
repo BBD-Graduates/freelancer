@@ -1,14 +1,18 @@
 package com.fl.user.model.response;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserResponse {
 
     private Integer userId;
@@ -20,4 +24,9 @@ public class UserResponse {
     private Boolean isVerified;
     private String photoURL;
     private Date createdDate;
+    private Integer languageId;
+    private String languageName;
+    @Builder.Default
+    List<LanguageResponse> languages =new ArrayList<>();
+
 }

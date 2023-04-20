@@ -14,4 +14,13 @@ public class DbQueries {
 
     @Value("${db.queries.users.updateUser}")
     private String updateUser;
+
+    @Value("${db.queries.users.getUserDetails}")
+    private String userDetails;
+
+    @Value("${db.queries.users.getUserDetailsByLanguageId}")
+    private String userDetailsByLanguageId;
+
+    @Value("${db.queries.userLanguages.insertUserLanguages}")
+    private String adduserLanguages;
 }
