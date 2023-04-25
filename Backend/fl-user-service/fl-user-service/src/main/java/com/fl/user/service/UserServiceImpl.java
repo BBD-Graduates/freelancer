@@ -56,33 +56,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserResponse> getUsers(Integer languageId) {
+    public List<UserResponse> getUsers(Integer languageId,Integer userId) {
         try {
             List<UserResponse> userDetailsList = new ArrayList<>();
-            List<UserResponse> userlanguages;
+            List<UserResponse> userDetails;
             if (!languageId.equals(0)) {
-                userlanguages = jdbcTemplate.query(dbQueries.getUserDetailsByLanguageId(), BeanPropertyRowMapper.newInstance(UserResponse.class));
+                userDetails = jdbcTemplate.query(dbQueries.getUserDetailsByLanguageId(), BeanPropertyRowMapper.newInstance(UserResponse.class),languageId);
+            } else if (!userId.equals(0)) {
+                userDetails = jdbcTemplate.query(dbQueries.getUserDetailsByUserId(), BeanPropertyRowMapper.newInstance(UserResponse.class),userId);
             } else {
-                userlanguages = jdbcTemplate.query(dbQueries.getUserDetails(), BeanPropertyRowMapper.newInstance(UserResponse.class));
+                userDetails = jdbcTemplate.query(dbQueries.getUserDetails(), BeanPropertyRowMapper.newInstance(UserResponse.class));
             }
 
-            List<Integer> userIdList = userlanguages.stream().map(UserResponse::getUserId).distinct().collect(Collectors.toList());
+            List<Integer> userIdList = userDetails.stream().map(UserResponse::getUserId).distinct().collect(Collectors.toList());
             for (Integer fetchUserId : userIdList) {
-                UserResponse usersDetails = new UserResponse();
-                usersDetails.setUserId(fetchUserId);
-                userlanguages.stream().filter(userResponse -> userResponse.getUserId() == fetchUserId).forEach(userResponse -> {
-                    usersDetails.setFirstName(userResponse.getFirstName());
-                    usersDetails.setLastName(userResponse.getLastName());
-                    usersDetails.setEmail(userResponse.getEmail());
-                    usersDetails.setCompany(userResponse.getCompany());
-                    usersDetails.setPhNo(userResponse.getPhNo());
-                    usersDetails.setIsVerified(userResponse.getIsVerified());
-                    usersDetails.setPhotoURL(userResponse.getPhotoURL());
-                    usersDetails.setCreatedDate(userResponse.getCreatedDate());
-                    usersDetails.getLanguages().add(LanguageResponse.builder().languageId(userResponse.getLanguageId())
+                UserResponse userResponseModel = new UserResponse();
+                userResponseModel.setUserId(fetchUserId);
+                userDetails.stream().filter(userResponse -> userResponse.getUserId() == fetchUserId).forEach(userResponse -> {
+                    userResponseModel.setFirstName(userResponse.getFirstName());
+                    userResponseModel.setLastName(userResponse.getLastName());
+                    userResponseModel.setEmail(userResponse.getEmail());
+                    userResponseModel.setCompany(userResponse.getCompany());
+                    userResponseModel.setPhNo(userResponse.getPhNo());
+                    userResponseModel.setIsVerified(userResponse.getIsVerified());
+                    userResponseModel.setPhotoURL(userResponse.getPhotoURL());
+                    userResponseModel.setCreatedDate(userResponse.getCreatedDate());
+                    userResponseModel.getLanguages().add(LanguageResponse.builder().languageId(userResponse.getLanguageId())
                             .languageName(userResponse.getLanguageName()).build());
                 });
-                userDetailsList.add(usersDetails);
+                userDetailsList.add(userResponseModel);
             }
             return userDetailsList;
         } catch (Exception e) {

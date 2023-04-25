@@ -24,7 +24,9 @@ db:
       getUserDetails: SELECT u.UserId, u.FirstName, u.LastName,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate,l.LanguageId, l.LanguageName
                 from users u, languages l, userlanguages ul where u.UserId=ul.UserId and l.LanguageId=ul.LanguageId
       getUserDetailsByLanguageId: SELECT u.UserId, u.FirstName, u.LastName,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate,l.LanguageId, l.LanguageName
-        from users u, languages l, userlanguages ul where u.UserId=ul.UserId and l.LanguageId=ul.LanguageId and l.LanguageId=?
+                from users u, languages l, userlanguages ul where u.UserId=ul.UserId and l.LanguageId=ul.LanguageId and l.LanguageId=?
+      getUserDetailsByUserId: SELECT u.UserId, u.FirstName, u.LastName,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate,l.LanguageId, l.LanguageName
+                from users u, languages l, userlanguages ul where u.UserId=ul.UserId and l.LanguageId=ul.LanguageId and u.UserId=?
     userLanguages:
       insertUserLanguages: INSERT INTO userlanguages(UserId,LanguageId) values(?,?)
 

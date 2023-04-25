@@ -33,7 +33,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("userLanguages")
+    @PostMapping("/languages")
     public ResponseEntity<FlResponse<String>> addUserLanguages(@Valid @RequestBody List<UserLanguageRequest> userLanguageRequestList) {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, userService.insertUserLanguages(userLanguageRequestList), UPDATED_SUCCESSFULLY);
@@ -51,10 +51,11 @@ public class UserController {
         }
     }
 
-    @GetMapping()
-    public ResponseEntity<FlResponse<List<UserResponse>>> getUsers(@RequestParam(name = "languageId", required = false, defaultValue = "0") Integer languageId) {
+    @GetMapping
+    public ResponseEntity<FlResponse<List<UserResponse>>> getUsers(@RequestParam(name = "languageId", required = false, defaultValue = "0") Integer languageId,
+                                                                   @RequestParam(name = "userId", required = false, defaultValue = "0") Integer userId) {
         try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, userService.getUsers(languageId), FETCHED_SUCCESSFULLY);
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, userService.getUsers(languageId,userId), FETCHED_SUCCESSFULLY);
         } catch (Exception e) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, NO_RECORD_FOUND);
         }
