@@ -11,6 +11,8 @@ public class Constant {
     public static String UPDATION_FAILED = "Updation Failed";
     public static String DELETION_FAILED = "Deletion Failed";
     public  static String BID="Bid ";
+    public  static String PROJECT_BID="Bid ";
+    public  static String FREELANCER_BID="Bid ";
 
     private Constant(){
 

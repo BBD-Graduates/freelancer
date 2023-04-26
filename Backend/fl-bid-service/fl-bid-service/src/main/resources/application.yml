@@ -26,3 +26,4 @@ db:
       selectBidByBidId: SELECT * from bids WHERE BidId = ?
       selectBidByProjectId: SELECT * from bids WHERE ProjectId = ?
       selectBidByFreelancerId: SELECT * from bids WHERE FreelancerId = ?
+

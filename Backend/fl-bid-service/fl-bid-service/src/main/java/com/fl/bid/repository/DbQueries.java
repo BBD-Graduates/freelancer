@@ -18,11 +18,11 @@ public class DbQueries {
     private String updateBid;
     @Value ("${db.queries.bid.selectAllBid}")
     private String allBid;
-    @Value ("${db.queries.bid.selectBidById}")
+    @Value("${db.queries.bid.selectBidByBidId}")
     private String bidByBidId;
     @Value("${db.queries.bid.selectBidByProjectId}")
     private String bidByProjectId;
-    @Value("${db.queries.bid.selectBidByProjectId}")
+    @Value("${db.queries.bid.selectBidByFreelancerId}")
     private String bidByFreelancerId;
 
 }

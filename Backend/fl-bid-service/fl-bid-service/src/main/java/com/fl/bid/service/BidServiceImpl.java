@@ -60,15 +60,14 @@ public class BidServiceImpl implements BidService {
 
     @Override
     public List<Bid> getBids(Integer bidId, Integer projectId, Integer freelancerId) {
-
         try {
             if (!bidId.equals(0)) {
                 return jdbcTemplate.query(dbQueries.getBidByBidId(),
-                        BeanPropertyRowMapper.newInstance(Bid.class), projectId);
+                        BeanPropertyRowMapper.newInstance(Bid.class), bidId);
             }else if(!projectId.equals(0)){
-                return jdbcTemplate.query(dbQueries.getBidByProjectId(), BeanPropertyRowMapper.newInstance(Bid.class), bidId);
+                return jdbcTemplate.query(dbQueries.getBidByProjectId(), BeanPropertyRowMapper.newInstance(Bid.class),  projectId);
             }else if(!freelancerId.equals(0)){
-                return jdbcTemplate.query(dbQueries.getBidByFreelancerId(), BeanPropertyRowMapper.newInstance(Bid.class), bidId);
+                return jdbcTemplate.query(dbQueries.getBidByFreelancerId(), BeanPropertyRowMapper.newInstance(Bid.class), freelancerId);
             }
             else {
                 return jdbcTemplate.query(dbQueries.getAllBid(), BeanPropertyRowMapper.newInstance(Bid.class));

@@ -44,17 +44,17 @@ public class BidController {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + UPDATION_FAILED, BID));
         }
     }
-//    @GetMapping
-//    public ResponseEntity<FlResponse<List<Bid>>> getBids(
-//            @RequestParam(defaultValue = "0", required = false, name = "bidId") Integer bidId,
-//            @RequestParam(defaultValue = "0", required = false, name = "projectId") Integer projectId,
-//            @RequestParam(defaultValue = "0", required = false, name = "freelancerId") Integer freelancerId){
-//        try {
-//            return flResponseUtil.getResponseEntity(HttpStatus.OK, bidService.getBids(bidId,projectId,freelancerId),String.format("%s" + FETCHED_SUCCESSFULLY, BID));
-//        } catch (Exception e) {
-//            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + NO_RECORD_FOUND));
-//        }
-//    }
+    @GetMapping
+    public ResponseEntity<FlResponse<List<Bid>>> getBids(
+            @RequestParam(defaultValue = "0", required = false, name = "bidId") Integer bidId,
+            @RequestParam(defaultValue = "0", required = false, name = "projectId") Integer projectId,
+            @RequestParam(defaultValue = "0", required = false, name = "freelancerId") Integer freelancerId){
+        try {
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, bidService.getBids(bidId,projectId,freelancerId),String.format("%s" + FETCHED_SUCCESSFULLY, BID));
+        } catch (Exception e) {
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + NO_RECORD_FOUND));
+        }
+    }
 }
 
 

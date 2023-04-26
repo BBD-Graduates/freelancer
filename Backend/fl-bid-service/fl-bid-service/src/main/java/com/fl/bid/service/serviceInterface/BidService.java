@@ -10,4 +10,5 @@ public interface BidService {
     String deleteBid(int bidId);
     String updateBid(BidRequest bidRequest,int bidId);
     List<Bid> getBids(Integer bidId, Integer projectId, Integer freelancerId);
+
 }
