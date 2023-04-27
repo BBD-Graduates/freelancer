@@ -28,7 +28,7 @@ public class BidController {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + INSERTION_FAILED, BID));
         }
     }
-    @DeleteMapping
+    @DeleteMapping("/{bidId}")
     public ResponseEntity<FlResponse<String>> deleteBid(@PathVariable("bidId") int bidId) {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, bidService.deleteBid(bidId), String.format("%s" + DELETED_SUCCESSFULLY, BID));
@@ -36,7 +36,7 @@ public class BidController {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + DELETION_FAILED, BID));
         }
     }
-    @PutMapping
+    @PutMapping("/{bidId}")
     public ResponseEntity<FlResponse<String>> updateBid(@PathVariable("bidId") Integer bidId, @Valid @RequestBody BidRequest bidRequest) {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, bidService.updateBid(bidRequest, bidId), String.format("%s" + UPDATED_SUCCESSFULLY, BID));
