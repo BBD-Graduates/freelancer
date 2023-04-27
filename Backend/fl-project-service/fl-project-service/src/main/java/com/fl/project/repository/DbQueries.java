@@ -51,4 +51,7 @@ public class DbQueries {
 
     @Value("${db.queries.rating.removeRatingByRatingId}")
     private String removeRatingByRatingId;
+
+    @Value("${db.queries.projectAssignment.assignBid}")
+    private String assignBid;
 }

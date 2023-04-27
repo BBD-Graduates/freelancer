@@ -35,3 +35,5 @@ db:
       selectRatingByProjectId: select * from ratings where projectId = ?
       updateRatingByratingId: update ratings set ratingDescription = ?,Rating =? where ratingId =?
       removeRatingByRatingId: delete from ratings where ratingId =?
+    projectAssignment:
+      assignBid: insert into projectAssignment (bidId) values (?)

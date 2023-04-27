@@ -12,6 +12,6 @@ public class SwaggerConfig {
 
     @Bean
     public OpenAPI baseOpenApi() {
-        return new OpenAPI().info(new Info().title("FL-Skill-Service").version("1.0.0").description("Spring doc"));
+        return new OpenAPI().info(new Info().title("FL-Project-Service").version("1.0.0").description("Spring doc"));
     }
 }
