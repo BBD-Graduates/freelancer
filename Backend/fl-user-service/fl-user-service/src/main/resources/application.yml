@@ -1,0 +1,33 @@
+server:
+  port : 8081
+
+#microservices configuration
+spring:
+  application:
+    name: fl-user-service
+  #database configuration:mysql
+  datasource:
+    url: jdbc:mysql://localhost:3306/fl_users?useSSL=false
+    username: root
+    password:
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/
+
+db:
+  queries:
+    users:
+      insertUser: INSERT INTO users(Email) values(?)
+      updateUser: UPDATE users set FirstName=?, LastName=?, Company=?, PhNo=?, PhotoURL=? WHERE UserId=?
+      getUserDetails: SELECT u.UserId, u.FirstName, u.LastName,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate,l.LanguageId, l.LanguageName
+                from users u, languages l, userlanguages ul where u.UserId=ul.UserId and l.LanguageId=ul.LanguageId
+      getUserDetailsByLanguageId: SELECT u.UserId, u.FirstName, u.LastName,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate,l.LanguageId, l.LanguageName
+                from users u, languages l, userlanguages ul where u.UserId=ul.UserId and l.LanguageId=ul.LanguageId and l.LanguageId=?
+      getUserDetailsByUserId: SELECT u.UserId, u.FirstName, u.LastName,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate,l.LanguageId, l.LanguageName
+                from users u, languages l, userlanguages ul where u.UserId=ul.UserId and l.LanguageId=ul.LanguageId and u.UserId=?
+    userLanguages:
+      insertUserLanguages: INSERT INTO userlanguages(UserId,LanguageId) values(?,?)
+
+

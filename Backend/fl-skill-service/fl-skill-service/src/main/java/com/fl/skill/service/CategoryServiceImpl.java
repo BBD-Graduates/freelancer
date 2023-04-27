@@ -52,7 +52,6 @@ public class CategoryServiceImpl implements CategoryService {
                 categorySkills = jdbcTemplate.query(dbQueries.getAllCategorySkills(), BeanPropertyRowMapper.newInstance(CategoryRes.class));
             }
 
-
             List<Integer> categoryIdList = categorySkills.stream()
                     .map(CategoryRes::getCategoryId).distinct().collect(Collectors.toList());
             for (Integer fetchCategoryId : categoryIdList) {
