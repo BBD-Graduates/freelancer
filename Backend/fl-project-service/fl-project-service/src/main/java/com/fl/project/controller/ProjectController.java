@@ -72,7 +72,7 @@ public class ProjectController {
                     String.format("%s " + DELETION_FAILED, PROJECT));
         }
     }
-    @PostMapping("/projectassignment")
+    @PostMapping("/bids")
     public ResponseEntity<FlResponse<String>> assignProjectBid(@Valid @RequestBody ProjectAssignmentRequest projectAssignmentRequest) {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, projectAssignment.assignBid(projectAssignmentRequest.getBidId()),
