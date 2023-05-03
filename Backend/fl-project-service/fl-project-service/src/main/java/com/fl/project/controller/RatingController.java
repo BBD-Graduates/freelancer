@@ -25,7 +25,7 @@ import static com.fl.project.config.Constant.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rating")
+@RequestMapping("/projects/rating")
 @RequiredArgsConstructor
 public class RatingController {
     private final RatingService ratingService;

@@ -28,5 +28,7 @@ public class ProjectResponse {
     private String status;
     @Builder.Default
     List<Skill> skills = new ArrayList<>();
+    @Builder.Default
+    List<BidResponse> bids = new ArrayList<>();
 
 }

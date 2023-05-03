@@ -1,8 +1,10 @@
 package com.fl.project.controller;
 
 import com.fl.project.model.FlResponse;
+import com.fl.project.model.request.ProjectAssignmentRequest;
 import com.fl.project.model.request.ProjectRequest;
 import com.fl.project.model.response.ProjectResponse;
+import com.fl.project.service.serviceInterface.ProjectAssignmentService;
 import com.fl.project.service.serviceInterface.ProjectService;
 
 import jakarta.validation.Valid;
@@ -22,6 +24,7 @@ import static com.fl.project.config.Constant.*;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final ProjectAssignmentService projectAssignment;
     private final FlResponseUtil flResponseUtil;
 
     @PostMapping
@@ -67,6 +70,16 @@ public class ProjectController {
         } catch (Exception ex) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,
                     String.format("%s " + DELETION_FAILED, PROJECT));
+        }
+    }
+    @PostMapping("/projectassignment")
+    public ResponseEntity<FlResponse<String>> assignProjectBid(@Valid @RequestBody ProjectAssignmentRequest projectAssignmentRequest) {
+        try {
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectAssignment.assignBid(projectAssignmentRequest.getBidId()),
+                    PROJECT_ASSIGN+INSERTED_SUCCESSFULLY);
+        } catch (Exception e) {
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,
+                    String.format("%s " + INSERTION_FAILED, PROJECT));
         }
     }
 }

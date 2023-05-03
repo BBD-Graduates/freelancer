@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import static com.fl.project.config.Constant.*;
 
 @RestController
-@RequestMapping("/paymentType")
+@RequestMapping("/projects/paymentType")
 @RequiredArgsConstructor
 public class PaymentTypeController {
     private final PaymentTypeService paymentTypeRepo;
