@@ -36,9 +36,10 @@ public class UserSkillController {
     }
 
     @GetMapping
-    public ResponseEntity<FlResponse<List<UserSkillsResponse>>> getUserSkills(@RequestParam(defaultValue = "0", required = false) Integer userId) {
+    public ResponseEntity<FlResponse<List<UserSkillsResponse>>> getUserSkills(@RequestParam(defaultValue = "0", required = false) Integer userId,
+                                                                              @RequestParam(defaultValue = "0", required = false) Integer skillId) {
         try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, userSkillsService.getUserSkills(userId), String.format("%s" + FETCHED_SUCCESSFULLY, USER_SKILLS));
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, userSkillsService.getUserSkills(userId,skillId), String.format("%s" + FETCHED_SUCCESSFULLY, USER_SKILLS));
         } catch (Exception e) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + NO_RECORD_FOUND));
         }

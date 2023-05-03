@@ -55,19 +55,23 @@ public class UserSkillsServiceImpl implements UserSkillsService {
     }
 
     @Override
-    public List<UserSkillsResponse> getUserSkills(Integer userId) {
+    public List<UserSkillsResponse> getUserSkills(Integer userId, Integer skillId) {
         try {
+
             List<UserSkillsResponse> userSkillDetails = new ArrayList<>();
             List<UserSkills> userSkills;
-            if (!userId.equals(0)) {
+            if (!skillId.equals(0)) {
+                String query = dbQueries.getUserSkillsBySkillId();
+                userSkills= jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(UserSkills.class), skillId);
+
+            } else if (!userId.equals(0)) {
                 String query = dbQueries.getUserSkillDetailsByUserId();
                 userSkills = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(UserSkills.class), userId);
-
             } else {
                 String query = dbQueries.getUserSkillDetails();
                 userSkills = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(UserSkills.class));
             }
-            List<Integer> userIdList = userSkills.stream().map(UserSkills::getUserId).distinct().collect(Collectors.toList());
+            List<Integer> userIdList = userSkills.stream().map(UserSkills::getUserId).distinct().toList();
             for (Integer fetchUserId : userIdList) {
                 UserSkillsResponse userSkillsResponse = new UserSkillsResponse();
                 userSkillsResponse.setUserId(fetchUserId);
@@ -77,6 +81,7 @@ public class UserSkillsServiceImpl implements UserSkillsService {
                 userSkillDetails.add(userSkillsResponse);
             }
             return userSkillDetails;
+
         } catch (DataAccessException e) {
             throw e;
         }

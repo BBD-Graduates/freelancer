@@ -11,5 +11,5 @@ public class UserSkills {
     private int userId;
     private int skillId;
     private String skillName;
-    private int CategoryId;
+    private int categoryId;
 }
