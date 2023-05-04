@@ -1,8 +1,10 @@
 package com.fl.project.service;
 
+import com.fl.project.feignClient.ProjectBidService;
 import com.fl.project.feignClient.ProjectSkillService;
 import com.fl.project.model.FlResponse;
 import com.fl.project.model.request.ProjectRequest;
+import com.fl.project.model.response.BidResponse;
 import com.fl.project.model.response.ProjectResponse;
 import com.fl.project.model.response.ProjectSkillsResponse;
 import com.fl.project.model.response.Skill;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.fl.project.config.Constant.*;
 
@@ -27,6 +30,7 @@ public class ProjectImpl implements ProjectService {
     private final JdbcTemplate jdbcTemplate;
     private final DbQueries dbQueries;
     private final ProjectSkillService projectSkillService;
+    private final ProjectBidService projectBidService;
 
     @Override
     public String saveProject(ProjectRequest project) {
@@ -54,15 +58,18 @@ public class ProjectImpl implements ProjectService {
             }
             if (!projects.isEmpty()) {
                 projects.stream().forEach(project -> {
-                    Integer projectid = project.getProjectId();
-                    FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillMicroservice(projectid);
-                    List<Skill> skills = new ArrayList<>();
-                    skillList.getResponse().stream().map(ProjectSkillsResponse::getSkills).forEach(x->{
-                        for (Skill skill : x) {
-                            skills.add(skill);
-                        };
-                    });
-                    project.setSkills(skills);
+                    FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService.getProjectSkillByProjectId(project.getProjectId());
+                    project.setSkills(skillList.getResponse().get(0).getSkills());
+
+                    FlResponse<List<BidResponse>> projectBidList = projectBidService.getProjectBidByProjectId(project.getProjectId());
+                    project.setBids(projectBidList.getResponse().stream().map(bidResponse -> BidResponse.builder()
+                            .bidId(bidResponse.getBidId())
+                            .projectId(bidResponse.getProjectId())
+                            .freelancerId(bidResponse.getFreelancerId())
+                            .amount(bidResponse.getAmount())
+                            .description(bidResponse.getDescription())
+                            .createdDate(bidResponse.getCreatedDate())
+                            .build()).collect(Collectors.toList()));
                 });
                 return projects;
             } else
@@ -70,7 +77,6 @@ public class ProjectImpl implements ProjectService {
         } catch (Exception e) {
             throw e;
         }
-
     }
 
     @Override
@@ -99,9 +105,5 @@ public class ProjectImpl implements ProjectService {
         } catch (Exception ex) {
             throw ex;
         }
-    }
-
-    private FlResponse<List<ProjectSkillsResponse>> projectSkillMicroservice(Integer projectId) {
-        return projectSkillService.getProjectSkillByProjectId(projectId);
     }
 }

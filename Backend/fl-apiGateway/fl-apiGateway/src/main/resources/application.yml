@@ -1,0 +1,30 @@
+server:
+  port: 8085
+#microservices configuration
+spring:
+  application:
+    name: fl-apiGateway
+  cloud:
+    gateway:
+      routes:
+        - id: fl-bid-service
+          uri: lb://fl-bid-service
+          predicates:
+            - Path=/bids/**
+        - id: fl-project-service
+          uri: lb://fl-project-service
+          predicates:
+            - Path=/projects/**
+        - id: fl-skill-service
+          uri: lb://FL-SKILL-SERVICE
+          predicates:
+            - Path=/skill-service/**
+        - id: fl-user-service
+          uri: lb://FL-USER-SERVICE
+          predicates:
+            - Path=/user-service/**
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/
