@@ -58,4 +58,6 @@ db:
                     skills s on us.SkillId = s.SkillId
       selectUserSkillDetailsByUserId: SELECT us.UserId,s.SkillId,s.SkillName,s.categoryId from userskills us INNER JOIN
                                       skills s on us.SkillId = s.SkillId and UserId=?
+      selectUserskillsBySkillId: SELECT  us.UserId,s.SkillId,s.SkillName,s.CategoryId from skills s INNER JOIN userskills us on us.SkillId = s.SkillId and us.UserId in
+            (SELECT us.UserId from skills s INNER JOIN userskills us on us.SkillId = s.SkillId and s.SkillId=?);
 

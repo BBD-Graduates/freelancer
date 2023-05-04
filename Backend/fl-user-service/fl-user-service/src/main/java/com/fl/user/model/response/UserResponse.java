@@ -24,9 +24,8 @@ public class UserResponse {
     private Boolean isVerified;
     private String photoURL;
     private Date createdDate;
-    private Integer languageId;
-    private String languageName;
     @Builder.Default
-    List<LanguageResponse> languages =new ArrayList<>();
-
+    List<LanguageResponse> languages = new ArrayList<>();
+    @Builder.Default
+    List<SkillResponse> skills = new ArrayList<>();
 }

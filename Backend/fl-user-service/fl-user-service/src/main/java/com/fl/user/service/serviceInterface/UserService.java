@@ -10,7 +10,9 @@ public interface UserService {
 
     String insertUser(UserRequest userRequest);
     String updateUser( Integer userId,UserRequest userRequest);
-    List<UserResponse> getUsers(Integer languageId,Integer userId);
+
+    List<UserResponse> getUsers(Integer languageId,Integer userId,Integer skillId);
+
     String insertUserLanguages(List<UserLanguageRequest> userLanguageRequestList);
 
 

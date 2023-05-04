@@ -9,5 +9,5 @@ import java.util.List;
 public interface UserSkillsService {
 
     String insertUserSkills(List<UserSkillsReq> userSkillReqList)  ;
-    List<UserSkillsResponse> getUserSkills(Integer userId)  ;
+    List<UserSkillsResponse> getUserSkills(Integer userId,Integer skillId)  ;
 }

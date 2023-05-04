@@ -65,4 +65,7 @@ public class DbQueries {
     @Value("${db.queries.userSkills.selectUserSkillDetailsByUserId}")
     private String userSkillDetailsByUserId;
 
+    @Value("${db.queries.userSkills.selectUserskillsBySkillId}")
+    private String userSkillsBySkillId;
+
 }
