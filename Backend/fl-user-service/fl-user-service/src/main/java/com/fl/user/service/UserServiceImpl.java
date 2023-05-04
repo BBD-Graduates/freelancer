@@ -1,8 +1,10 @@
 package com.fl.user.service;
 
 import com.fl.user.config.Constant;
+
 import com.fl.user.feignClient.UserSkillClient;
 import com.fl.user.model.FlResponse;
+
 import com.fl.user.model.request.UserLanguageRequest;
 import com.fl.user.model.request.UserRequest;
 import com.fl.user.model.response.LanguageResponse;
@@ -19,10 +21,12 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Service;
-
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +37,7 @@ public class UserServiceImpl implements UserService {
     private final DbQueries dbQueries;
     @Autowired
     private final UserSkillClient userSkillClient;
+
 
     @Override
     public String insertUser(UserRequest userRequest) {
@@ -64,6 +69,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+
     public List<UserResponse> getUsers(Integer languageId, Integer userId, Integer skillId) {
         try {
             FlResponse<List<UserSkillsResponse>> userList;
@@ -84,6 +90,7 @@ public class UserServiceImpl implements UserService {
                 userDetails = jdbcTemplate.query(dbQueries.getUserDetailsByLanguageId(), BeanPropertyRowMapper.newInstance(UserResponse.class), languageId);
             } else if (!userId.equals(0)) {
                 userDetails = jdbcTemplate.query(dbQueries.getUserDetailsByUserId(), BeanPropertyRowMapper.newInstance(UserResponse.class), userId);
+
             } else {
                 userDetails = jdbcTemplate.query(dbQueries.getUserDetails(), BeanPropertyRowMapper.newInstance(UserResponse.class));
             }
@@ -101,7 +108,6 @@ public class UserServiceImpl implements UserService {
             throw e;
         }
     }
-
 
     @Override
     public String insertUserLanguages(List<UserLanguageRequest> userLanguageRequestList) {
@@ -133,5 +139,6 @@ public class UserServiceImpl implements UserService {
     public List<LanguageResponse> getUserLanguage(Integer userId) {
         return jdbcTemplate.query(dbQueries.getLanguagesByUserId(), BeanPropertyRowMapper.newInstance(LanguageResponse.class), userId);
     }
+
 
 }

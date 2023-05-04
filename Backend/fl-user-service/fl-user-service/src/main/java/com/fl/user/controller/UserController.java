@@ -57,6 +57,7 @@ public class UserController {
                                                                    @RequestParam(name = "skillId", required = false, defaultValue = "0") Integer skillId) {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, userService.getUsers(languageId,userId,skillId), FETCHED_SUCCESSFULLY);
+        
         } catch (Exception e) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, NO_RECORD_FOUND);
         }

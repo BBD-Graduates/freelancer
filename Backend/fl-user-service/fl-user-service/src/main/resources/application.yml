@@ -21,6 +21,7 @@ db:
     users:
       insertUser: INSERT INTO users(Email) values(?)
       updateUser: UPDATE users set FirstName=?, LastName=?, Company=?, PhNo=?, PhotoURL=? WHERE UserId=?
+
       getUserDetails: SELECT u.UserId, u.FirstName, u.LastName,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate
                 from users u
       getUserDetailsByLanguageId: SELECT u.UserId, u.FirstName, u.LastName,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate
@@ -31,12 +32,13 @@ db:
                 from users u where u.UserId IN (:userId)
       getLanguagesByUserId: SELECT l.LanguageId, l.LanguageName from users u, languages l, userlanguages ul where 
                 u.UserId=ul.UserId and l.LanguageId=ul.LanguageId and u.UserId=?
+
     userLanguages:
       insertUserLanguages: INSERT INTO userlanguages(UserId,LanguageId) values(?,?)
-
 
 service:
   props:
     webServices:
       fl-skill-service:
         endpoint: http://localhost:8082/user-skills
+

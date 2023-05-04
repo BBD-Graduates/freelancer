@@ -1,0 +1,29 @@
+server:
+  port : 8082
+
+#microservices configuration
+spring:
+  application:
+    name: fl-bid-service
+  #database configuration:mysql
+  datasource:
+    url: jdbc:mysql://localhost:3306/fl_bid?useSSL=false
+    username: root
+    password:
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/
+
+db:
+  queries:
+    bid:
+      insertBid: INSERT INTO bids(ProjectId,FreelancerId,Amount,Description) values (?,?,?,?)
+      removeBid: DELETE FROM `bids` WHERE BidId=?
+      updateBid: UPDATE bids set Amount= ? , Description = ? WHERE BidId = ?
+      selectAllBid: SELECT * from bids
+      selectBidByBidId: SELECT * from bids WHERE BidId = ?
+      selectBidByProjectId: SELECT * from bids WHERE ProjectId = ?
+      selectBidByFreelancerId: SELECT * from bids WHERE FreelancerId = ?
+

@@ -1,17 +1,20 @@
-package com.fl.project.model.Response;
+package com.fl.project.model.response;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
+@Builder
 @NoArgsConstructor
-public class ProjectRes {
-    private int projectId;
+@AllArgsConstructor
+public class ProjectResponse {
+    private Integer projectId;
     private int clientId;
     private String projectName;
     private String projectDescription;
@@ -23,10 +26,9 @@ public class ProjectRes {
     private Float maxPrice;
     private Date createdDate;
     private String status;
-    private List<Skill> skills;
-
-    public void setSkill(List<Skill> skills){
-        this.skills = skills;
-    }
+    @Builder.Default
+    List<Skill> skills = new ArrayList<>();
+    @Builder.Default
+    List<BidResponse> bids = new ArrayList<>();
 
 }

@@ -28,6 +28,4 @@ public class UserResponse {
     List<LanguageResponse> languages = new ArrayList<>();
     @Builder.Default
     List<SkillResponse> skills = new ArrayList<>();
-
-
 }
