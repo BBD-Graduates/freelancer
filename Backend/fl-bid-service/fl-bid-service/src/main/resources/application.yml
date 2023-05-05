@@ -19,9 +19,9 @@ eureka:
 db:
   queries:
     bid:
-      insertBid: INSERT INTO bids(ProjectId,FreelancerId,Amount,Description) values (?,?,?,?)
+      insertBid: INSERT INTO bids(ProjectId,FreelancerId,Amount,DeliveryDays,Description) values (?,?,?,?,?)
       removeBid: DELETE FROM `bids` WHERE BidId=?
-      updateBid: UPDATE bids set Amount= ? , Description = ? WHERE BidId = ?
+      updateBid: UPDATE bids set Amount= ? , DeliveryDays= ? , Description = ? WHERE BidId = ?
       selectAllBid: SELECT * from bids
       selectBidByBidId: SELECT * from bids WHERE BidId = ?
       selectBidByProjectId: SELECT * from bids WHERE ProjectId = ?

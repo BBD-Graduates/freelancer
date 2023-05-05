@@ -14,7 +14,9 @@ public class BidRequest {
     @NotNull(message = "Please enter Freelancer Id")
     private int freelancerId;
     @NotNull(message = "Please enter Amount")
-    private int amount;
+    private float amount;
+    @NotNull(message = "Please enter Delivery Days")
+    private int deliveryDays;
     @NotNull(message = "Please enter Description")
     @Size(min=20, message = "Description Should not be blank")
     private String description;
