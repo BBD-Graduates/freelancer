@@ -21,15 +21,42 @@ db:
     users:
       insertUser: INSERT INTO users(Email) values(?)
       updateUser: UPDATE users set FirstName=?, LastName=?, Company=?, PhNo=?, PhotoURL=? WHERE UserId=?
-
-      getUserDetails: SELECT u.UserId, u.FirstName, u.LastName,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate
-                from users u
-      getUserDetailsByLanguageId: SELECT u.UserId, u.FirstName, u.LastName,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate
-                from users u, languages l, userlanguages ul where u.UserId=ul.UserId and l.LanguageId=ul.LanguageId and l.LanguageId=?
-      getUserDetailsByUserId: SELECT u.UserId, u.FirstName, u.LastName,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate
-                from users u where u.UserId=?
-      getUserDetailsInUserIds: SELECT u.UserId, u.FirstName, u.LastName,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate
-                from users u where u.UserId IN (:userId)
+      getUserDetails: SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate, s.StateName ,cr.CountryName
+          FROM users u
+          INNER join userlocation ul on u.UserId=ul.UserId
+          INNER join cities c on ul.CityId=c.CityId
+          INNER join states s on c.StateId =s.StateId
+          INNER JOIN countries cr on s.CountryId=cr.CountryId
+      getUserDetailsByCountryId: SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate, s.StateName ,cr.CountryName
+          FROM users u
+          INNER join userlocation ul on u.UserId=ul.UserId
+          INNER join cities c on ul.CityId=c.CityId
+          INNER join states s on c.StateId =s.StateId
+          INNER JOIN countries cr on s.CountryId=cr.CountryId
+          WHERE cr.CountryId=?
+      getUserDetailsByLanguageId: SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate, s.StateName ,cr.CountryName
+          FROM users u
+          INNER join userlocation ul on u.UserId=ul.UserId
+          INNER join cities c on ul.CityId=c.CityId
+          INNER join states s on c.StateId =s.StateId
+          INNER JOIN countries cr on s.CountryId=cr.CountryId
+          INNER join userlanguages ulg on  u.UserId=ulg.UserId
+          INNER join languages l on l.LanguageId=ulg.LanguageId
+          WHERE l.LanguageId=?
+      getUserDetailsByUserId: SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate, s.StateName ,cr.CountryName
+          FROM users u
+          INNER join userlocation ul on u.UserId=ul.UserId
+          INNER join cities c on ul.CityId=c.CityId
+          INNER join states s on c.StateId =s.StateId
+          INNER JOIN countries cr on s.CountryId=cr.CountryId
+          WHERE u.UserId=?
+      getUserDetailsInUserIds: SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate, s.StateName ,cr.CountryName
+          FROM users u
+          INNER join userlocation ul on u.UserId=ul.UserId
+          INNER join cities c on ul.CityId=c.CityId
+          INNER join states s on c.StateId =s.StateId
+          INNER JOIN countries cr on s.CountryId=cr.CountryId
+          WHERE u.UserId IN (:userId)
       getLanguagesByUserId: SELECT l.LanguageId, l.LanguageName from users u, languages l, userlanguages ul where 
                 u.UserId=ul.UserId and l.LanguageId=ul.LanguageId and u.UserId=?
 
@@ -41,4 +68,6 @@ service:
     webServices:
       fl-skill-service:
         endpoint: http://localhost:8082/user-skills
+      fl-project-service:
+        endpoint: http://localhost:8083/projects/rating
 

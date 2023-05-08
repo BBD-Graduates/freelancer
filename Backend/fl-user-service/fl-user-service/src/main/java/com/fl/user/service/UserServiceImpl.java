@@ -1,19 +1,18 @@
 package com.fl.user.service;
 
 import com.fl.user.config.Constant;
-
+import com.fl.user.feignClient.UserProjectClient;
 import com.fl.user.feignClient.UserSkillClient;
 import com.fl.user.model.FlResponse;
-
 import com.fl.user.model.request.UserLanguageRequest;
 import com.fl.user.model.request.UserRequest;
 import com.fl.user.model.response.LanguageResponse;
+import com.fl.user.model.response.RatingResponse;
 import com.fl.user.model.response.UserResponse;
 import com.fl.user.model.response.UserSkillsResponse;
 import com.fl.user.repository.DbQueries;
 import com.fl.user.service.serviceInterface.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,11 +20,10 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Service;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -35,8 +33,8 @@ public class UserServiceImpl implements UserService {
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final DbQueries dbQueries;
-    @Autowired
     private final UserSkillClient userSkillClient;
+    private final UserProjectClient userProjectClient;
 
 
     @Override
@@ -69,13 +67,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-
-    public List<UserResponse> getUsers(Integer languageId, Integer userId, Integer skillId) {
+    public List<UserResponse> getUsers(Integer languageId, Integer userId, Integer skillId, Integer countryId) {
         try {
             FlResponse<List<UserSkillsResponse>> userList;
             List<UserResponse> userDetails;
 
-            if (!skillId.equals(0)) {
+            if (skillId != null) {
                 userList = userSkillClient.getUserSkillBySkillId(skillId);
                 List<Integer> userIdList = userList.getResponse().stream().map(UserSkillsResponse::getUserId).distinct().toList();
                 SqlParameterSource parameters = new MapSqlParameterSource("userId", userIdList);
@@ -86,9 +83,11 @@ public class UserServiceImpl implements UserService {
                     userDetail.setLanguages(languageList);
                 }
                 return userDetails;
-            } else if (!languageId.equals(0)) {
+            } else if (languageId != null) {
                 userDetails = jdbcTemplate.query(dbQueries.getUserDetailsByLanguageId(), BeanPropertyRowMapper.newInstance(UserResponse.class), languageId);
-            } else if (!userId.equals(0)) {
+            } else if (countryId != null) {
+                userDetails = jdbcTemplate.query(dbQueries.getUserDetailsByCountryId(), BeanPropertyRowMapper.newInstance(UserResponse.class), countryId);
+            } else if (userId != null) {
                 userDetails = jdbcTemplate.query(dbQueries.getUserDetailsByUserId(), BeanPropertyRowMapper.newInstance(UserResponse.class), userId);
 
             } else {
@@ -99,8 +98,22 @@ public class UserServiceImpl implements UserService {
                 Integer fetchUserId = detail.getUserId();
                 List<LanguageResponse> languageList = getUserLanguage(fetchUserId);
                 FlResponse<List<UserSkillsResponse>> skillList = userSkillClient.getUserSkills(fetchUserId);
+                FlResponse<List<RatingResponse>> ratings = userProjectClient.getUserRatingsByUserId(fetchUserId);
                 detail.setLanguages(languageList);
-                detail.setSkills(skillList.getResponse().get(0).getSkills());
+                if (!skillList.getResponse().isEmpty()) {
+                    detail.setSkills(skillList.getResponse().get(0).getSkills());
+                }
+
+                if (!ratings.getResponse().isEmpty()) {
+                    ratings.getResponse().forEach(rating -> {
+                        detail.getRatings().add(RatingResponse.builder().userId(rating.getUserId())
+                                .projectId(rating.getProjectId())
+                                .ratingDescription(rating.getRatingDescription())
+                                .rating(rating.getRating()).build());
+
+                    });
+
+                }
             });
             return userDetails;
 

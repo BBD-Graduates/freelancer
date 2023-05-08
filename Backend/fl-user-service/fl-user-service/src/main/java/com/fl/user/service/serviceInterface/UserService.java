@@ -9,9 +9,10 @@ import java.util.List;
 public interface UserService {
 
     String insertUser(UserRequest userRequest);
-    String updateUser( Integer userId,UserRequest userRequest);
 
-    List<UserResponse> getUsers(Integer languageId,Integer userId,Integer skillId);
+    String updateUser(Integer userId, UserRequest userRequest);
+
+    List<UserResponse> getUsers(Integer languageId, Integer userId, Integer skillId, Integer countryId);
 
     String insertUserLanguages(List<UserLanguageRequest> userLanguageRequestList);
 
