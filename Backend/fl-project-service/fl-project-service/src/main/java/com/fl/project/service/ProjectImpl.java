@@ -59,17 +59,20 @@ public class ProjectImpl implements ProjectService {
             if (!projects.isEmpty()) {
                 projects.stream().forEach(project -> {
                     FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService.getProjectSkillByProjectId(project.getProjectId());
-                    project.setSkills(skillList.getResponse().get(0).getSkills());
-
+                    if(skillList.getResponse().size()>0){
+                        project.setSkills(skillList.getResponse().get(0).getSkills());
+                    }
                     FlResponse<List<BidResponse>> projectBidList = projectBidService.getProjectBidByProjectId(project.getProjectId());
-                    project.setBids(projectBidList.getResponse().stream().map(bidResponse -> BidResponse.builder()
-                            .bidId(bidResponse.getBidId())
-                            .projectId(bidResponse.getProjectId())
-                            .freelancerId(bidResponse.getFreelancerId())
-                            .amount(bidResponse.getAmount())
-                            .description(bidResponse.getDescription())
-                            .createdDate(bidResponse.getCreatedDate())
-                            .build()).collect(Collectors.toList()));
+                    if(projectBidList.getResponse().size()>0){
+                        project.setBids(projectBidList.getResponse().stream().map(bidResponse -> BidResponse.builder()
+                                .bidId(bidResponse.getBidId())
+                                .projectId(bidResponse.getProjectId())
+                                .freelancerId(bidResponse.getFreelancerId())
+                                .amount(bidResponse.getAmount())
+                                .description(bidResponse.getDescription())
+                                .createdDate(bidResponse.getCreatedDate())
+                                .build()).collect(Collectors.toList()));
+                    }
                 });
                 return projects;
             } else
