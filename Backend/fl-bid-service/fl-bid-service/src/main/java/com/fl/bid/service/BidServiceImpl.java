@@ -21,7 +21,7 @@ public class BidServiceImpl implements BidService {
     public String insertBid(BidRequest bidRequest) {
         try {
             int insertStatus = jdbcTemplate.update(dbQueries.getAddBid(),
-                    bidRequest.getProjectId(), bidRequest.getFreelancerId(), bidRequest.getAmount(), bidRequest.getDescription());
+                    bidRequest.getProjectId(), bidRequest.getFreelancerId(), bidRequest.getAmount(), bidRequest.getDeliveryDays(), bidRequest.getDescription());
             if (insertStatus > 0) {
                 return Constant.INSERTED_SUCCESSFULLY;
             } else {
@@ -47,7 +47,7 @@ public class BidServiceImpl implements BidService {
 
     public String updateBid(BidRequest bidRequest, int bidId) {
         try {
-            int updateStatus = jdbcTemplate.update(dbQueries.getUpdateBid(), bidRequest.getAmount(), bidRequest.getDescription(), bidId);
+            int updateStatus = jdbcTemplate.update(dbQueries.getUpdateBid(), bidRequest.getAmount(), bidRequest.getDeliveryDays(), bidRequest.getDescription(), bidId);
             if (updateStatus > 0) {
                 return Constant.UPDATED_SUCCESSFULLY;
             } else {

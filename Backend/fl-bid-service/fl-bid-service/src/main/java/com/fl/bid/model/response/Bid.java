@@ -11,7 +11,8 @@ public class Bid {
     private int bidId;
     private int projectId;
     private int freelancerId;
-    private int amount;
+    private float amount;
+    private int deliveryDays;
     private String description;
     private String createdDate;
 
