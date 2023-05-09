@@ -17,6 +17,7 @@ import java.util.List;
 import static com.fl.user.config.Constant.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
@@ -52,12 +53,13 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<FlResponse<List<UserResponse>>> getUsers(@RequestParam(name = "languageId", required = false, defaultValue = "0") Integer languageId,
-                                                                   @RequestParam(name = "userId", required = false, defaultValue = "0") Integer userId,
-                                                                   @RequestParam(name = "skillId", required = false, defaultValue = "0") Integer skillId) {
+    public ResponseEntity<FlResponse<List<UserResponse>>> getUsers(@RequestParam(name = "languageId", required = false) Integer languageId,
+                                                                   @RequestParam(name = "userId", required = false) Integer userId,
+                                                                   @RequestParam(name = "skillId", required = false) Integer skillId,
+                                                                   @RequestParam(name = "countryId", required = false) Integer countryId) {
         try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, userService.getUsers(languageId,userId,skillId), FETCHED_SUCCESSFULLY);
-        
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, userService.getUsers(languageId, userId, skillId, countryId), FETCHED_SUCCESSFULLY);
+
         } catch (Exception e) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, NO_RECORD_FOUND);
         }

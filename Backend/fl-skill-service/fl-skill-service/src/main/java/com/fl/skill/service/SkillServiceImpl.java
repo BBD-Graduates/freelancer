@@ -4,16 +4,12 @@ import com.fl.skill.config.Constant;
 import com.fl.skill.model.request.Skill;
 import com.fl.skill.model.response.SkillRes;
 import com.fl.skill.repository.DbQueries;
-import com.fl.skill.service.serviceInterface.CategoryService;
 import com.fl.skill.service.serviceInterface.SkillService;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -23,7 +19,6 @@ import java.util.List;
 public class SkillServiceImpl implements SkillService {
 
     private final DbQueries dbQueries;
-    private final CategoryService catService;
     private final JdbcTemplate jdbcTemplate;
 
     @Override

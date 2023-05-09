@@ -1,7 +1,6 @@
 package com.fl.user.feignClient;
 
 import com.fl.user.model.FlResponse;
-import com.fl.user.model.response.UserResponse;
 import com.fl.user.model.response.UserSkillsResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(url = "${service.props.webServices.fl-skill-service.endpoint}", name = "fl-skill-service")
+@FeignClient(name = "FL-SKILL-SERVICE/user-skills")
 @Service
 public interface UserSkillClient {
 

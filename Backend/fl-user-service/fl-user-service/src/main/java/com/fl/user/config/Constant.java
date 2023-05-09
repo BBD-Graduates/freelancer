@@ -10,8 +10,6 @@ public class Constant {
     public static String REGISTRATION_FAILED = "Registration Failed";
     public static String UPDATION_FAILED = "Updation Failed";
 
-    public static String DELETION_FAILED = "Deletion Failed";
-
     private Constant(){
 
     }
