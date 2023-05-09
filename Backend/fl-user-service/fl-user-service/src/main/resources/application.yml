@@ -63,11 +63,5 @@ db:
     userLanguages:
       insertUserLanguages: INSERT INTO userlanguages(UserId,LanguageId) values(?,?)
 
-service:
-  props:
-    webServices:
-      fl-skill-service:
-        endpoint: http://localhost:8082/user-skills
-      fl-project-service:
-        endpoint: http://localhost:8083/projects/rating
+
 

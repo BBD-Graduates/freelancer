@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(url = "${service.props.webServices.fl-skill-service.endpoint}", name = "fl-skill-service")
+@FeignClient(name = "FL-SKILL-SERVICE/user-skills")
 @Service
 public interface UserSkillClient {
 

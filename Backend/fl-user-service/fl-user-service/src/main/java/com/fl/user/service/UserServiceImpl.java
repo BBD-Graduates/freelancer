@@ -105,14 +105,11 @@ public class UserServiceImpl implements UserService {
                 }
 
                 if (!ratings.getResponse().isEmpty()) {
-                    ratings.getResponse().forEach(rating -> {
-                        detail.getRatings().add(RatingResponse.builder().userId(rating.getUserId())
-                                .projectId(rating.getProjectId())
-                                .ratingDescription(rating.getRatingDescription())
-                                .rating(rating.getRating()).build());
-
-                    });
-
+                    ratings.getResponse().forEach(rating ->
+                            detail.getRatings().add(RatingResponse.builder().userId(rating.getUserId())
+                                    .projectId(rating.getProjectId())
+                                    .ratingDescription(rating.getRatingDescription())
+                                    .rating(rating.getRating()).build()));
                 }
             });
             return userDetails;

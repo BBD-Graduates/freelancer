@@ -17,6 +17,7 @@ import java.util.List;
 import static com.fl.user.config.Constant.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
