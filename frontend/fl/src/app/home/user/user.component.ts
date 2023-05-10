@@ -16,7 +16,6 @@ export class UserComponent implements OnInit {
   getAllCourse() {
     this.httpClient.get('assets/data/courses.json').subscribe({
       next: (course) => {
-        console.log(course);
         this.courses = course as Course[];
       },
       error: (errors) => { },

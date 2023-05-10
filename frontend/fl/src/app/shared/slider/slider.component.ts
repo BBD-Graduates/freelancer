@@ -6,7 +6,7 @@ import { Course } from 'src/app/model/course.model';
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.scss']
 })
-export class SliderComponent implements OnInit,OnChanges,AfterViewInit {
+export class SliderComponent implements OnInit,OnChanges {
   ngOnInit(): void {
   }
 
@@ -18,11 +18,9 @@ export class SliderComponent implements OnInit,OnChanges,AfterViewInit {
   // @ViewChild('slider')
   // slider:ElementRef;
   constructor(){}
-  ngAfterViewInit(): void {
-    throw new Error('Method not implemented.');
-  }
+  
   ngOnChanges(): void {
-    console.log(this.courses)
+    // console.log(this.courses)
   }
   setUpSlider(){}
   getCategories(){
