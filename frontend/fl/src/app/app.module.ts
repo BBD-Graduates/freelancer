@@ -27,8 +27,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { HeadingComponent } from './shared/heading/heading.component';
 import { HowItWorksComponent } from './user/home/how-it-works/how-it-works.component';
 import { SliderComponent } from './shared/slider/slider.component';
+
 import { ProjectListComponent } from './user/project/project-list/project-list.component';
 import { ProjectDetailsComponent } from './user/project/project-details/project-details.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +53,7 @@ import { ProjectDetailsComponent } from './user/project/project-details/project-
     SliderComponent,
     ProjectListComponent,
     ProjectDetailsComponent,
+
   ],
   imports: [
     BrowserModule,
