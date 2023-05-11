@@ -21,6 +21,7 @@ import static com.fl.project.config.Constant.*;
 @RestController
 @RequestMapping("/projects")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class ProjectController {
 
     private final ProjectService projectService;

@@ -19,6 +19,7 @@ import static com.fl.skill.config.Constant.*;
 @RestController
 @RequestMapping("/project-skills")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class ProjectSkillController {
     private final ProjectSkillsService projectSkillsService;
     private final FlResponseUtil flResponseUtil;
