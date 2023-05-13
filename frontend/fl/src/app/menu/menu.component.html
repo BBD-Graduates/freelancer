@@ -21,8 +21,8 @@
         <fl-job-links />
       </div>
       <div class="mt-6">
-        <fl-social-links/>
-    </div>
+        <fl-social-links />
+      </div>
     </div>
   </div>
   <div (click)="this.closeSidebar()" class="bg-gray-900 hidden md:block md:w-full opacity-60">
@@ -39,7 +39,7 @@
         <li>
           <fl-email />
         </li>
-        <li><fl-social-links/></li>
+        <li><fl-social-links /></li>
       </ul>
     </div>
   </div>
@@ -48,7 +48,7 @@
     <div
       class="py-5  flex items-center justify-between container {{isMenuScrolled?'':'border'}} border-emerald-500 border-opacity-30 rounded-xl">
       <a href="">
-        <img alt="logo" src="../../assets/images/logo copy.png">
+        <img alt="logo" src="../../assets/images/logo.png" class="h-16">
       </a>
       <div class="lg:hidden">
         <svg (click)="this.openSidebar()" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -62,12 +62,15 @@
     </div>
   </div>
 </header>
-<router-outlet class="py-52"></router-outlet>
+
+    <router-outlet></router-outlet>
+  
 Footer
 <button *ngIf="isMenuScrolled" (click)="scrollToTop()"
-class="flex text-white transition-all duration-300 fixed bottom-5 right-5 w-10 h-10 bg-emerald-600 hover:bg-slate-800 rounded-full">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 m-auto">
+  class="flex text-white transition-all duration-300 fixed bottom-5 right-5 w-10 h-10 bg-emerald-600 hover:bg-slate-800 rounded-full">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+    class="w-6 h-6 m-auto">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75" />
   </svg>
-  
+
 </button>
