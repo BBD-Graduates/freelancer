@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'xxs': '540px', // min-width
+      },
       animation: {
         upDown: 'upDown 3s linear infinite',
         leftRight: 'leftRight 3s linear infinite',

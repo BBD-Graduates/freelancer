@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { config } from 'src/app/config';
 
 @Component({
   selector: 'fl-job-links',
@@ -11,7 +12,7 @@ export class JobLinksComponent implements OnInit{
   constructor(private _httpClient:HttpClient){}
 
   ngOnInit(): void {
-    this._httpClient.get('http://localhost:8082/categories?categoryId=0').subscribe(res=>{
+    this._httpClient.get(config.skillApi.getCategorySkills).subscribe(res=>{
       this.menuData = res;
       console.log(this.menuData);
     });
