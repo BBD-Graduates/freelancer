@@ -5,7 +5,7 @@ import { config } from 'src/app/config';
 @Component({
   selector: 'fl-job-links',
   templateUrl: './job-links.component.html',
-  styleUrls: ['./job-links.component.scss',]
+  styleUrls: ['./job-links.component.scss']
 })
 export class JobLinksComponent implements OnInit{
   menuData:any;
