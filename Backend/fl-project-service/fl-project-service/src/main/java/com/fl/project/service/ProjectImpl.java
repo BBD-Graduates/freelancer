@@ -62,6 +62,7 @@ public class ProjectImpl implements ProjectService {
                     if(skillList.getResponse().size()>0){
                         project.setSkills(skillList.getResponse().get(0).getSkills());
                     }
+
                     FlResponse<List<BidResponse>> projectBidList = projectBidService.getProjectBidByProjectId(project.getProjectId());
                     if(projectBidList.getResponse().size()>0){
                         project.setBids(projectBidList.getResponse().stream().map(bidResponse -> BidResponse.builder()

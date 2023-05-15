@@ -19,6 +19,7 @@ import static com.fl.skill.config.Constant.*;
 @RestController
 @RequestMapping("/skills")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class SkillController {
 
     private final SkillService skillService;

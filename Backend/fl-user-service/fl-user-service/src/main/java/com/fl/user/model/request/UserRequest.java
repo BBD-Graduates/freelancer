@@ -1,7 +1,5 @@
 package com.fl.user.model.request;
 
-import jakarta.validation.constraints.Null;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

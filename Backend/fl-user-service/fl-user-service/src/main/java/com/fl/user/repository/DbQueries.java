@@ -21,9 +21,11 @@ public class DbQueries {
     @Value("${db.queries.users.getUserDetailsByLanguageId}")
     private String userDetailsByLanguageId;
 
+    @Value("${db.queries.users.getUserDetailsByCountryId}")
+    private String userDetailsByCountryId;
+
     @Value("${db.queries.users.getUserDetailsByUserId}")
     private String userDetailsByUserId;
-
 
     @Value("${db.queries.users.getUserDetailsInUserIds}")
     private String userDetailsInUserIds;

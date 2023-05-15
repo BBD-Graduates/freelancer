@@ -20,6 +20,7 @@ import static com.fl.skill.config.Constant.*;
 @RestController
 @RequestMapping("/categories")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class CategoryController {
 
     private final CategoryService categoryService;
