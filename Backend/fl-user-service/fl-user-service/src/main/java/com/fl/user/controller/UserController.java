@@ -20,6 +20,7 @@ import static com.fl.user.config.Constant.*;
 @CrossOrigin
 @RequestMapping("/users")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class UserController {
 
     private final UserService userService;
