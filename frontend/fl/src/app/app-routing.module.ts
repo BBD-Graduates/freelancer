@@ -7,6 +7,7 @@ import { ProjectListComponent } from './user/project/project-list/project-list.c
 import { ProjectDetailsComponent } from './user/project/project-details/project-details.component';
 
 const routes: Routes = [
+
   {path:'', component:HomeComponent},
   {path:'test', component:TestComponent},
   {path:'test/:id', component:TestComponent},
@@ -15,10 +16,11 @@ const routes: Routes = [
   {path:'project-details', component:ProjectDetailsComponent},
   {path:'skill/9/project-details', component:ProjectListComponent},
 
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -19,8 +19,8 @@ eureka:
 db:
   queries:
     users:
-      insertUser: INSERT INTO users(Email) values(?)
-      updateUser: UPDATE users set FirstName=?, LastName=?, Company=?, PhNo=?, PhotoURL=? WHERE UserId=?
+      insertUser: INSERT INTO users(FirstName,LastName,Email) values(?,?,?)
+      updateUser: UPDATE users set FirstName=?, LastName=?, HeadLine=?, Summary=?, Company=?, PhNo=?, PhotoURL=? WHERE UserId=?
       getUserDetails: SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate, s.StateName ,cr.CountryName
           FROM users u
           INNER join userlocation ul on u.UserId=ul.UserId
@@ -50,6 +50,13 @@ db:
           INNER join states s on c.StateId =s.StateId
           INNER JOIN countries cr on s.CountryId=cr.CountryId
           WHERE u.UserId=?
+      getUserDetailsByEmail: SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate, s.StateName ,cr.CountryName
+        FROM users u
+        INNER join userlocation ul on u.UserId=ul.UserId
+        INNER join cities c on ul.CityId=c.CityId
+        INNER join states s on c.StateId =s.StateId
+        INNER JOIN countries cr on s.CountryId=cr.CountryId
+        WHERE u.Email=?
       getUserDetailsInUserIds: SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.CreatedDate, s.StateName ,cr.CountryName
           FROM users u
           INNER join userlocation ul on u.UserId=ul.UserId

@@ -22,10 +22,17 @@ import { HeadingComponent } from './shared/heading/heading.component';
 import { HowItWorksComponent } from './user/home/how-it-works/how-it-works.component';
 import { SliderComponent } from './shared/slider/slider.component';
 
+import { GoogleAuthComponent } from './shared/google-auth/google-auth.component';
+import {
+  GoogleLoginProvider,
+  GoogleSigninButtonModule,
+  SocialAuthService,
+  SocialAuthServiceConfig,
+  SocialLoginModule,
+} from '@abacritt/angularx-social-login';
 import { ProjectListComponent } from './user/project/project-list/project-list.component';
 import { ProjectDetailsComponent } from './user/project/project-details/project-details.component';
 import { TextboxComponent } from './shared/textbox/textbox.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +53,7 @@ import { TextboxComponent } from './shared/textbox/textbox.component';
     HeadingComponent,
     HowItWorksComponent,
     SliderComponent,
+    GoogleAuthComponent,
     ProjectListComponent,
     ProjectDetailsComponent,
     TextboxComponent,
@@ -54,9 +62,33 @@ import { TextboxComponent } from './shared/textbox/textbox.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    GoogleSigninButtonModule,
+    SocialLoginModule,
     HttpClientModule
+
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    SocialAuthService,
+
+    {
+      provide: 'SocialAuthServiceConfig',
+
+      useValue: {
+        autoLogin: false,
+
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+
+            provider: new GoogleLoginProvider(
+              '213833434245-a09bde18s63cojj5qk9bptmhr20dji8u.apps.googleusercontent.com'
+            ),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

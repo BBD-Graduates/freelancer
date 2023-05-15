@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String insertUser(UserRequest userRequest) {
         try {
-            int insertStatus = jdbcTemplate.update(dbQueries.getAddUser(), userRequest.getEmail());
+            int insertStatus = jdbcTemplate.update(dbQueries.getAddUser(), userRequest.getFirstName(), userRequest.getLastName(), userRequest.getEmail());
             if (insertStatus > 0) {
                 return Constant.REGISTERED_SUCCESSFULLY;
             } else {
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     public String updateUser(Integer userId, UserRequest userRequest) {
         try {
             int updateStatus = jdbcTemplate.update(dbQueries.getUpdateUser(), userRequest.getFirstName(), userRequest.getLastName()
-                    , userRequest.getCompany(), userRequest.getPhNo(), userRequest.getPhotoURL(), userId);
+                    , userRequest.getHeadLine(), userRequest.getSummary(), userRequest.getCompany(), userRequest.getPhNo(), userRequest.getPhotoURL(), userId);
             if (updateStatus > 0) {
                 return Constant.UPDATED_SUCCESSFULLY;
             } else {
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserResponse> getUsers(Integer languageId, Integer userId, Integer skillId, Integer countryId) {
+    public List<UserResponse> getUsers(Integer languageId, Integer userId, Integer skillId, Integer countryId, String email) {
         try {
             FlResponse<List<UserSkillsResponse>> userList;
             List<UserResponse> userDetails;
@@ -89,31 +89,32 @@ public class UserServiceImpl implements UserService {
                 userDetails = jdbcTemplate.query(dbQueries.getUserDetailsByCountryId(), BeanPropertyRowMapper.newInstance(UserResponse.class), countryId);
             } else if (userId != null) {
                 userDetails = jdbcTemplate.query(dbQueries.getUserDetailsByUserId(), BeanPropertyRowMapper.newInstance(UserResponse.class), userId);
-
+            } else if (email != null) {
+                userDetails = jdbcTemplate.query(dbQueries.getUserDetailsByEmail(), BeanPropertyRowMapper.newInstance(UserResponse.class), email);
             } else {
                 userDetails = jdbcTemplate.query(dbQueries.getUserDetails(), BeanPropertyRowMapper.newInstance(UserResponse.class));
             }
 
-            userDetails.forEach(detail -> {
-                Integer fetchUserId = detail.getUserId();
-                List<LanguageResponse> languageList = getUserLanguage(fetchUserId);
-                FlResponse<List<UserSkillsResponse>> skillList = userSkillClient.getUserSkills(fetchUserId);
-                FlResponse<List<RatingResponse>> ratings = userProjectClient.getUserRatingsByUserId(fetchUserId);
-                detail.setLanguages(languageList);
-                if (!skillList.getResponse().isEmpty()) {
-                    detail.setSkills(skillList.getResponse().get(0).getSkills());
-                }
+                userDetails.forEach(detail -> {
+                    Integer fetchUserId = detail.getUserId();
+                    List<LanguageResponse> languageList = getUserLanguage(fetchUserId);
+                    FlResponse<List<UserSkillsResponse>> skillList = userSkillClient.getUserSkills(fetchUserId);
+                    FlResponse<List<RatingResponse>> ratings = userProjectClient.getUserRatingsByUserId(fetchUserId);
+                    detail.setLanguages(languageList);
+                    if (!skillList.getResponse().isEmpty()) {
+                        detail.setSkills(skillList.getResponse().get(0).getSkills());
+                    }
 
-                if (!ratings.getResponse().isEmpty()) {
-                    ratings.getResponse().forEach(rating ->
-                            detail.getRatings().add(RatingResponse.builder().userId(rating.getUserId())
-                                    .projectId(rating.getProjectId())
-                                    .ratingDescription(rating.getRatingDescription())
-                                    .rating(rating.getRating()).build()));
-                }
-            });
+                    if (!ratings.getResponse().isEmpty()) {
+                        ratings.getResponse().forEach(rating ->
+                                detail.getRatings().add(RatingResponse.builder().userId(rating.getUserId())
+                                        .projectId(rating.getProjectId())
+                                        .ratingDescription(rating.getRatingDescription())
+                                        .rating(rating.getRating()).build()));
+                    }
+                });
+
             return userDetails;
-
         } catch (Exception e) {
             throw e;
         }
