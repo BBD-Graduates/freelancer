@@ -5,9 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatIconModule} from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 import { MenuComponent } from './menu/menu.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { HomeComponent } from './home/home.component';
@@ -27,6 +27,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { HeadingComponent } from './shared/heading/heading.component';
 import { HowItWorksComponent } from './user/home/how-it-works/how-it-works.component';
 import { SliderComponent } from './shared/slider/slider.component';
+import { GoogleAuthComponent } from './shared/google-auth/google-auth.component';
+import {
+  GoogleLoginProvider,
+  GoogleSigninButtonModule,
+  SocialAuthService,
+  SocialAuthServiceConfig,
+  SocialLoginModule,
+} from '@abacritt/angularx-social-login';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +55,7 @@ import { SliderComponent } from './shared/slider/slider.component';
     HeadingComponent,
     HowItWorksComponent,
     SliderComponent,
+    GoogleAuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,9 +66,31 @@ import { SliderComponent } from './shared/slider/slider.component';
     MatDividerModule,
     MatIconModule,
     MatMenuModule,
-    HttpClientModule
+    HttpClientModule,
+    GoogleSigninButtonModule,
+    SocialLoginModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    SocialAuthService,
+
+    {
+      provide: 'SocialAuthServiceConfig',
+
+      useValue: {
+        autoLogin: false,
+
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+
+            provider: new GoogleLoginProvider(
+              '213833434245-a09bde18s63cojj5qk9bptmhr20dji8u.apps.googleusercontent.com'
+            ),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
