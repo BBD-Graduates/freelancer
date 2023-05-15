@@ -63,7 +63,6 @@ public class ProjectImpl implements ProjectService {
                         project.setSkills(skillList.getResponse().get(0).getSkills());
                     }
 
-
                     FlResponse<List<BidResponse>> projectBidList = projectBidService.getProjectBidByProjectId(project.getProjectId());
                     if(projectBidList.getResponse().size()>0){
                         project.setBids(projectBidList.getResponse().stream().map(bidResponse -> BidResponse.builder()
@@ -75,7 +74,6 @@ public class ProjectImpl implements ProjectService {
                                 .createdDate(bidResponse.getCreatedDate())
                                 .build()).collect(Collectors.toList()));
                     }
-
                 });
                 return projects;
             } else

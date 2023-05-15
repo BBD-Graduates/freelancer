@@ -26,6 +26,7 @@ import { ProjectListComponent } from './user/project/project-list/project-list.c
 import { ProjectDetailsComponent } from './user/project/project-details/project-details.component';
 import { TextboxComponent } from './shared/textbox/textbox.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
