@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
             } else {
                 userDetails = jdbcTemplate.query(dbQueries.getUserDetails(), BeanPropertyRowMapper.newInstance(UserResponse.class));
             }
-            if (!userDetails.isEmpty()) {
+
                 userDetails.forEach(detail -> {
                     Integer fetchUserId = detail.getUserId();
                     List<LanguageResponse> languageList = getUserLanguage(fetchUserId);
@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
                                         .rating(rating.getRating()).build()));
                     }
                 });
-            }
+
             return userDetails;
         } catch (Exception e) {
             throw e;
