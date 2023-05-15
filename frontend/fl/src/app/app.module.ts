@@ -24,11 +24,8 @@ import { SliderComponent } from './shared/slider/slider.component';
 
 import { ProjectListComponent } from './user/project/project-list/project-list.component';
 import { ProjectDetailsComponent } from './user/project/project-details/project-details.component';
-<<<<<<< HEAD
 import { TextboxComponent } from './shared/textbox/textbox.component';
-=======
 
->>>>>>> f25f867d4044c1bea64efc35599e243a85610c5a
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,11 +48,7 @@ import { TextboxComponent } from './shared/textbox/textbox.component';
     SliderComponent,
     ProjectListComponent,
     ProjectDetailsComponent,
-<<<<<<< HEAD
     TextboxComponent,
-=======
-
->>>>>>> f25f867d4044c1bea64efc35599e243a85610c5a
   ],
   imports: [
     BrowserModule,
