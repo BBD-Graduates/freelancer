@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/bids")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class BidController {
     private final BidService bidService;
     private final FlResponseUtil flResponseUtil;
