@@ -1,15 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatIconModule} from '@angular/material/icon';
 import { MenuComponent } from './menu/menu.component';
-import { MatMenuModule } from '@angular/material/menu';
 import { HomeComponent } from './home/home.component';
 import { AuthLinksComponent } from './shared/auth-links/auth-links.component';
 import { MobileComponent } from './shared/mobile/mobile.component';
@@ -30,6 +24,8 @@ import { SliderComponent } from './shared/slider/slider.component';
 
 import { ProjectListComponent } from './user/project/project-list/project-list.component';
 import { ProjectDetailsComponent } from './user/project/project-details/project-details.component';
+import { TextboxComponent } from './shared/textbox/textbox.component';
+
 
 @NgModule({
   declarations: [
@@ -53,17 +49,12 @@ import { ProjectDetailsComponent } from './user/project/project-details/project-
     SliderComponent,
     ProjectListComponent,
     ProjectDetailsComponent,
-
+    TextboxComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatDividerModule,
-    MatIconModule,
-    MatMenuModule,
     HttpClientModule
   ],
   providers: [],

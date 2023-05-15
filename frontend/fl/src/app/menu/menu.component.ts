@@ -1,5 +1,4 @@
 import { Component, HostListener } from '@angular/core';
-import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'fl-menu',
