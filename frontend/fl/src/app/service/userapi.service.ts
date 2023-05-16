@@ -18,11 +18,12 @@ export class UserapiService {
       if (userStatus?.response.length > 0) {
         console.log('User Exist');
         sessionStorage.setItem('userId', userStatus?.response[0]['email']);
+        if (userStatus?.response[0]['userRole'] == 'Admin') {
+        } else {
+        }
       } else {
         console.log('User not Exist');
         const newUser = await this.registerUser(userData);
-
-        console.log('User not Exist', newUser?.response);
         if (newUser?.message == 'Registration successful') {
           console.log('New User Registered');
           if (userData.email != null) {
