@@ -1,0 +1,48 @@
+<div class="flex">
+    <input type="checkbox" id="menu-toggle" class="hidden">
+    <label for="menu-toggle" class="block cursor-pointer md:hidden" (click)="toggleSidebar()">
+      <svg class="h-6 w-6 fill-current text-gray-800" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path
+        d="M4 6h16M4 12h16M4 18h16"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      ></path>
+    </svg>
+  </label>
+  <div [class]="'hidden md:block ' + (showSidebar ? 'w-64' : 'w-0')">
+    <div [class]="'fixed inset-y-0 left-0 bg-gray-800 overflow-y-auto ' + (showSidebar ? 'w-64' : 'w-0')">
+        <input type="checkbox" id="menu-toggle" class="hidden">
+        <label for="menu-toggle" class="block cursor-pointer md:hidden" (click)="toggleSidebar()">
+          <svg class="h-6 w-6 fill-current text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+              d="M4 6h16M4 12h16M4 18h16"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            ></path>
+          </svg>
+        </label>
+        <div class="hidden md:block">
+          <ul class="py-6">
+            <li class="px-4 py-2">
+              <a href="#" class="text-white hover:text-gray-200">Home</a>
+            </li>
+            <li class="px-4 py-2">
+              <a href="#" class="text-white hover:text-gray-200">About</a>
+            </li>
+            <li class="px-4 py-2">
+              <a href="#" class="text-white hover:text-gray-200">Services</a>
+            </li>
+            <li class="px-4 py-2">
+              <a href="#" class="text-white hover:text-gray-200">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+  </div>
+  <div class="flex-1 bg-gray-100">
+    <!-- Content of your application -->
+  </div>
+</div>
+  
+<router-outlet/>
+<!-- <router-outlet name="admin" /> -->
+<a [routerLink]="[{ outlets: { userSecondary: 'any' } }]">about</a>
