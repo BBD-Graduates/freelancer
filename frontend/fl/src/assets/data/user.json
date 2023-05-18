@@ -1,0 +1,123 @@
+[
+  {
+    "name":"Data Science and Machine Learning with Python - Hands On!",
+    "thumbnail":"courses-01.jpg",
+    "userName":"Jason Williams",
+    "userImage":"userName-01.jpg",
+    "category":"Science",
+    "hours":"08hr 15 mins",
+    "completeProjects":29,
+    "price":385,
+    "rating":4.1
+  },
+  {
+    "name":"Create Amazing Color Schemes for Your UX Design Projects",
+    "thumbnail":"courses-02.jpg",
+    "userName":"Pamela Foster",
+    "userImage":"userName-02.jpg",
+    "category":"Science",
+    "hours":"08hr 15 mins",
+    "completeProjects":29,
+    "price":420,
+    "rating":4.3
+  },
+  {
+    "name":"Culture & Leadership: Strategies for a Successful Business",
+    "thumbnail":"courses-03.jpg",
+    "userName":"Rose Simmons",
+    "userImage":"userName-03.jpg",
+    "category":"Science",
+    "hours":"08hr 15 mins",
+    "completeProjects":29,
+    "price":295,
+    "rating":4.9
+  },
+  {
+    "name":"Finance Series: Learn to Budget and Calculate your Net Worth.",
+    "thumbnail":"courses-04.jpg",
+    "userName":"Jason Williams",
+    "userImage":"userName-04.jpg",
+    "category":"Finance",
+    "hours":"08hr 15 mins",
+    "completeProjects":29,
+    "price":0,
+    "rating":4.9
+  },
+  {
+    "name":"Build Brand Into Marketing: Tackling the New Marketing Landscape",
+    "thumbnail":"courses-05.jpg",
+    "userName":"Jason Williams",
+    "userImage":"userName-05.jpg",
+    "category":"Marketing",
+    "hours":"08hr 15 mins",
+    "completeProjects":29,
+    "price":136,
+    "rating":4.9
+  },
+  {
+    "name":"Graphic Design: Illustrating Badges and Icons with Geometric Shapes",
+    "thumbnail":"courses-06.jpg",
+    "userName":"Jason Williams",
+    "userImage":"userName-06.jpg",
+    "category":"Science",
+    "hours":"08hr 15 mins",
+    "completeProjects":29,
+    "price":237,
+    "rating":4.9
+  },
+  {
+    "name":"Graphic Design: Illustrating Badges and Icons with Geometric Shapes",
+    "thumbnail":"courses-06.jpg",
+    "userName":"Jason Williams",
+    "userImage":"userName-06.jpg",
+    "category":"UI/UX Design",
+    "hours":"08hr 15 mins",
+    "completeProjects":29,
+    "price":237,
+    "rating":4.9
+  },
+  {
+    "name":"Graphic Design: Illustrating Badges and Icons with Geometric Shapes",
+    "thumbnail":"courses-06.jpg",
+    "userName":"Jason Williams",
+    "userImage":"userName-06.jpg",
+    "category":"Development",
+    "hours":"08hr 15 mins",
+    "completeProjects":29,
+    "price":237,
+    "rating":4.9
+  },
+  {
+    "name":"Graphic Design: Illustrating Badges and Icons with Geometric Shapes",
+    "thumbnail":"courses-06.jpg",
+    "userName":"Jason Williams",
+    "userImage":"userName-06.jpg",
+    "category":"Data Science",
+    "hours":"08hr 15 mins",
+    "completeProjects":29,
+    "price":237,
+    "rating":4.9
+  },
+  {
+    "name":"Graphic Design: Illustrating Badges and Icons with Geometric Shapes",
+    "thumbnail":"courses-06.jpg",
+    "userName":"Jason Williams",
+    "userImage":"userName-06.jpg",
+    "category":"Business",
+    "hours":"08hr 15 mins",
+    "completeProjects":29,
+    "price":237,
+    "rating":4
+  },
+  {
+    "name":"Graphic Design: Illustrating Badges and Icons with Geometric Shapes",
+    "thumbnail":"courses-06.jpg",
+    "userName":"Jason Williams",
+    "userImage":"userName-06.jpg",
+    "category":"Design",
+    "hours":"08hr 15 mins",
+    "completeProjects":29,
+    "price":237,
+    "rating":3
+  }
+]
