@@ -25,6 +25,7 @@ public class UserResponse {
     private String phNo;
     private Boolean isVerified;
     private String photoURL;
+    private String userRole;
     private Date createdDate;
     private String stateName;
     private String countryName;
