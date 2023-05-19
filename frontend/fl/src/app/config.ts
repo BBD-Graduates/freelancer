@@ -11,5 +11,4 @@ export const config = {
   BidApi:{
     insertBid: "http://localhost:8084/bids"
   }
-
 }

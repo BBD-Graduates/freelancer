@@ -5,8 +5,6 @@ import { ProjectListComponent } from '../project-list/project-list.component';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 
-
-
 @Component({
   selector: 'fl-project-details',
   templateUrl: './project-details.component.html',
