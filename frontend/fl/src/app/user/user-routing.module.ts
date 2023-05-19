@@ -31,7 +31,7 @@ const routes: Routes = [
         component: ProjectDetailsComponent,
       },
       {
-        path: 'project-details',
+        path: 'skill/:id/project-details/:id',
         component: ProjectDetailsComponent,
       },
     ]
