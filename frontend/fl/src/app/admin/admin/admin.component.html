@@ -1,48 +1,58 @@
 <div class="flex">
-    <input type="checkbox" id="menu-toggle" class="hidden">
-    <label for="menu-toggle" class="block cursor-pointer md:hidden" (click)="toggleSidebar()">
-      <svg class="h-6 w-6 fill-current text-gray-800" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path
-        d="M4 6h16M4 12h16M4 18h16"
-        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-      ></path>
+  <div class="relative bg-blue-700 h-screen p-5 pt-5 {{showSidebar? 'w-72':'w-20'}} duration-200 ">
+    <svg xmlns="http://www.w3.org/2000/svg" (click)="this.toggleSidebar()" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class=" w-6 h-6 bg-white text-emerald-700 text-3xl rounded-full absolute -right-3 top-9 border-x-2 border-emerald-950 cursor-pointer {{!showSidebar && 'rotate-180'}}">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
     </svg>
-  </label>
-  <div [class]="'hidden md:block ' + (showSidebar ? 'w-64' : 'w-0')">
-    <div [class]="'fixed inset-y-0 left-0 bg-gray-800 overflow-y-auto ' + (showSidebar ? 'w-64' : 'w-0')">
-        <input type="checkbox" id="menu-toggle" class="hidden">
-        <label for="menu-toggle" class="block cursor-pointer md:hidden" (click)="toggleSidebar()">
-          <svg class="h-6 w-6 fill-current text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path
-              d="M4 6h16M4 12h16M4 18h16"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            ></path>
+    <div class="inline-flex"> 
+      <a href="/home">
+        <img alt="logo" src="../../../../assets/images/logo.png" class="{{showSidebar? 'h-16':'h-10 rotate-[360deg]'}} duration-500 block float-left mr-2">
+      </a>
+      <h1 class="text-white origin-left font-medium text-2xl duration-500 {{!showSidebar && 'hidden'}}">FreeLance Fordge</h1>
+    </div>
+    <ul class="pt-2">
+      <li class="text-gray-300 p-2 text-sm flex items-center gap-x-4 cursor-pointer hover:text-gray-800 hover:bg-slate-300 mt-2 rounded-md" routerLink="category">
+        <span class="text-2xl block float-left" title="Category">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
           </svg>
-        </label>
-        <div class="hidden md:block">
-          <ul class="py-6">
-            <li class="px-4 py-2">
-              <a href="#" class="text-white hover:text-gray-200">Home</a>
-            </li>
-            <li class="px-4 py-2">
-              <a href="#" class="text-white hover:text-gray-200">About</a>
-            </li>
-            <li class="px-4 py-2">
-              <a href="#" class="text-white hover:text-gray-200">Services</a>
-            </li>
-            <li class="px-4 py-2">
-              <a href="#" class="text-white hover:text-gray-200">Contact</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      
+        </span>
+        <span class="text-base font-medium flex-1 duration-200 {{!showSidebar && 'hidden'}}">
+          Category
+        </span> 
+      </li>
+      <li class="text-gray-300 p-2 text-sm flex items-center gap-x-4 cursor-pointer hover:text-gray-800 hover:bg-slate-300 mt-2 rounded-md" routerLink="skill">
+        <span class="text-2xl block float-left" title="Skill">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+          </svg>
+        </span>
+        <span class="text-base font-medium flex-1 duration-200 {{!showSidebar && 'hidden'}}">
+          Skill
+        </span> 
+      </li>
+      <li class="text-gray-300 p-2 text-sm flex items-center gap-x-4 cursor-pointer hover:text-gray-800 hover:bg-slate-300 mt-2 rounded-md" routerLink="project">
+        <span class="text-2xl block float-left" title="Project">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+          </svg>
+        </span>
+        <span class="text-base font-medium flex-1 duration-200 {{!showSidebar && 'hidden'}}">
+          Project
+        </span> 
+      </li>
+      <li class="text-gray-300 p-2 text-sm flex items-center gap-x-4 cursor-pointer hover:text-gray-800 hover:bg-slate-300 mt-2 rounded-md" routerLink="bids">
+        <span class="text-2xl block float-left" title="Bids">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+          </svg>
+        </span>
+        <span class="text-base font-medium flex-1 duration-200 {{!showSidebar && 'hidden'}}">
+          Bids
+        </span> 
+      </li>
+    </ul>  
   </div>
-  <div class="flex-1 bg-gray-100">
-    <!-- Content of your application -->
+  <div class="p-7 w-full">
+    <router-outlet/>
   </div>
 </div>
-  
-<router-outlet/>
-<!-- <router-outlet name="admin" /> -->
-<a [routerLink]="[{ outlets: { userSecondary: 'any' } }]">about</a>
