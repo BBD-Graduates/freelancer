@@ -7,7 +7,7 @@ spring:
     name: fl-bid-service
   #database configuration:mysql
   datasource:
-    url: jdbc:mysql://localhost:3306/fl_bid?useSSL=false
+    url: jdbc:mysql://localhost:3306/fl_bids?useSSL=false
     username: root
     password:
 
