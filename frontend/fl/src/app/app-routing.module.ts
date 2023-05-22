@@ -9,7 +9,7 @@ const routes: Routes = [
   // { path: 'admin', loadChildren:() => import('./admin/admin.module').then(m=> m.AdminModule) },
   // { path: '', redirectTo:'/user/home',pathMatch:'full' },
   {path: 'home/', component: HomeComponent  },
-  {path: '', component: HomeComponent  },
+  {path: '', redirectTo:'home',pathMatch:'full'  },
   {path: 'admin', component: AdminComponent  },
 ];
 
