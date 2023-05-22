@@ -4,15 +4,17 @@ import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProjectListComponent } from './components/project/project-list/project-list.component';
 import { ProjectDetailsComponent } from './components/project/project-details/project-details.component';
+import { BrowseFreelancersComponent } from './components/browseFreelancers/browse-freelancers/browse-freelancers.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 const routes: Routes = [
-  // { path: 'home', component: HomeComponent },
   {
-    path: 'home', component: HomeComponent,
+    path: 'home',
+    component: HomeComponent,
     children: [
       {
         path: '',
-        component: DashboardComponent,
+        component: LandingPageComponent,
       },
       {
         path: 'dashboard',
@@ -34,13 +36,16 @@ const routes: Routes = [
         path: 'skill/:id/project-details/:id',
         component: ProjectDetailsComponent,
       },
-    ]
+      {
+        path: 'users',
+        component: BrowseFreelancersComponent,
+      },
+    ],
   },
-  // { path: 'dashboard', component: DashboardComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class UserRoutingModule { }
+export class UserRoutingModule {}

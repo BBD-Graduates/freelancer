@@ -1,5 +1,5 @@
 server:
-  port : 8081
+  port: 8081
 
 #microservices configuration
 spring:
@@ -19,56 +19,60 @@ eureka:
 db:
   queries:
     users:
-      insertUser: INSERT INTO users(FirstName,LastName,Email) values(?,?,?)
-      updateUser: UPDATE users set FirstName=?, LastName=?, HeadLine=?, Summary=?, Company=?, PhNo=?, PhotoURL=? WHERE UserId=?
-      getUserDetails: SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
-          FROM users u
-          LEFT join userlocation ul on u.UserId=ul.UserId
-          LEFT join cities c on ul.CityId=c.CityId
-          LEFT join states s on c.StateId =s.StateId
-          LEFT JOIN countries cr on s.CountryId=cr.CountryId
-      getUserDetailsByCountryId: SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
-          FROM users u
-          LEFT join userlocation ul on u.UserId=ul.UserId
-          LEFT join cities c on ul.CityId=c.CityId
-          LEFT join states s on c.StateId =s.StateId
-          LEFT JOIN countries cr on s.CountryId=cr.CountryId
-          WHERE cr.CountryId=?
-      getUserDetailsByLanguageId: SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
-          FROM users u
-          LEFT join userlocation ul on u.UserId=ul.UserId
-          LEFT join cities c on ul.CityId=c.CityId
-          LEFT join states s on c.StateId =s.StateId
-          LEFT JOIN countries cr on s.CountryId=cr.CountryId
-          LEFT join userlanguages ulg on  u.UserId=ulg.UserId
-          LEFT join languages l on l.LanguageId=ulg.LanguageId
-          WHERE l.LanguageId=?
-      getUserDetailsByUserId: SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
-          FROM users u
-          LEFT join userlocation ul on u.UserId=ul.UserId
-          LEFT join cities c on ul.CityId=c.CityId
-          LEFT join states s on c.StateId =s.StateId
-          LEFT JOIN countries cr on s.CountryId=cr.CountryId
-          WHERE u.UserId=?
-      getUserDetailsByEmail: SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
+      insertUser: INSERT INTO users(FirstName,LastName,Email,PhotoUrl) values(?,?,?,?)
+      updateUser: UPDATE users set FirstName=?, LastName=?, HeadLine=?, Summary=?, Company=?, PhNo=?, PhotoUrl=? WHERE UserId=?
+      getUserDetails:
+        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
         FROM users u
-          LEFT join userlocation ul on u.UserId=ul.UserId
-          LEFT join cities c on ul.CityId=c.CityId
-          LEFT join states s on c.StateId =s.StateId
-          LEFT JOIN countries cr on s.CountryId=cr.CountryId
+        LEFT join userlocation ul on u.UserId=ul.UserId
+        LEFT join cities c on ul.CityId=c.CityId
+        LEFT join states s on c.StateId =s.StateId
+        LEFT JOIN countries cr on s.CountryId=cr.CountryId
+      getUserDetailsByCountryId:
+        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
+        FROM users u
+        LEFT join userlocation ul on u.UserId=ul.UserId
+        LEFT join cities c on ul.CityId=c.CityId
+        LEFT join states s on c.StateId =s.StateId
+        LEFT JOIN countries cr on s.CountryId=cr.CountryId
+        WHERE cr.CountryId=?
+      getUserDetailsByLanguageId:
+        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
+        FROM users u
+        LEFT join userlocation ul on u.UserId=ul.UserId
+        LEFT join cities c on ul.CityId=c.CityId
+        LEFT join states s on c.StateId =s.StateId
+        LEFT JOIN countries cr on s.CountryId=cr.CountryId
+        LEFT join userlanguages ulg on  u.UserId=ulg.UserId
+        LEFT join languages l on l.LanguageId=ulg.LanguageId
+        WHERE l.LanguageId=?
+      getUserDetailsByUserId:
+        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
+        FROM users u
+        LEFT join userlocation ul on u.UserId=ul.UserId
+        LEFT join cities c on ul.CityId=c.CityId
+        LEFT join states s on c.StateId =s.StateId
+        LEFT JOIN countries cr on s.CountryId=cr.CountryId
+        WHERE u.UserId=?
+      getUserDetailsByEmail:
+        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
+        FROM users u
+        LEFT join userlocation ul on u.UserId=ul.UserId
+        LEFT join cities c on ul.CityId=c.CityId
+        LEFT join states s on c.StateId =s.StateId
+        LEFT JOIN countries cr on s.CountryId=cr.CountryId
         WHERE u.Email=?
-      getUserDetailsInUserIds: SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoURL,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
-          FROM users u
-          LEFT join userlocation ul on u.UserId=ul.UserId
-          LEFT join cities c on ul.CityId=c.CityId
-          LEFT join states s on c.StateId =s.StateId
-          LEFT JOIN countries cr on s.CountryId=cr.CountryId
-          WHERE u.UserId IN (:userId)
-      getLanguagesByUserId: SELECT l.LanguageId, l.LanguageName from users u, languages l, userlanguages ul where 
-                u.UserId=ul.UserId and l.LanguageId=ul.LanguageId and u.UserId=?
+      getUserDetailsInUserIds:
+        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
+        FROM users u
+        LEFT join userlocation ul on u.UserId=ul.UserId
+        LEFT join cities c on ul.CityId=c.CityId
+        LEFT join states s on c.StateId =s.StateId
+        LEFT JOIN countries cr on s.CountryId=cr.CountryId
+        WHERE u.UserId IN (:userId)
+      getLanguagesByUserId:
+        SELECT l.LanguageId, l.LanguageName from users u, languages l, userlanguages ul where
+        u.UserId=ul.UserId and l.LanguageId=ul.LanguageId and u.UserId=?
 
     userLanguages:
       insertUserLanguages: INSERT INTO userlanguages(UserId,LanguageId) values(?,?)
-
-
-

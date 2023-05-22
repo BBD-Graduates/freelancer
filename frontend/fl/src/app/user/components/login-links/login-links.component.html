@@ -1,12 +1,43 @@
 <ul class="justify-center flex gap-6 font-semibold text-slate-700 text-lg">
-  <!-- <li >
-        <fl-button class="hidden lg:block" name="Sign In" size="L"/>
-        <fl-button class="lg:hidden" name="Sign In" size="M" shade="W" animation="F" />
-    </li>
-    <li>
-        <fl-button name="Sign Up" class="hidden lg:block" name="Sign Up" size="L" shade="W" animation="F" />
-        <fl-button class="lg:hidden" name="Sign Up" size="M" shade="W" animation="F" />
-    </li> -->
-  <fl-google-auth></fl-google-auth>
-</ul>
+  <ng-container *ngIf="sessionStatus;else elseTemplate">
+    <fl-google-auth></fl-google-auth>
+  </ng-container>
 
+  <ng-template #elseTemplate>
+    <li class="p-3 border-t lg:border-0">
+      <div class="group inline-block">
+        <button class="outline-none focus:outline-none rounded-sm flex items-center min-w-32">
+          <span class="pr-1 font-semibold flex-1"><img class="h-16 rounded-full" [src]="profileUrl"
+              referrerpolicy="no-referrer" alt="ProfilePic">
+          </span><span>
+            <p clas="pr-1 font-semibold flex-1">{{firstName}}{{lastName}}</p>
+          </span>
+
+        </button>
+        <ul class="bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute 
+    transition duration-150 ease-in-out origin-top min-w-32">
+          <div>
+            <div>
+              <li class="rounded-sm relative px-3 py-3 hover:bg-gray-100">
+                <button class="w-full text-left flex items-center outline-none focus:outline-none">
+                  <span class="pr-1 flex-1"><a>View Profile</a></span>
+                </button>
+              </li>
+              <li class="rounded-sm relative px-3 py-3 hover:bg-gray-100">
+                <button class="w-full text-left flex items-center outline-none focus:outline-none">
+                  <span class="pr-1 flex-1"><a>Settings</a></span>
+                </button>
+              </li>
+              <li class="rounded-sm relative px-3 py-3 hover:bg-gray-100">
+                <button class="w-full text-left flex items-center outline-none focus:outline-none">
+                  <span class="pr-1 flex-1"><a (click)="logout()">Logout</a></span>
+                </button>
+              </li>
+
+            </div>
+          </div>
+        </ul>
+      </div>
+    </li>
+  </ng-template>
+</ul>

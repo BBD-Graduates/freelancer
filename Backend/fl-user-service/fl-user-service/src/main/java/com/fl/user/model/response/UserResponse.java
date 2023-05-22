@@ -24,7 +24,7 @@ public class UserResponse {
     private String email;
     private String phNo;
     private Boolean isVerified;
-    private String photoURL;
+    private String photoUrl;
     private String userRole;
     private Date createdDate;
     private String stateName;
@@ -35,6 +35,5 @@ public class UserResponse {
     List<SkillResponse> skills = new ArrayList<>();
     @Builder.Default
     List<RatingResponse> ratings=new ArrayList<>();
-
 
 }

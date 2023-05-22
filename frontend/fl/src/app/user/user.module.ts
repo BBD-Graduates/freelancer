@@ -13,6 +13,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UserCardComponent } from './components/user-card/user-card.component';
 import { ProjectDetailsComponent } from './components/project/project-details/project-details.component';
 import { ProjectListComponent } from './components/project/project-list/project-list.component';
+import { BrowseFreelancersComponent } from './components/browseFreelancers/browse-freelancers/browse-freelancers.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 
 @NgModule({
@@ -25,6 +27,8 @@ import { ProjectListComponent } from './components/project/project-list/project-
     UserCardComponent,
     ProjectDetailsComponent,
     ProjectListComponent,
+    BrowseFreelancersComponent,
+    LandingPageComponent,
   ],
   imports: [
     CommonModule,
