@@ -3,20 +3,17 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'fl-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
   isMenuScrolled = false;
   scrollCheck() {
-    if (window.pageYOffset > 100)
-      this.isMenuScrolled = true;
-    else
-      this.isMenuScrolled = false;
-
+    if (window.pageYOffset > 100) this.isMenuScrolled = true;
+    else this.isMenuScrolled = false;
 
     console.log(this.isMenuScrolled);
   }
-  scrollToTop(){
-    document.body.scrollIntoView({behavior:'smooth'}); 
+  scrollToTop() {
+    document.body.scrollIntoView({ behavior: 'smooth' });
   }
 }

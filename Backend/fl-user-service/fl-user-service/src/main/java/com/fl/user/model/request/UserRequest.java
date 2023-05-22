@@ -13,15 +13,17 @@ public class UserRequest {
     @NotNull(message = "Please enter firstName")
     @NotBlank(message = "Please enter firstName")
     private String firstName;
-    @NotNull(message = "Please enter firstName")
-    @NotBlank(message = "Please enter firstName")
+    @NotNull(message = "Please enter lastName")
+    @NotBlank(message = "Please enter lastName")
     private String lastName;
     private String headLine;
     private String summary;
     private String company;
-    @NotNull(message = "Please enter firstName")
-    @NotBlank(message = "Please enter firstName")
+    @NotNull(message = "Please enter email")
+    @NotBlank(message = "Please enter email")
     private String email;
     private String phNo;
-    private String photoURL;
+    @NotNull(message = "Please enter photoUrl")
+    @NotBlank(message = "Please enter photoUrl")
+    private String photoUrl;
 }

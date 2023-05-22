@@ -14,26 +14,36 @@ export class UserapiService {
 
   async loginUser(userData: UserModel) {
     try {
+      console.log('loginUser');
       const userStatus = await this.getAllUsers({ email: userData.email });
       if (userStatus?.response.length > 0) {
         console.log('User Exist');
-        sessionStorage.setItem('userId', userStatus?.response[0]['email']);
+        console.log('authState user: ', userData);
+        sessionStorage.setItem('userEmail', userStatus?.response[0]['email']);
         if (userStatus?.response[0]['userRole'] == 'Admin') {
         } else {
+          this.router.navigate(['/home/dashboard']).then(() => {
+            window.location.reload();
+          });
         }
       } else {
-        console.log('User not Exist');
-        const newUser = await this.registerUser(userData);
-        if (newUser?.message == 'Registration successful') {
-          console.log('New User Registered');
-          if (userData.email != null) {
-            sessionStorage.setItem('userId', userData.email);
+        if (userData.email != null) {
+          console.log('User not Exist');
+          const newUser = await this.registerUser(userData);
+          if (newUser?.message == 'Registration successful') {
+            console.log('New User Registered');
+            sessionStorage.setItem('userEmail', userData.email);
+            this.router.navigate(['/home/dashboard']).then(() => {
+              window.location.reload();
+            });
           }
         }
       }
-    } catch {}
-  }
+    } catch (error) {
+      console.log(error);
+    }
 
+  }
   async getAllUsers({
     languageId,
     userId,
@@ -45,6 +55,7 @@ export class UserapiService {
     userId?: number;
     skillId?: number;
     countryId?: number;
+
     email?: string;
   }) {
     try {
