@@ -6,8 +6,10 @@ import { UserapiService } from './../../user/service/user-api.service';
   styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent {
+
   constructor(private userapiService: UserapiService) {}
   showSidebar = false;
+
 
   toggleSidebar() {
     this.showSidebar = !this.showSidebar;

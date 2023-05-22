@@ -38,6 +38,7 @@ export class GoogleAuthComponent {
       console.log('authState user: ', user);
       console.log('Token from state: ', user.authToken);
       await this.userapiService.loginUser(userData);
+
     });
   }
 

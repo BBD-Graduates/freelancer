@@ -42,8 +42,8 @@ export class UserapiService {
     } catch (error) {
       console.log(error);
     }
-  }
 
+  }
   async getAllUsers({
     languageId,
     userId,
@@ -55,7 +55,8 @@ export class UserapiService {
     userId?: number;
     skillId?: number;
     countryId?: number;
-    email?: String;
+
+    email?: string;
   }) {
     try {
       let params = new HttpParams();
