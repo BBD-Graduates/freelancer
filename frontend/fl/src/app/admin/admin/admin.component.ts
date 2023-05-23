@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-
+import { UserapiService } from './../../user/service/user-api.service';
 @Component({
   selector: 'fl-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+  styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent {
-  showSidebar = true;
+  constructor(private userapiService: UserapiService) {}
+  showSidebar = false;
 
   toggleSidebar() {
     this.showSidebar = !this.showSidebar;

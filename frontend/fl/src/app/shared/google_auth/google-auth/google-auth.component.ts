@@ -32,12 +32,13 @@ export class GoogleAuthComponent {
         firstName: user['firstName'],
         lastName: user['lastName'],
         email: user['email'],
+        photoUrl: user['photoUrl'],
       };
-
-      await this.userapiService.loginUser(userData);
 
       console.log('authState user: ', user);
       console.log('Token from state: ', user.authToken);
+      await this.userapiService.loginUser(userData);
+
     });
   }
 

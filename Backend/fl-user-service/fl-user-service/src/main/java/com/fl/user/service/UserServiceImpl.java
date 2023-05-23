@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String insertUser(UserRequest userRequest) {
         try {
-            int insertStatus = jdbcTemplate.update(dbQueries.getAddUser(), userRequest.getFirstName(), userRequest.getLastName(), userRequest.getEmail());
+            int insertStatus = jdbcTemplate.update(dbQueries.getAddUser(), userRequest.getFirstName(), userRequest.getLastName(), userRequest.getEmail(),userRequest.getPhotoUrl());
             if (insertStatus > 0) {
                 return Constant.REGISTERED_SUCCESSFULLY;
             } else {
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     public String updateUser(Integer userId, UserRequest userRequest) {
         try {
             int updateStatus = jdbcTemplate.update(dbQueries.getUpdateUser(), userRequest.getFirstName(), userRequest.getLastName()
-                    , userRequest.getHeadLine(), userRequest.getSummary(), userRequest.getCompany(), userRequest.getPhNo(), userRequest.getPhotoURL(), userId);
+                    , userRequest.getHeadLine(), userRequest.getSummary(), userRequest.getCompany(), userRequest.getPhNo(), userRequest.getPhotoUrl(), userId);
             if (updateStatus > 0) {
                 return Constant.UPDATED_SUCCESSFULLY;
             } else {
