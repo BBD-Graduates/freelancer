@@ -1,0 +1,54 @@
+<div class="bg-white py-10 px-5 mt-10 border-2 rounded-md shadow-md">
+    <div class="grid grid-row-3 grid-flow-row-dense gap-4 mx-auto">
+        <div class="container">
+            <div class="grid grid-cols-3 gap-2 place-content-center">
+                <div>
+                    <p>Category</p>
+                </div>
+                <div class="col-span-2">
+                    <fl-textbox />
+                </div>
+                <div>
+                    <p>Skill</p>
+                </div>
+                <div class="col-span-2">
+                    <fl-textbox />
+                </div>
+                <div></div>
+                <div><fl-button name="Submit" size="S" shade="W" /></div>
+            </div>
+        </div>
+        <div>
+            <div class='overflow-x-auto w-full'>
+                <table class='w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden'>
+                    <thead class="bg-gray-900">
+                        <tr class="text-white text-left">
+                            <th class="font-semibold text-sm uppercase px-6 py-4">Category </th>
+                            <th class="font-semibold text-sm uppercase px-6 py-4">Skill </th>
+                            <th class="font-semibold text-sm uppercase px-6 py-4"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-slate-400 hover:text-white" *ngFor="let skill of data?.response;let i = index">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="inline-flex w-10 h-10"> <img
+                                                    class='w-10 h-10 object-cover rounded-full' alt='User avatar'
+                                                    src='https://i.imgur.com/siKnZP2.jpg' /> </div>
+                                            <div>
+                                                <p > 1 </p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">{{skill.skillName}}</td>
+                                    <td class="px-6 py-4">
+                                        <a href="#" class="text-purple-800 hover:underline">Edit</a>
+                                    </td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

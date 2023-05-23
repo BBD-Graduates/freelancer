@@ -1,0 +1,99 @@
+<div class="bg-white py-10 px-5 mt-10 border-2 rounded-md shadow-md">
+    <div class="grid grid-flow-row-dense gap-4 mx-auto">
+        <div>
+            <div class='overflow-x-auto w-full'>
+                <table class='w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden'>
+                    <thead class="bg-gray-900">
+                        <tr class="text-white text-left">
+                            <th class="font-semibold text-sm uppercase px-6 py-4">Sr</th>
+                            <th class="font-semibold text-sm uppercase px-6 py-4">Project Title</th>
+                            <th class="font-semibold text-sm uppercase px-6 py-4">Description</th>
+                            <th class="font-semibold text-sm uppercase px-6 py-4">Posted</th>
+                            <th class="font-semibold text-sm uppercase px-6 py-4">Range</th>
+                            <th class="font-semibold text-sm uppercase px-6 py-4">Bids</th>
+                            <th class="font-semibold text-sm uppercase px-6 py-4">Skills</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr *ngFor="let project of projects?.response;let i = index" class="hover:bg-slate-400 hover:text-white">
+                            <td class="px-6 py-4">{{i+1}}</td>
+                            <td class="px-6 py-4">
+                                <a routerLink="1" >{{project.projectName}}</a>
+                            </td>
+                            <td class="px-6 py-4">{{project.projectDescription}}</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="inline-flex w-10 h-10"> <img class='w-10 h-10 object-cover rounded-full'
+                                            alt='User avatar' src='https://i.imgur.com/siKnZP2.jpg' /> </div>
+                                    <div>
+                                        <p> Mira Rodeo </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">{{project.minPrice}}-{{project.maxPrice}}</td>
+                            <td class="px-6 py-4" >
+                                <p>{{project.bid?.length}}</p>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex flex-wrap gap-2" *ngFor="let skill of project.skills">
+                                    <button class="bg-emerald-400 rounded-full px-2">{{skill.skillName}}</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- <tr>
+                            <td>2</td>
+                            <td class="px-6 py-4">
+                                <a routerLink="1">Project 1</a>
+                            </td>
+                            <td class="px-6 py-4">Project Description</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="inline-flex w-10 h-10"> <img class='w-10 h-10 object-cover rounded-full'
+                                            alt='User avatar' src='https://i.imgur.com/siKnZP2.jpg' /> </div>
+                                    <div>
+                                        <p> Mira Rodeo </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">1000-5000</td>
+                            <td class="px-6 py-4">15</td>
+                            <td class="px-6 py-4">
+                                <div class="flex flex-wrap gap-2">
+                                    <button class="bg-red-400 rounded-full px-2">skill 1</button>
+                                    <button class="bg-red-400 rounded-full px-2">skill 2</button>
+                                    <button class="bg-red-400 rounded-full px-2">skill 3</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td class="px-6 py-4">
+                                <a href="#">Project 1</a>
+                            </td>
+                            <td class="px-6 py-4">Project Description</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="inline-flex w-10 h-10"> <img class='w-10 h-10 object-cover rounded-full'
+                                            alt='User avatar' src='https://i.imgur.com/siKnZP2.jpg' /> </div>
+                                    <div>
+                                        <p> Mira Rodeo </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">1000-5000</td>
+                            <td class="px-6 py-4">15</td>
+                            <td class="px-6 py-4">
+                                <div class="flex flex-wrap gap-2">
+                                    <button class="bg-red-400 rounded-full px-2">skill 1</button>
+                                    <button class="bg-red-400 rounded-full px-2">skill 2</button>
+                                    <button class="bg-red-400 rounded-full px-2">skill 3</button>
+                                </div>
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
