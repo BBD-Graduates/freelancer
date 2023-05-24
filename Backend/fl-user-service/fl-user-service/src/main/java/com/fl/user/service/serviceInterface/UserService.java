@@ -12,7 +12,7 @@ public interface UserService {
 
     String updateUser(Integer userId, UserRequest userRequest);
 
-    List<UserResponse> getUsers(Integer languageId, Integer userId, Integer skillId, Integer countryId,String email);
+    List<UserResponse> getUsers(List<Integer> languageIds, Integer userId,  List<Integer> skillIds, Integer countryId,String email,Integer categoryId);
 
     String insertUserLanguages(List<UserLanguageRequest> userLanguageRequestList);
 

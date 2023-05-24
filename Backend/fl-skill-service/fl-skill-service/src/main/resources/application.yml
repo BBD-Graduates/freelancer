@@ -56,8 +56,17 @@ db:
       insertUserSkill: INSERT INTO userskills (UserId,SkillId) values(?,?)
       selectUserSkillDetails: SELECT us.UserId,s.SkillId,s.SkillName,s.categoryId from userskills us INNER JOIN 
                     skills s on us.SkillId = s.SkillId
-      selectUserSkillDetailsByUserId: SELECT us.UserId,s.SkillId,s.SkillName,s.categoryId from userskills us INNER JOIN
+      selectUserSkillsByUserId: SELECT us.UserId,s.SkillId,s.SkillName,s.categoryId from userskills us INNER JOIN
                                       skills s on us.SkillId = s.SkillId and UserId=?
-      selectUserskillsBySkillId: SELECT  us.UserId,s.SkillId,s.SkillName,s.CategoryId from skills s INNER JOIN userskills us on us.SkillId = s.SkillId and us.UserId in
-            (SELECT us.UserId from skills s INNER JOIN userskills us on us.SkillId = s.SkillId and s.SkillId=?);
-
+      selectUserSkillsInSkillIds: SELECT  us.UserId,s.SkillId,s.SkillName,s.CategoryId from skills s INNER JOIN userskills us on us.SkillId = s.SkillId and us.UserId in
+          (SELECT DISTINCT us.UserId from skills s INNER JOIN userskills us on us.SkillId = s.SkillId and s.SkillId IN (:skillIds))
+      selectUserSkillsByCategoryId: SELECT us.UserId, s.SkillId, s.SkillName, s.CategoryId
+          FROM skills s
+          INNER JOIN userskills us ON us.SkillId = s.SkillId
+          AND us.UserId IN (
+          SELECT DISTINCT us.UserId
+          FROM skills s
+          INNER JOIN userskills us ON us.SkillId = s.SkillId
+          INNER JOIN categories c ON c.CategoryId = s.CategoryId
+          AND c.CategoryId = ?)
+          ORDER BY us.UserId

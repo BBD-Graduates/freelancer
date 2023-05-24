@@ -59,12 +59,12 @@ public class ProjectImpl implements ProjectService {
             if (!projects.isEmpty()) {
                 projects.stream().forEach(project -> {
                     FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService.getProjectSkillByProjectId(project.getProjectId());
-                    if(skillList.getResponse().size()>0){
+                    if(skillList.getResponse().isEmpty()){
                         project.setSkills(skillList.getResponse().get(0).getSkills());
                     }
 
                     FlResponse<List<BidResponse>> projectBidList = projectBidService.getProjectBidByProjectId(project.getProjectId());
-                    if(projectBidList.getResponse().size()>0){
+                    if(projectBidList.getResponse().isEmpty()){
                         project.setBids(projectBidList.getResponse().stream().map(bidResponse -> BidResponse.builder()
                                 .bidId(bidResponse.getBidId())
                                 .projectId(bidResponse.getProjectId())
@@ -75,9 +75,8 @@ public class ProjectImpl implements ProjectService {
                                 .build()).collect(Collectors.toList()));
                     }
                 });
-                return projects;
-            } else
-                return projects;
+            }
+            return projects;
         } catch (Exception e) {
             throw e;
         }

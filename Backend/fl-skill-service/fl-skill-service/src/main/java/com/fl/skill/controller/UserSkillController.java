@@ -19,6 +19,7 @@ import static com.fl.skill.config.Constant.*;
 @RestController
 @RequestMapping("/user-skills")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class UserSkillController {
 
     private final UserSkillsService userSkillsService;
@@ -35,12 +36,13 @@ public class UserSkillController {
     }
 
     @GetMapping
-    public ResponseEntity<FlResponse<List<UserSkillsResponse>>> getUserSkills(@RequestParam(defaultValue = "0", required = false) Integer userId,
-                                                                              @RequestParam(defaultValue = "0", required = false) Integer skillId) {
+    public ResponseEntity<FlResponse<List<UserSkillsResponse>>> getUserSkills(@RequestParam(name = "userId", required = false) Integer userId,
+                                                                              @RequestParam(name = "skillIds", required = false)  List<Integer> skillIds,
+                                                                              @RequestParam(name = "categoryId", required = false)Integer categoryId) {
         try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, userSkillsService.getUserSkills(userId,skillId), String.format("%s" + FETCHED_SUCCESSFULLY, USER_SKILLS));
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, userSkillsService.getUserSkills(userId,skillIds,categoryId), String.format("%s" + FETCHED_SUCCESSFULLY, USER_SKILLS));
         } catch (Exception e) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + NO_RECORD_FOUND));
         }
-    }
+        }
 }

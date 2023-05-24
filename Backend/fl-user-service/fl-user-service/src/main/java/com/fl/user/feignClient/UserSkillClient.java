@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(name = "FL-SKILL-SERVICE/user-skills")
+@FeignClient(url = "${service.props.webservices.fl-skill-service.endpoint}" , name = "fl-skill-service")
+//@FeignClient(name = "FL-SKILL-SERVICE/user-skills")
 @Service
 public interface UserSkillClient {
 
@@ -17,6 +18,9 @@ public interface UserSkillClient {
     FlResponse<List<UserSkillsResponse>> getUserSkills(@RequestParam(name = "userId",required = false,defaultValue = "0") Integer userId);
 
     @GetMapping
-    FlResponse<List<UserSkillsResponse>> getUserSkillBySkillId(@RequestParam(name = "skillId",required = false,defaultValue = "0") Integer skillId);
+    FlResponse<List<UserSkillsResponse>> getUserSkillBySkillId(@RequestParam(name = "skillIds",required = false,defaultValue = "0")  List<Integer> skillIds);
+
+    @GetMapping
+    FlResponse<List<UserSkillsResponse>> getUserSkillByCategoryId(@RequestParam(name = "categoryId",required = false,defaultValue = "0") Integer categoryId);
 
 }
