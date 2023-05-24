@@ -2,7 +2,9 @@ package com.fl.skill.service;
 
 import com.fl.skill.config.Constant;
 import com.fl.skill.model.request.UserSkillsReq;
-import com.fl.skill.model.response.*;
+import com.fl.skill.model.response.SkillRes;
+import com.fl.skill.model.response.UserSkills;
+import com.fl.skill.model.response.UserSkillsResponse;
 import com.fl.skill.repository.DbQueries;
 import com.fl.skill.service.serviceInterface.UserSkillsService;
 import lombok.RequiredArgsConstructor;
@@ -10,13 +12,15 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Service;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +28,7 @@ public class UserSkillsServiceImpl implements UserSkillsService {
 
     private final JdbcTemplate jdbcTemplate;
     private final DbQueries dbQueries;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
     public String insertUserSkills(List<UserSkillsReq> userSkillReqList) {
@@ -55,17 +60,19 @@ public class UserSkillsServiceImpl implements UserSkillsService {
     }
 
     @Override
-    public List<UserSkillsResponse> getUserSkills(Integer userId, Integer skillId) {
+    public List<UserSkillsResponse> getUserSkills(Integer userId, List<Integer> skillIds, Integer categoryId) {
         try {
-
             List<UserSkillsResponse> userSkillDetails = new ArrayList<>();
             List<UserSkills> userSkills;
-            if (!skillId.equals(0)) {
-                String query = dbQueries.getUserSkillsBySkillId();
-                userSkills= jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(UserSkills.class), skillId);
-
-            } else if (!userId.equals(0)) {
-                String query = dbQueries.getUserSkillDetailsByUserId();
+            if (skillIds != null) {
+                String query = dbQueries.getUserSkillsInSkillIds();
+                SqlParameterSource parameters=new MapSqlParameterSource("skillIds",skillIds);
+                userSkills = namedParameterJdbcTemplate.query(query, parameters,BeanPropertyRowMapper.newInstance(UserSkills.class));
+            } else if (categoryId != null) {
+                String query = dbQueries.getUserSkillsByCategoryId();
+                userSkills = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(UserSkills.class), categoryId);
+            } else if (userId != null) {
+                String query = dbQueries.getUserSkillsByUserId();
                 userSkills = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(UserSkills.class), userId);
             } else {
                 String query = dbQueries.getUserSkillDetails();

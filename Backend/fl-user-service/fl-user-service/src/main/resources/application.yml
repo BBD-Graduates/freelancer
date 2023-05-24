@@ -16,6 +16,7 @@ eureka:
     service-url:
       default-zone: http://localhost:8761/
 
+
 db:
   queries:
     users:
@@ -36,16 +37,14 @@ db:
         LEFT join states s on c.StateId =s.StateId
         LEFT JOIN countries cr on s.CountryId=cr.CountryId
         WHERE cr.CountryId=?
-      getUserDetailsByLanguageId:
-        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
+      getUserDetailsByLanguageIds:
+        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate, 			s.StateName ,cr.CountryName
         FROM users u
         LEFT join userlocation ul on u.UserId=ul.UserId
         LEFT join cities c on ul.CityId=c.CityId
         LEFT join states s on c.StateId =s.StateId
         LEFT JOIN countries cr on s.CountryId=cr.CountryId
-        LEFT join userlanguages ulg on  u.UserId=ulg.UserId
-        LEFT join languages l on l.LanguageId=ulg.LanguageId
-        WHERE l.LanguageId=?
+        WHERE u.UserId IN (SELECT DISTINCT UserId from userlanguages WHERE LanguageId IN(:languageIds))
       getUserDetailsByUserId:
         SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
         FROM users u
@@ -76,3 +75,14 @@ db:
 
     userLanguages:
       insertUserLanguages: INSERT INTO userlanguages(UserId,LanguageId) values(?,?)
+
+
+service:
+  props:
+    webServices:
+      fl-skill-service:
+        endpoint: http://localhost:8082/user-skills
+      fl-project-service:
+        endpoint: http://localhost:8083/projects/rating
+      fl-bid-service:
+        endpoint: http://localhost:8084/

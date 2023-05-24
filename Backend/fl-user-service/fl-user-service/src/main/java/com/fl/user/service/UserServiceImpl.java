@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String insertUser(UserRequest userRequest) {
         try {
-            int insertStatus = jdbcTemplate.update(dbQueries.getAddUser(), userRequest.getFirstName(), userRequest.getLastName(), userRequest.getEmail(),userRequest.getPhotoUrl());
+            int insertStatus = jdbcTemplate.update(dbQueries.getAddUser(), userRequest.getFirstName(), userRequest.getLastName(), userRequest.getEmail(), userRequest.getPhotoUrl());
             if (insertStatus > 0) {
                 return Constant.REGISTERED_SUCCESSFULLY;
             } else {
@@ -67,13 +67,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserResponse> getUsers(Integer languageId, Integer userId, Integer skillId, Integer countryId, String email) {
+    public List<UserResponse> getUsers(List<Integer> languageIds, Integer userId,  List<Integer> skillIds, Integer countryId, String email, Integer categoryId) {
         try {
             FlResponse<List<UserSkillsResponse>> userList;
             List<UserResponse> userDetails;
-
-            if (skillId != null) {
-                userList = userSkillClient.getUserSkillBySkillId(skillId);
+            if (skillIds != null) {
+                userList = userSkillClient.getUserSkillBySkillId(skillIds);
                 List<Integer> userIdList = userList.getResponse().stream().map(UserSkillsResponse::getUserId).distinct().toList();
                 SqlParameterSource parameters = new MapSqlParameterSource("userId", userIdList);
                 userDetails = namedParameterJdbcTemplate.query(dbQueries.getUserDetailsInUserIds(), parameters, BeanPropertyRowMapper.newInstance(UserResponse.class));
@@ -83,8 +82,22 @@ public class UserServiceImpl implements UserService {
                     userDetail.setLanguages(languageList);
                 }
                 return userDetails;
-            } else if (languageId != null) {
-                userDetails = jdbcTemplate.query(dbQueries.getUserDetailsByLanguageId(), BeanPropertyRowMapper.newInstance(UserResponse.class), languageId);
+            } else if (categoryId != null) {
+                userList = userSkillClient.getUserSkillByCategoryId(categoryId);
+                List<Integer> userIdList = userList.getResponse().stream().map(UserSkillsResponse::getUserId).distinct().toList();
+                SqlParameterSource parameters = new MapSqlParameterSource("userId", userIdList);
+                userDetails = namedParameterJdbcTemplate.query(dbQueries.getUserDetailsInUserIds(), parameters, BeanPropertyRowMapper.newInstance(UserResponse.class));
+                for (UserResponse userDetail : userDetails) {
+                    userDetail.setSkills(userList.getResponse().stream().filter(user -> user.getUserId() == userDetail.getUserId()).findFirst().get().getSkills());
+                    List<LanguageResponse> languageList = getUserLanguage(userDetail.getUserId());
+                    userDetail.setLanguages(languageList);
+                }
+                return userDetails;
+            }
+            if (languageIds != null) {
+                String query=dbQueries.getUserDetailsByLanguageIds();
+                SqlParameterSource parameters =new MapSqlParameterSource("languageIds",languageIds);
+                userDetails = namedParameterJdbcTemplate.query(query,parameters, BeanPropertyRowMapper.newInstance(UserResponse.class));
             } else if (countryId != null) {
                 userDetails = jdbcTemplate.query(dbQueries.getUserDetailsByCountryId(), BeanPropertyRowMapper.newInstance(UserResponse.class), countryId);
             } else if (userId != null) {
@@ -95,25 +108,24 @@ public class UserServiceImpl implements UserService {
                 userDetails = jdbcTemplate.query(dbQueries.getUserDetails(), BeanPropertyRowMapper.newInstance(UserResponse.class));
             }
 
-                userDetails.forEach(detail -> {
-                    Integer fetchUserId = detail.getUserId();
-                    List<LanguageResponse> languageList = getUserLanguage(fetchUserId);
-                    FlResponse<List<UserSkillsResponse>> skillList = userSkillClient.getUserSkills(fetchUserId);
-                    FlResponse<List<RatingResponse>> ratings = userProjectClient.getUserRatingsByUserId(fetchUserId);
-                    detail.setLanguages(languageList);
-                    if (!skillList.getResponse().isEmpty()) {
-                        detail.setSkills(skillList.getResponse().get(0).getSkills());
-                    }
+            userDetails.forEach(detail -> {
+                Integer fetchUserId = detail.getUserId();
+                List<LanguageResponse> languageList = getUserLanguage(fetchUserId);
+                FlResponse<List<UserSkillsResponse>> skillList = userSkillClient.getUserSkills(fetchUserId);
+                FlResponse<List<RatingResponse>> ratings = userProjectClient.getUserRatingsByUserId(fetchUserId);
+                detail.setLanguages(languageList);
+                if (!skillList.getResponse().isEmpty()) {
+                    detail.setSkills(skillList.getResponse().get(0).getSkills());
+                }
 
-                    if (!ratings.getResponse().isEmpty()) {
-                        ratings.getResponse().forEach(rating ->
-                                detail.getRatings().add(RatingResponse.builder().userId(rating.getUserId())
-                                        .projectId(rating.getProjectId())
-                                        .ratingDescription(rating.getRatingDescription())
-                                        .rating(rating.getRating()).build()));
-                    }
-                });
-
+                if (!ratings.getResponse().isEmpty()) {
+                    ratings.getResponse().forEach(rating ->
+                            detail.getRatings().add(RatingResponse.builder().userId(rating.getUserId())
+                                    .projectId(rating.getProjectId())
+                                    .ratingDescription(rating.getRatingDescription())
+                                    .rating(rating.getRating()).build()));
+                }
+            });
             return userDetails;
         } catch (Exception e) {
             throw e;

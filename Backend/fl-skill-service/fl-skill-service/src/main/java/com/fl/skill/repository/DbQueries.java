@@ -62,10 +62,13 @@ public class DbQueries {
     @Value("${db.queries.userSkills.selectUserSkillDetails}")
     private String userSkillDetails;
 
-    @Value("${db.queries.userSkills.selectUserSkillDetailsByUserId}")
-    private String userSkillDetailsByUserId;
+    @Value("${db.queries.userSkills.selectUserSkillsByUserId}")
+    private String userSkillsByUserId;
 
-    @Value("${db.queries.userSkills.selectUserskillsBySkillId}")
-    private String userSkillsBySkillId;
+    @Value("${db.queries.userSkills.selectUserSkillsInSkillIds}")
+    private String userSkillsInSkillIds;
+
+    @Value("${db.queries.userSkills.selectUserSkillsByCategoryId}")
+    private String userSkillsByCategoryId;
 
 }

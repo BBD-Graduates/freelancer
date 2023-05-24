@@ -53,13 +53,14 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<FlResponse<List<UserResponse>>> getUsers(@RequestParam(name = "languageId", required = false) Integer languageId,
+    public ResponseEntity<FlResponse<List<UserResponse>>> getUsers(@RequestParam(name = "languageId", required = false) List<Integer> languageIds,
                                                                    @RequestParam(name = "userId", required = false) Integer userId,
-                                                                   @RequestParam(name = "skillId", required = false) Integer skillId,
+                                                                   @RequestParam(name = "skillIds", required = false) List<Integer> skillIds,
+                                                                   @RequestParam(name = "categoryId", required = false) Integer categoryId,
                                                                    @RequestParam(name = "countryId", required = false) Integer countryId,
                                                                    @RequestParam(name="email",required = false)String email) {
         try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, userService.getUsers(languageId, userId, skillId, countryId,email), FETCHED_SUCCESSFULLY);
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, userService.getUsers(languageIds, userId, skillIds, countryId,email,categoryId), FETCHED_SUCCESSFULLY);
         } catch (Exception e) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, NO_RECORD_FOUND);
         }
