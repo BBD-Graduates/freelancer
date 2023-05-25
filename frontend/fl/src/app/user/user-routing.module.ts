@@ -6,6 +6,7 @@ import { ProjectListComponent } from './components/project/project-list/project-
 import { ProjectDetailsComponent } from './components/project/project-details/project-details.component';
 import { BrowseFreelancersComponent } from './components/browseFreelancers/browse-freelancers/browse-freelancers.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { PostProjectComponent } from './components/project/post-project/post-project.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
         path: 'users',
         component: BrowseFreelancersComponent,
       },
+      {
+        path:'post-project',
+        component:PostProjectComponent,
+      }
     ],
   },
 ];
