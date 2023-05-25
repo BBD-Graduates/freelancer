@@ -8,3 +8,5 @@
         @apply max-w-7xl px-5 mx-auto;
     }
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

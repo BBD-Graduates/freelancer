@@ -8,7 +8,7 @@
                       <h2 class="text-3xl font-medium ">{{item.projectName}}</h2>
                   </div>
                   <div >
-                      <p class="right-0">$ 100-500 USD</p>
+                      <p class="right-0">${{item.minPrice}}-{{item.maxPrice}}</p>
                   </div>
               </div>
           </div>
@@ -26,6 +26,9 @@
                               <div class=" mr-2" *ngFor="let userSkill of item.skills">
                                   <p>{{userSkill.skillName}}</p>
                               </div>
+                              <div class=" mr-2" *ngFor="let projects of data.response"><br/>
+                                  <p>Project Id : #{{projects.projectId}}</p>
+                              </div>
                           </div>
                       </div>
                   </div>
@@ -41,8 +44,8 @@
                       <div>
                           <fl-rating [value]="4" />
                       </div>
-                      <div>
-                          <p >Gujarat,India</p>
+                      <div *ngFor="let item of locationData.response">
+                           {{item.stateName}}
                       </div>
                   </div>
               </div>
@@ -68,38 +71,33 @@
                     <div class="my-2" >
                       <div class="grid-flow-row">
                           <h2>Your bid for this job</h2>
-                          <p>ProjectId</p>
-                          <input type="text" id="projectId" formControlName="projectId" class="border rounded-lg px-2 py-1 mt-1" />
-                          <!-- <fl-textbox formControlName="projectId"/> -->
                       </div>
                   </div>
                   <div class="my-2" >
                     <div class="grid-flow-row">
                         <p>FreelancerId</p>
                         <input type="text" id="freelancerId" formControlName="freelancerId" class="border rounded-lg px-2 py-1 mt-1" />
-                        <!-- <fl-textbox formControlName="FreelancerId" /> -->
+
                     </div>
                 </div>
                   <div class="my-2" >
                       <div class="grid-flow-row">
-
                           <p>Amount</p>
                           <input type="text" id="amount" formControlName="amount" class="border rounded-lg px-2 py-1 mt-1" />
-                          <!-- <fl-textbox formControlName="amount"/> -->
+
                       </div>
                   </div>
                   <div class="my-2">
                     <div class="grid-flow-row">
                         <p>Description</p>
-                        <input type="text" id="description" formControlName="description" class="border rounded-lg px-2 py-1 mt-1" />
-                        <!-- <fl-textbox formControlName="description" id="description" class=""/> -->
+                        <input type="textarea" id="description" formControlName="description" class="border rounded-lg px-2 py-1 mt-1" />
+
                     </div>
                 </div>
                 <div class="my-2">
                   <div class="grid-flow-row">
                       <p>Delivery Days</p>
                       <input type="text" id="deliveryDays" formControlName="deliveryDays" class="border rounded-lg px-2 py-1 mt-1" />
-                      <!-- <fl-textbox formControlName="deliveryDays"/> -->
                   </div>
               </div>
                   <div class="my-2">
@@ -112,4 +110,3 @@
       </div>
     </div>
 </section>
-
