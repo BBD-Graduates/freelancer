@@ -42,7 +42,6 @@ export class UserapiService {
     } catch (error) {
       console.log(error);
     }
-
   }
   async getAllUsers({
     languageId,

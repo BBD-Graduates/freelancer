@@ -1,0 +1,51 @@
+<section class="bg-emerald-50  flex lg:py-52 sm:py-36 py-45 bg-slate-100 w-full">
+  <div class="bg-scroll bg-cover h-96 w-full bg-no-repeat relative left-0"
+    style="background-image: url(https://images.pexels.com/photos/8085942/pexels-photo-8085942.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);">
+    <div class=" bg-white my-52 rounded-xl max-w-4xl ml-32 h-screen">
+      <div class="max-w-4xl pt-5 relative flex gap-4">
+        <!-- User profile photo -->
+        <div>
+          <img [src]="photoUrl" referrerpolicy="no-referrer" class=" w-64 ml-8 object-cover  rounded-full"
+            alt="User Profile Photo" />
+          <div class="mt-4 ml-8 w-64">
+            <hr class="">
+            <div class="flex gap-2 justify-left mt-3">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                <path fill-rule="evenodd"
+                  d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.976.544l.062.029.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z"
+                  clip-rule="evenodd" />
+              </svg>
+              <a href="" class="hover:text-emerald-500 transition-all duration-500">{{state}} {{country}}</a>
+            </div>
+            <div class="flex gap-2 justify-left mt-3">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                <path fill-rule="evenodd"
+                  d="M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75z"
+                  clip-rule="evenodd" />
+              </svg>
+              <a href="" class="hover:text-emerald-500 transition-all duration-500"> Joined
+                {{showDate(createdDate)}}</a>
+            </div>
+          </div>
+        </div>
+        <!-- User profile details -->
+        <div class="flex-auto w-full p-5">
+          <div class=" w-96 mr-32">
+            <div class="mb-12">
+              <h1 class="text-emerald-600 font-semibold text-2xl  mb-2">{{firstName}}{{lastName}}</h1>
+              <p class="text-slate-600 text-xl mb-4">{{headLine}}</p>
+              <p class="text-slate-600 text-xl mb-4"><fl-rating [value]="4.5" /></p>
+              <!-- User summary details -->
+            </div>
+          </div>
+          <div class=" w-full h-96 bg-slate-100 p-3 text-wrap rounded-xl">
+            <p class="text-slate-600 text-lg font-light mb-4 ">
+              {{summary}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>

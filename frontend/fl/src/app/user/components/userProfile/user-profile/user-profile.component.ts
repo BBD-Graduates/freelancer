@@ -1,33 +1,31 @@
 import { Component } from '@angular/core';
-import { UserapiService } from '../../service/user-api.service';
 import { Router } from '@angular/router';
+import { UserapiService } from 'src/app/user/service/user-api.service';
 
 @Component({
-  selector: 'fl-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  selector: 'fl-user-profile',
+  templateUrl: './user-profile.component.html',
+  styleUrls: ['./user-profile.component.css'],
 })
-export class DashboardComponent {
+export class UserProfileComponent {
   constructor(private userapiService: UserapiService, private router: Router) {}
   ngOnInit() {
     this.getUserDetails();
   }
-  profileUrl!: string;
-  firstName!: string;
-  lastName!: string;
-  headLine!: string;
-  summary!: string;
-  company!: string;
-  email!: string;
-  phNo!: number;
-  createdDate!: Date;
-  state!: string;
-  country!: string;
-  joiningDate!: Date;
-  dateString!: string;
-  photoUrl!: string;
-
-  ratings: any[] = [];
+  profileUrl: any;
+  firstName: any;
+  lastName: any;
+  headLine: any;
+  summary: any;
+  company: any;
+  email: any;
+  phNo: any;
+  createdDate: any;
+  state: any;
+  country: any;
+  joiningDate: any;
+  dateString: any;
+  photoUrl: any;
 
   sessionStatus = sessionStorage.getItem('userEmail') == null;
 
@@ -36,7 +34,6 @@ export class DashboardComponent {
     const user = await this.userapiService.getAllUsers({
       email: userEmail,
     });
-
     this.profileUrl = user?.response[0]['photoUrl'];
     this.firstName = user?.response[0]['firstName'].toUpperCase();
     this.lastName = user?.response[0]['lastName'].toUpperCase();
@@ -49,8 +46,6 @@ export class DashboardComponent {
     this.state = user?.response[0]['stateName'];
     this.country = user?.response[0]['countryName'];
     this.photoUrl = this.profileUrl.replace('s96-c', 's400-c');
-    this.ratings = user?.response[0]['ratings'];
-    console.log(this.ratings[0]['ratingDescription']);
   }
 
   showDate(dateTimeString: any) {

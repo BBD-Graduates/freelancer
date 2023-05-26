@@ -6,6 +6,7 @@ import { ProjectListComponent } from './components/project/project-list/project-
 import { ProjectDetailsComponent } from './components/project/project-details/project-details.component';
 import { BrowseFreelancersComponent } from './components/browseFreelancers/browse-freelancers/browse-freelancers.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { UserProfileComponent } from './components/userProfile/user-profile/user-profile.component';
 
 const routes: Routes = [
   {

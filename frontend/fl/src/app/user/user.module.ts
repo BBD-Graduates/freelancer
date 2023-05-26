@@ -15,6 +15,7 @@ import { ProjectDetailsComponent } from './components/project/project-details/pr
 import { ProjectListComponent } from './components/project/project-list/project-list.component';
 import { BrowseFreelancersComponent } from './components/browseFreelancers/browse-freelancers/browse-freelancers.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { UserProfileComponent } from './components/userProfile/user-profile/user-profile.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
     ProjectListComponent,
     BrowseFreelancersComponent,
     LandingPageComponent,
+    UserProfileComponent,
   ],
   imports: [
     CommonModule,
