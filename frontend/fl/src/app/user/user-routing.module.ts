@@ -7,6 +7,7 @@ import { ProjectDetailsComponent } from './components/project/project-details/pr
 import { BrowseFreelancersComponent } from './components/browseFreelancers/browse-freelancers/browse-freelancers.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { UserProfileComponent } from './components/userProfile/user-profile/user-profile.component';
+import { PostProjectComponent } from './components/project/post-project/post-project.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
         path: 'users',
         component: BrowseFreelancersComponent,
       },
+      {
+        path:'post-project',
+        component:PostProjectComponent,
+      }
     ],
   },
 ];

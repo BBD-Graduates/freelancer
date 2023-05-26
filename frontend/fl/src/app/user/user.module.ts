@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserRoutingModule } from './user-routing.module';
 import { SharedModule } from '../shared/shared.module';
@@ -16,7 +16,7 @@ import { ProjectListComponent } from './components/project/project-list/project-
 import { BrowseFreelancersComponent } from './components/browseFreelancers/browse-freelancers/browse-freelancers.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { UserProfileComponent } from './components/userProfile/user-profile/user-profile.component';
-
+import { PostProjectComponent } from './components/project/post-project/post-project.component';
 
 @NgModule({
   declarations: [
@@ -31,13 +31,15 @@ import { UserProfileComponent } from './components/userProfile/user-profile/user
     BrowseFreelancersComponent,
     LandingPageComponent,
     UserProfileComponent,
+    PostProjectComponent,
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
     HttpClientModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
   ]
 })
 export class UserModule { }
