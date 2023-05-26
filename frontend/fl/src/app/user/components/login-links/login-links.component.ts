@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserapiService } from '../../service/user-api.service';
-import { ApiResponse } from 'src/app/shared/model/apiResponse';
 
 @Component({
   selector: 'fl-login-links',
@@ -16,7 +15,7 @@ export class LoginLinksComponent {
   sessionStatus = sessionStorage.getItem('userEmail') == null;
 
   ngOnInit() {
-    this.getUserProfilePic();
+    this.getUserDetails();
   }
   ngOnChanges() {
     this.sessionStatus = sessionStorage.getItem('userEmail') == null;
@@ -28,13 +27,13 @@ export class LoginLinksComponent {
     this.router.navigate(['/home']);
   }
 
-  async getUserProfilePic() {
+  async getUserDetails() {
     let userEmail = sessionStorage.getItem('userEmail') ?? '';
     const user = await this.userapiService.getAllUsers({
       email: userEmail,
     });
     this.profileUrl = user?.response[0]['photoUrl'];
-    this.firstName = user?.response[0]['firstName'];
-    this.lastName = user?.response[0]['lastName'];
+    this.firstName = user?.response[0]['firstName'].toUpperCase();
+    this.lastName = user?.response[0]['lastName'].toUpperCase();
   }
 }
