@@ -56,6 +56,12 @@ public class DbQueries {
     @Value("${db.queries.projectSkills.selectProjectSkillDetailsByProjectId}")
     private String projectSkillDetailsByProjectId;
 
+    @Value("${db.queries.projectSkills.selectProjectSkillDetailsBySkillId}")
+    private String projectSkillDetailsBySkillId;
+
+    @Value("${db.queries.projectSkills.selectProjectSkillDetailsByCategoryId}")
+    private String projectSkillDetailsByCategoryId;
+
     @Value("${db.queries.userSkills.insertUserSkill}")
     private String addUserSkill;
 

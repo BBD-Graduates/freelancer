@@ -9,5 +9,5 @@ import java.util.List;
 public interface ProjectSkillsService {
 
     String insertProjectSkills(List<ProjectSkillsReq> projectSkillReqList)  ;
-    List<ProjectSkillsResponse> getProjectSkills(Integer projectId)  ;
+    List<ProjectSkillsResponse> getProjectSkills(Integer projectId,Integer skilltId,Integer categoryId)  ;
 }

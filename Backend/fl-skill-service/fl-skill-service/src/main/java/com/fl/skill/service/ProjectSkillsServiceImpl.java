@@ -57,7 +57,7 @@ public class ProjectSkillsServiceImpl implements ProjectSkillsService {
     }
 
     @Override
-    public List<ProjectSkillsResponse> getProjectSkills(Integer projectId) {
+    public List<ProjectSkillsResponse> getProjectSkills(Integer projectId,Integer skilltId,Integer categoryId) {
 
         try {
             List<ProjectSkillsResponse> projectSkillDetails = new ArrayList<>();
@@ -66,6 +66,10 @@ public class ProjectSkillsServiceImpl implements ProjectSkillsService {
             if (!projectId.equals(0)) {
                 query = dbQueries.getProjectSkillDetailsByProjectId();
                 projectSkills = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ProjectSkills.class), projectId);
+            } else if (!skilltId.equals(0)) {
+                projectSkills = jdbcTemplate.query(dbQueries.getProjectSkillDetailsBySkillId(), BeanPropertyRowMapper.newInstance(ProjectSkills.class), skilltId);
+            } else if (!categoryId.equals(0)) {
+                projectSkills = jdbcTemplate.query(dbQueries.getProjectSkillDetailsByCategoryId(), BeanPropertyRowMapper.newInstance(ProjectSkills.class), categoryId);
             } else {
                 query = dbQueries.getProjectSkillDetails();
                 projectSkills = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ProjectSkills.class));

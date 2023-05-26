@@ -23,12 +23,13 @@ const routes: Routes = [
         component: DashboardComponent,
       },
       {
-        path: 'skill',
+        path: 'category/:categoryid',
         component: ProjectListComponent,
       },
       {
         path: 'skill/:id',
         component: ProjectListComponent,
+        pathMatch:'prefix'
       },
       {
         path: 'skill/:id/project-details',
