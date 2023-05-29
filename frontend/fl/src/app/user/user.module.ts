@@ -18,6 +18,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { UserProfileComponent } from './components/userProfile/user-profile/user-profile.component';
 import { PostProjectComponent } from './components/project/post-project/post-project.component';
 import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
+import { MyProjectsComponent } from './components/myProjects/my-projects/my-projects.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
     LandingPageComponent,
     UserProfileComponent,
     PostProjectComponent,
+    MyProjectsComponent,
   ],
   imports: [
     CommonModule,

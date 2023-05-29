@@ -8,6 +8,7 @@ import { BrowseFreelancersComponent } from './components/browseFreelancers/brows
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { UserProfileComponent } from './components/userProfile/user-profile/user-profile.component';
 import { PostProjectComponent } from './components/project/post-project/post-project.component';
+import { MyProjectsComponent } from './components/myProjects/my-projects/my-projects.component';
 
 const routes: Routes = [
   {
@@ -29,7 +30,7 @@ const routes: Routes = [
       {
         path: 'skill/:id',
         component: ProjectListComponent,
-        pathMatch:'prefix'
+        pathMatch: 'prefix',
       },
       {
         path: 'skill/:id/project-details',
@@ -49,8 +50,12 @@ const routes: Routes = [
         component: BrowseFreelancersComponent,
       },
       {
+        path: 'myProjects',
+        component: MyProjectsComponent,
+      },
+      {
         path: 'users/:userId',
-        component: UserProfileComponent,
+        component: MyProjectsComponent,
       },
       {
         path: 'post-project',
