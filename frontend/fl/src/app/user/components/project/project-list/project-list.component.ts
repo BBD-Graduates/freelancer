@@ -92,4 +92,28 @@ export class ProjectListComponent implements OnInit {
       return 0;
     }
   }
+  options = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
+  selectedOptions: string[] = [];
+  isDropdownOpen = false;
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  closeDropdown() {
+    this.isDropdownOpen = false;
+  }
+
+  toggleOption(option: string) {
+    const index = this.selectedOptions.indexOf(option);
+    if (index > -1) {
+      this.selectedOptions.splice(index, 1);
+    } else {
+      this.selectedOptions.push(option);
+    }
+  }
+
+  isSelected(option: string) {
+    return this.selectedOptions.includes(option);
+  }
 }

@@ -30,6 +30,7 @@ export class BrowseFreelancersComponent {
     | undefined;
   userDetailsList: any[] = [];
   userData: any;
+  locationData:any[]=[];
 
   async ngOnInit(): Promise<void> {
     this.userData = await this.userApiService.getAllUsers({});
@@ -56,5 +57,29 @@ export class BrowseFreelancersComponent {
       };
       this.userDetailsList.push(this.userDetails);
     });
+  }
+  options = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
+  selectedOptions: string[] = [];
+  isDropdownOpen = false;
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  closeDropdown() {
+    this.isDropdownOpen = false;
+  }
+
+  toggleOption(option: string) {
+    const index = this.selectedOptions.indexOf(option);
+    if (index > -1) {
+      this.selectedOptions.splice(index, 1);
+    } else {
+      this.selectedOptions.push(option);
+    }
+  }
+
+  isSelected(option: string) {
+    return this.selectedOptions.includes(option);
   }
 }
