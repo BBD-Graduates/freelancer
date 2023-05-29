@@ -14,11 +14,9 @@ export class UserapiService {
 
   async loginUser(userData: UserModel) {
     try {
-      console.log('loginUser');
       const userStatus = await this.getAllUsers({ email: userData.email });
       if (userStatus?.response.length > 0) {
         console.log('User Exist');
-        console.log('authState user: ', userData);
         sessionStorage.setItem('userEmail', userStatus?.response[0]['email']);
         if (userStatus?.response[0]['userRole'] == 'Admin') {
         } else {
@@ -43,6 +41,7 @@ export class UserapiService {
       console.log(error);
     }
   }
+
   async getAllUsers({
     languageId,
     userId,
@@ -54,9 +53,8 @@ export class UserapiService {
     userId?: number;
     skillId?: number;
     countryId?: number;
-
     email?: string;
-  }) {
+  }): Promise<ApiResponse | null> {
     try {
       let params = new HttpParams();
       params = this.addParamsIfNotEmpty(params, 'languageId', languageId);

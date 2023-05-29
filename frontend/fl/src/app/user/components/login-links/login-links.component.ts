@@ -17,6 +17,7 @@ export class LoginLinksComponent {
   ngOnInit() {
     this.getUserDetails();
   }
+
   ngOnChanges() {
     this.sessionStatus = sessionStorage.getItem('userEmail') == null;
   }
@@ -24,7 +25,9 @@ export class LoginLinksComponent {
   logout() {
     sessionStorage.clear();
     this.sessionStatus = sessionStorage.getItem('userEmail') == null;
-    this.router.navigate(['/home']);
+    this.router.navigate(['/home']).then(() => {
+      window.location.reload();
+    });
   }
 
   async getUserDetails() {

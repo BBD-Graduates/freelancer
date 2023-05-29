@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserapiService } from 'src/app/user/service/user-api.service';
 
 @Component({
@@ -8,32 +8,40 @@ import { UserapiService } from 'src/app/user/service/user-api.service';
   styleUrls: ['./user-profile.component.css'],
 })
 export class UserProfileComponent {
-  constructor(private userapiService: UserapiService, private router: Router) {}
+  constructor(
+    private userapiService: UserapiService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+  id!: any;
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('userId');
     this.getUserDetails();
   }
-  profileUrl: any;
-  firstName: any;
-  lastName: any;
-  headLine: any;
-  summary: any;
-  company: any;
-  email: any;
-  phNo: any;
-  createdDate: any;
-  state: any;
-  country: any;
-  joiningDate: any;
-  dateString: any;
-  photoUrl: any;
+  profileUrl!: string;
+  firstName!: string;
+  lastName!: string;
+  headLine!: string;
+  summary!: string;
+  company!: string;
+  email!: string;
+  phNo!: number;
+  createdDate!: Date;
+  state!: string;
+  country!: string;
+  joiningDate!: Date;
+  dateString!: string;
+  photoUrl!: string;
 
-  sessionStatus = sessionStorage.getItem('userEmail') == null;
+  ratings: any[] = [];
+  skills: any[] = [];
+  languages: any[] = [];
 
   async getUserDetails() {
-    let userEmail = sessionStorage.getItem('userEmail') ?? '';
     const user = await this.userapiService.getAllUsers({
-      email: userEmail,
+      userId: this.id,
     });
+
     this.profileUrl = user?.response[0]['photoUrl'];
     this.firstName = user?.response[0]['firstName'].toUpperCase();
     this.lastName = user?.response[0]['lastName'].toUpperCase();
@@ -46,6 +54,9 @@ export class UserProfileComponent {
     this.state = user?.response[0]['stateName'];
     this.country = user?.response[0]['countryName'];
     this.photoUrl = this.profileUrl.replace('s96-c', 's400-c');
+    this.ratings = user?.response[0]['ratings'];
+    this.skills = user?.response[0]['skills'];
+    this.languages = user?.response[0]['languages'];
   }
 
   showDate(dateTimeString: any) {

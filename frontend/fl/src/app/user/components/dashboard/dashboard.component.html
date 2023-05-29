@@ -4,9 +4,9 @@
       style="background-image: url('/assets/images/dashboardBGImage.jpg');">
     </div>
     <div class="" style="margin-top: -150px;">
-      <div class="grid md:grid-cols-3 gap-5 justify-between container">
+      <div class="grid md:grid-cols-3 gap-10 justify-between container">
         <!-- User Profile -->
-        <div class=" bg-white col-span-2  max-h-max rounded-xl">
+        <div class=" bg-white col-span-2  rounded-xl ">
           <div class=" max-w-4xl pt-5 relative flex gap-4">
             <!-- User profile photo -->
             <div>
@@ -22,7 +22,7 @@
                   </svg>
                   <a href="" class="hover:text-emerald-500 transition-all duration-500">{{state}} {{country}}</a>
                 </div>
-                <div class="flex gap-2 justify-left mt-3">
+                <div class="flex gap-2 justify-left mt-6">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
                     <path fill-rule="evenodd"
                       d="M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75z"
@@ -46,14 +46,59 @@
               <div class=" bg-slate-100 p-3 text-wrap rounded-xl">
                 <p class="text-slate-600 text-lg font-light mb-4 ">
                   {{summary}}
-                  {{summary}}
-                  {{summary}}{{summary}}
+
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <!-- <div class="bg-white rounded-xl "></div> -->
+        <div class="row-span-2 mt-16">
+          <div class="grid grid-row-4  p-5 gap-10">
+            <div class="bg-white rounded-xl  h-96">
+              <div class=" p-5 text-center">
+                <h1 class="text-emerald-600 font-semibold text-2xl ">Verifications</h1>
+              </div>
+              <div>
+                <hr>
+                <div class="flex gap-2 justify-left mt-3 p-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                  </svg>
+                  <a class="hover:text-emerald-500 transition-all duration-500">Email Verified</a>
+                </div>
+
+              </div>
+            </div>
+            <div class="bg-white rounded-xl h-96">
+              <div class=" p-5 text-center">
+                <h1 class="text-emerald-600 font-semibold text-2xl ">Skills</h1>
+              </div>
+              <hr>
+              <div class=" flex-wrap flex  mt-4 justify-center ">
+                <div class="w-2/5 flex-none p-2" *ngFor="let skill of skills">
+                  <div class="text-white text-center bg-emerald-600    m-2 px-4 py-2 ">{{skill.skillName}} </div>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-xl h-96">
+              <div class=" p-5 text-center">
+                <h1 class="text-emerald-600 font-semibold text-2xl ">Languages</h1>
+              </div>
+              <hr>
+              <div class=" flex-wrap flex  mt-4 justify-center ">
+                <div class="w-2/5 flex-none p-2" *ngFor="let language of languages">
+                  <div class="text-white text-center bg-emerald-600    m-2 px-4 py-2 ">{{language.languageName}} </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="bg-white rounded-xl h-96">
+
+            </div>
+          </div>
+        </div>
         <!--  User Ratings -->
         <div class=" bg-white col-span-2  max-h-max rounded-xl">
           <div class=" max-w-4xl py-3 relative gap-4 ">
@@ -78,10 +123,9 @@
             </div>
 
           </div>
-
         </div>
-      </div>
-      ​
+
+      </div> ​
     </div>
   </div>
 </section>

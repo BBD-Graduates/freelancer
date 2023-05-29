@@ -12,6 +12,7 @@ export class DashboardComponent {
   ngOnInit() {
     this.getUserDetails();
   }
+
   profileUrl!: string;
   firstName!: string;
   lastName!: string;
@@ -28,6 +29,8 @@ export class DashboardComponent {
   photoUrl!: string;
 
   ratings: any[] = [];
+  skills: any[] = [];
+  languages: any[] = [];
 
   sessionStatus = sessionStorage.getItem('userEmail') == null;
 
@@ -50,7 +53,8 @@ export class DashboardComponent {
     this.country = user?.response[0]['countryName'];
     this.photoUrl = this.profileUrl.replace('s96-c', 's400-c');
     this.ratings = user?.response[0]['ratings'];
-    console.log(this.ratings[0]['ratingDescription']);
+    this.skills = user?.response[0]['skills'];
+    this.languages = user?.response[0]['languages'];
   }
 
   showDate(dateTimeString: any) {

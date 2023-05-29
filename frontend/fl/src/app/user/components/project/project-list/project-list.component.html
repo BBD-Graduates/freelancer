@@ -1,41 +1,40 @@
 <section class="lg:py-52 sm:py-36 sm:px-2 md:px-5 py-36 bg-slate-100">
   <div class="w-full lg:container">
-      <div
-          class="bg-emerald-600 items-center border rounded-xl shadow-md hover:bg-emerald-500 transition duration-300 ease-in-out">
-          <div class="ml-3 text-white py-2 inline-block">
-              <span class="text-3xl font-medium text">.Net</span>
-          </div>
+    <div
+      class="bg-emerald-600 items-center border rounded-xl shadow-md hover:bg-emerald-500 transition duration-300 ease-in-out">
+      <div class="ml-3 text-white py-2 inline-block">
+        <span class="text-3xl font-medium text">.Net</span>
       </div>
-      <div class="grid grid-cols-4 group mt-2 bg-slate-50 border rounded-lg" *ngFor="let item of data.response">
-          <div class="col-span-3 group-hover:bg-slate-200 rounded-sm">
-              <div class="grid grid-rows-3 items-center ml-5" >
-                  <div class="inline-block"  >
-                      <h2><b>{{item.projectName}}</b></h2>
-                      <h4>{{item.projectDescription}}</h4>
-                  </div>
-                  <div class=" flex text-blue-400">
-                      <div class=" mr-2" *ngFor="let userSkill of item.skills">
-                          <p>{{userSkill.skillName}}</p>
-                      </div>
-                  </div>
-              </div>
+    </div>
+    <div class="grid grid-cols-4 group mt-2 bg-slate-50 border rounded-lg" *ngFor="let item of data.response">
+      <div class="col-span-3 group-hover:bg-slate-200 rounded-sm">
+        <div class="grid grid-rows-3 items-center ml-5">
+          <div class="inline-block">
+            <h2><b>{{item.projectName}}</b></h2>
+            <h4>{{item.projectDescription}}</h4>
           </div>
-          <div>
-              <div class="grid grid-rows-3 min-h-full items-center group-hover:bg-slate-200">
-                  <div class="place-self-center">
-                      <p><span class="font-bold underline">₹ 820 / hr</span> Avg Bid</p>
-                  </div>
-                  <div class="place-self-center">
-                      <p>18 Bids</p>
-                  </div>
-                  <div class="place-self-center">
-                      <fl-button class="hidden group-hover:block" size="S" name="Bid" shade="D"
-                      [routerLink]="['project-details/',item.projectId]" />
-
-                  </div>
-              </div>
+          <div class=" flex text-blue-400">
+            <div class=" mr-2" *ngFor="let userSkill of item.skills">
+              <p>{{userSkill.skillName}}</p>
+            </div>
           </div>
+        </div>
       </div>
-      <hr>
+      <div>
+        <div class="grid grid-rows-3 min-h-full items-center group-hover:bg-slate-200">
+          <div class="place-self-center">
+            <p><span class="font-bold underline">₹ 820 / hr</span> Avg Bid</p>
+          </div>
+          <div class="place-self-center">
+            <p>18 Bids</p>
+          </div>
+          <div class="place-self-center">
+            <fl-button class="hidden group-hover:block" size="S" name="Bid" shade="D"
+              [routerLink]="['project-details/',item.projectId]" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
   </div>
 </section>

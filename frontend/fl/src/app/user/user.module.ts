@@ -17,6 +17,7 @@ import { BrowseFreelancersComponent } from './components/browseFreelancers/brows
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { UserProfileComponent } from './components/userProfile/user-profile/user-profile.component';
 import { PostProjectComponent } from './components/project/post-project/post-project.component';
+import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { PostProjectComponent } from './components/project/post-project/post-pro
     SharedModule,
     ReactiveFormsModule,
     FormsModule,
-  ]
+    GoogleSigninButtonModule,
+  ],
 })
-export class UserModule { }
+export class UserModule {}
