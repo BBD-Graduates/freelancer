@@ -22,6 +22,7 @@ db:
       insertProject: insert into projects(ClientId,ProjectName,ProjectDescription,IsConfidential,PaymentTypeId,BidStartDate,BidEndDate,MinPrice,MaxPrice) values(?,?,?,?,?,?,?,?,?)
       selectAllProject: select * from projects
       selectProjectByProjectId: select * from projects where projectid = ?
+      selectProjectByProjectIds: select * from projects where projectid in (%s)
       updateProjectByProjectid: update project set projectName=?,projectDescription=?,paymentTypeId=?,minPrice=?,maxPrice=? where projectId=?
       deleteProjectByProjectid: delete from projects where projectId=?
     paymentType:

@@ -16,7 +16,6 @@ export class JobLinksComponent {
   ngOnInit(): void {
     this._httpClient.get(config.skillApi.getCategorySkills).subscribe((res) => {
       this.menuData = res;
-      console.log(this.menuData);
     });
   }
   ngOnChange(): void {

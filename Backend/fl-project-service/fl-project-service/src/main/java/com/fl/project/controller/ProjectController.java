@@ -41,15 +41,17 @@ public class ProjectController {
 
     @GetMapping
     public ResponseEntity<FlResponse<List<ProjectResponse>>> getAllProjects(
-            @RequestParam(defaultValue = "0", required = false, name = "ProjectId") Integer ProjectId) {
+            @RequestParam(defaultValue = "0", required = false, name = "projectId") Integer projectId,
+            @RequestParam(defaultValue = "0", required = false, name = "skillId") Integer skillId,
+            @RequestParam(defaultValue = "0", required = false, name = "categoryId") Integer categoryId) {
         try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.getProject(ProjectId),
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.getProject(projectId,skillId,categoryId),
                     String.format("%s" + FETCHED_SUCCESSFULLY, PROJECT));
         } catch (Exception e) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,
                     String.format(NO_RECORD_FOUND));
         }
-    }
+        }
 
     @PutMapping("/{projectId}")
     public ResponseEntity<FlResponse<String>> updateProject(@PathVariable("projectId") int projectId,

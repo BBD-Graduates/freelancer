@@ -51,6 +51,10 @@ db:
                                  skills s on ps.SkillId=s.SkillId
       selectProjectSkillDetailsByProjectId: SELECT  ps.ProjectId, s.SkillId, s.SkillName, s.CategoryId from projectskills ps INNER JOIN 
                                             skills s on ps.SkillId=s.SkillId and ProjectId=?
+      selectProjectSkillDetailsBySkillId: SELECT  ps.ProjectId, s.SkillId, s.SkillName, s.CategoryId from projectskills ps INNER JOIN
+        skills s on ps.SkillId=s.SkillId where ps.SkillId=?
+      selectProjectSkillDetailsByCategoryId: SELECT  ps.ProjectId, s.SkillId, s.SkillName, s.CategoryId from projectskills ps INNER JOIN
+        skills s on ps.SkillId=s.SkillId inner JOIN categories c on s.CategoryId = c.CategoryId where c.CategoryId=?
 
     userSkills:
       insertUserSkill: INSERT INTO userskills (UserId,SkillId) values(?,?)

@@ -2,11 +2,15 @@ export const config = {
   apiGatewayUrl: 'http://localhost:8085/',
   projectService: '',
   skillApi: {
+      getCategoryByCategoryId:'http://localhost:8082/categories?categoryId=',
       getSkills: 'http://localhost:8082/skills',
+      getSkillBySkillId: 'http://localhost:8082/skills?skillId=',
       getCategorySkills: 'http://localhost:8082/categories'
   },
   projectApi: {
       getProject: 'http://localhost:8083/projects?ProjectId=0',
+      getProjectByCategoryId: 'http://localhost:8083/projects?categoryId=',
+      getProjectBySkillId: 'http://localhost:8083/projects?skillId=',
       getProjectByProjectId: 'http://localhost:8083/projects?ProjectId=',
       insertProject:'http://localhost:8083/projects'
   },

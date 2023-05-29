@@ -15,9 +15,17 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapperResultSetExtractor;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Service;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,25 +54,76 @@ public class ProjectImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectResponse> getProject(Integer ProjectId) {
+    public List<ProjectResponse> getProject(Integer projectId, Integer skillId, Integer categoryId) {
         List<ProjectResponse> projects;
         try {
-            if (ProjectId.equals(0)) {
+            if (!projectId.equals(0)) {
                 projects = jdbcTemplate.query(dbQueries.getSelectAllProject(),
                         BeanPropertyRowMapper.newInstance(ProjectResponse.class));
+            } else if (!skillId.equals(0)) {
+                FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService.getProjectSkillByProjectId(0,
+                        skillId, 0);
+                if (!skillList.getResponse().isEmpty()) {
+                    List<Integer> projectIds = skillList.getResponse().stream().map(project -> project.getProjectId()).toList();
+
+                    String inSql = String.join(",", Collections.nCopies(projectIds.size(), "?"));
+
+                    projects = jdbcTemplate.query(new PreparedStatementCreator() {
+                        @Override
+                        public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                            PreparedStatement ps = con
+                                    .prepareStatement(String.format(dbQueries.getSelectProjectByProjectIds(), inSql));
+                            for (int i = 0; i < projectIds.size(); i++) {
+                                ps.setObject(i + 1, projectIds.get(i));
+                            }
+                            return ps;
+                        }
+                    }, new RowMapperResultSetExtractor<>(BeanPropertyRowMapper.newInstance(ProjectResponse.class)));
+
+                } else {
+                    projects = jdbcTemplate.query(dbQueries.getSelectProjectByProjectId(),
+                            BeanPropertyRowMapper.newInstance(ProjectResponse.class), projectId);
+                }
+            } else if (!categoryId.equals(0)) {
+                FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService.getProjectSkillByProjectId(0,
+                        0, categoryId);
+                List<Integer> projectIds;
+                if (!skillList.getResponse().isEmpty()) {
+                    projectIds = skillList.getResponse().stream().map(project -> project.getProjectId()).toList();
+
+                    String inSql = String.join(",", Collections.nCopies(projectIds.size(), "?"));
+
+                    projects = jdbcTemplate.query(new PreparedStatementCreator() {
+                        @Override
+                        public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                            PreparedStatement ps = con
+                                    .prepareStatement(String.format(dbQueries.getSelectProjectByProjectIds(), inSql));
+                            for (int i = 0; i < projectIds.size(); i++) {
+                                ps.setObject(i + 1, projectIds.get(i));
+                            }
+                            return ps;
+                        }
+                    }, new RowMapperResultSetExtractor<>(BeanPropertyRowMapper.newInstance(ProjectResponse.class)));
+
+                } else {
+                    projects = jdbcTemplate.query(dbQueries.getSelectProjectByProjectId(),
+                            BeanPropertyRowMapper.newInstance(ProjectResponse.class), projectId);
+                }
             } else {
                 projects = jdbcTemplate.query(dbQueries.getSelectProjectByProjectId(),
-                        BeanPropertyRowMapper.newInstance(ProjectResponse.class), ProjectId);
+                        BeanPropertyRowMapper.newInstance(ProjectResponse.class), projectId);
             }
             if (!projects.isEmpty()) {
                 projects.stream().forEach(project -> {
-                    FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService.getProjectSkillByProjectId(project.getProjectId());
-                    if(skillList.getResponse().isEmpty()){
+                    FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService
+                            .getProjectSkillByProjectId(project.getProjectId(), 0, 0);
+                    if (!skillList.getResponse().isEmpty()) {
                         project.setSkills(skillList.getResponse().get(0).getSkills());
                     }
 
-                    FlResponse<List<BidResponse>> projectBidList = projectBidService.getProjectBidByProjectId(project.getProjectId());
-                    if(projectBidList.getResponse().isEmpty()){
+                    FlResponse<List<BidResponse>> projectBidList = projectBidService
+                            .getProjectBidByProjectId(project.getProjectId());
+                    if (!projectBidList.getResponse().isEmpty()) {
                         project.setBids(projectBidList.getResponse().stream().map(bidResponse -> BidResponse.builder()
                                 .bidId(bidResponse.getBidId())
                                 .projectId(bidResponse.getProjectId())
