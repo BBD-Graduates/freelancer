@@ -69,9 +69,50 @@
             </div>
           </div>
         </div>
-        <div class="bg-white rounded-md ">
+        <div class="">
+          <div class="bg-white rounded-md gird grid-rows-2 container min-h-[7%]">
+            <div>
+              <div class="relative">
+                <div>
+                  <button type="button"
+                    class="inline-flex flex-initial w-full mt-2 justify-center items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    (click)="toggleDropdown()">
+                    {{ selectedOptions.length > 0 ? selectedOptions.length + ' selected' : 'Select Skills' }}
+                    <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                      fill="currentColor" [class.rotate-180]="isDropdownOpen">
+                      <path fill-rule="evenodd"
+                        d="M10 16a1 1 0 01-.707-.293l-5-5a1 1 0 011.414-1.414L10 13.586l3.293-3.293a1 1 0 111.414 1.414l-4 4A1 1 0 0110 16z"
+                        clip-rule="evenodd"></path>
+                    </svg>
+                  </button>
+                </div>
+                <div class="absolute w-full rounded-md bg-white shadow-lg mt-1" *ngIf="isDropdownOpen"
+                  (clickOutside)="closeDropdown()">
+                  <ul>
+                    <li *ngFor="let option of options" class="p-2">
+                      <label class="inline-flex items-center">
+                        <input type="checkbox"
+                          class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                          [checked]="isSelected(option)" (change)="toggleOption(option)">
+                        <span class="ml-2">{{ option }}</span>
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="mt-4">
+                Selected Skills:
+                <ul class="px-5">
+                  <li *ngFor="let selectedOption of selectedOptions">- {{ selectedOption }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
-      </div> ​
+      </div>
     </div>
   </div>
 </section>
