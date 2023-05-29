@@ -35,6 +35,11 @@ const routes: Routes = [
         path: 'skill/:id/project-details',
         component: ProjectDetailsComponent,
       },
+
+      {
+        path: 'project-list',
+        component: ProjectListComponent,
+      },
       {
         path: 'skill/:id/project-details/:id',
         component: ProjectDetailsComponent,
@@ -44,9 +49,13 @@ const routes: Routes = [
         component: BrowseFreelancersComponent,
       },
       {
-        path:'post-project',
-        component:PostProjectComponent,
-      }
+        path: 'users/:userId',
+        component: UserProfileComponent,
+      },
+      {
+        path: 'post-project',
+        component: PostProjectComponent,
+      },
     ],
   },
 ];

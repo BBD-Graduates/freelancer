@@ -32,65 +32,49 @@
   }
 </style>
 <ul class="lg:flex font-semibold text-slate-700 text-lg gap-8 xl:gap-14">
-  <!-- <li class="p-3 border-t lg:border-0">
-      <a [routerLink]="['']">Home</a>
-    </li> -->
-  <!-- <li class="p-3 border-t lg:border-0">
-      <button mat-button [matMenuTriggerFor]="menu">
-        Category
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item>Item 1</button>
-        <button mat-menu-item>Item 2</button>
-      </mat-menu>
-    </li> -->
   <li class="p-3 border-t lg:border-0">
     <!-- component -->
     <div class="group inline-block">
-      <button class="outline-none focus:outline-none rounded-sm flex items-center min-w-32">
-        <span class="pr-1 font-semibold flex-1">Find Jobs</span>
-        <!-- <span>
-          <svg class="fill-current h-4 w-4 transform group-hover:-rotate-180
-          transition duration-150 ease-in-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-          </svg>
-        </span> -->
-      </button>
-      <ul class="bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute
+  <li class="outline-none focus:outline-none rounded-sm flex items-center min-w-32">
+    <a [routerLink]="['project-list/']"> <span class="pr-1 font-semibold flex-1">Find Jobs</span></a>
+  </li>
+  <ul class="bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute
     transition duration-150 ease-in-out origin-top min-w-32">
-        <div *ngIf="menuData?.response">
-          <div *ngFor="let categories of menuData?.response">
-            <li class="rounded-sm relative px-3 py-3 hover:bg-gray-100">
-              <button class="w-full text-left flex items-center outline-none focus:outline-none">
-                <span class="pr-1 flex-1"><a
-                    [routerLink]="['category/',categories.categoryId]">{{categories.categoryName}}</a></span>
-                <span class="mr-auto">
-                  <svg class="fill-current h-4 w-4
+    <div *ngIf="menuData?.response">
+      <div *ngFor="let categories of menuData?.response">
+        <li class="rounded-sm relative px-3 py-3 hover:bg-gray-100">
+          <button class="w-full text-left flex items-center outline-none focus:outline-none">
+            <span class="pr-1 flex-1"><a
+                [routerLink]="['category/',categories.categoryId]">{{categories.categoryName}}</a></span>
+            <span class="mr-auto">
+              <svg class="fill-current h-4 w-4
                   transition duration-150 ease-in-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                  </svg>
-                </span>
-              </button>
-              <ul class="bg-white border rounded-sm absolute top-0 right-0
+                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+              </svg>
+            </span>
+          </button>
+          <ul class="bg-white border rounded-sm absolute top-0 right-0
         transition duration-150 ease-in-out origin-top-left
         min-w-32
         ">
-                <div *ngFor="let skill of categories.skills">
-                  <li class="px-3 py-2 hover:bg-gray-100"><a
-                      [routerLink]="['skill/',skill.skillId]">{{skill.skillName}}</a> </li>
-                </div>
-              </ul>
-            </li>
-          </div>
-        </div>
-      </ul>
+            <div *ngFor="let skill of categories.skills">
+              <li class="px-3 py-2 hover:bg-gray-100"><a [routerLink]="['skill/',skill.skillId]">{{skill.skillName}}</a>
+              </li>
+            </div>
+          </ul>
+        </li>
+      </div>
     </div>
+  </ul>
+  </div>
   </li>
   <li class="p-3 border-t lg:border-0">
-    <a>Browse Freelancers</a>
+    <a [routerLink]="['users/']"> <span class="pr-1 font-semibold flex-1">Browse Freelancers</span></a>
   </li>
-  <!-- <li class="p-3 border-t lg:border-0">
-    <a [routerLink]="[{outlets:{user:'mobile'}}]">mobile</a>
-  </li> -->
+  <ng-container *ngIf="!sessionStatus">
+    <li class="p-3 border-t lg:border-0">
+      <a [routerLink]="['users/']"> <span class="pr-1 font-semibold flex-1">My Projects</span></a>
+    </li>
+  </ng-container>
 
 </ul>
