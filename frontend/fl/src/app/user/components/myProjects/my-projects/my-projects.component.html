@@ -1,10 +1,10 @@
 <section class="flex lg:py-1 sm:py-36 bg-slate-100">
   <div class="bg-scroll bg-cover w-full mt-52 p-2 h-screen">
     <div class=" p-2  bg-emerald-500">
-      <form class="max-w-2xl container bg-white  rounded-md">
-        <div class="flex items-center py-2 ">
+      <form class="flex justify-between container">
+        <div class="flex flex-initial items-center bg-white py-2 max-w-2xl rounded-md">
           <input
-            class="appearance-none bg-transparent border-none w-full text-gray-700 leading-tight focus:outline-none"
+            class="appearance-none bg-transparent border-none ml-2 w-full text-gray-700 leading-tight focus:outline-none"
             type="text" placeholder="Search Freelancers" aria-label="Full name">
           <button
             class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
@@ -15,20 +15,19 @@
             class="flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-1 px-2 rounded"
             value="Cancel">
         </div>
+        <div class="flex flex-initial items-center py-2 max-w-2xl rounded-md">
+          <a routerLink="freelancer">freelancer</a>
+          <button name="As Client" (click)="changeOption()" routerLink="client"
+            class="{{IsClient?'bg-emerald-600 text-emerald-50 hover:bg-emerald-700':'bg-white text-slate-700 hover:bg-slate-300'}} border border-emerald-600 disabled:opacity-30 duration-500 font-medium group overflow-clip px-5 py-2 relative rounded-lg text-md transition-all">As
+            Client</button>
+          <button name="As Freelancer" (click)="changeOption()" routerLink="freelancer"
+            class="{{IsFreelancer?'bg-emerald-600 text-emerald-50 hover:bg-emerald-700':'bg-white text-slate-700 hover:bg-slate-300'}} border border-emerald-600 disabled:opacity-30 duration-500 font-medium group overflow-clip px-5 py-2 relative rounded-lg text-emerald-50 text-md transition-all">As
+            Freelancer</button>
+        </div>
       </form>
     </div>
-    <div class="p-2  mt-2 ">
-      <div class="grid md:grid-cols-4 gap-10 h-full container p-2">
-        <div class=" bg-white col-span-3 rounded-md">
-          <div class="p-5 flex justify-between">
-            <p class="font-semibold">Top Results</p>
-            <p>Sort By</p>
-          </div>
-          <hr>
-        </div>
-        <div class="bg-white rounded-md ">
-        </div>
-      </div> ​
+    <div class="container">
+      <router-outlet></router-outlet>
     </div>
   </div>
 </section>

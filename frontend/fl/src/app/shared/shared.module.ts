@@ -15,6 +15,7 @@ import {
   SocialAuthServiceConfig,
   SocialLoginModule,
 } from '@abacritt/angularx-social-login';
+import { ProjectCardComponent } from './project-card/project-card.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {
     RatingComponent,
     TextboxComponent,
     GoogleAuthComponent,
+    ProjectCardComponent,
   ],
   imports: [CommonModule, SocialLoginModule, GoogleSigninButtonModule],
   exports: [

@@ -9,6 +9,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { UserProfileComponent } from './components/userProfile/user-profile/user-profile.component';
 import { PostProjectComponent } from './components/project/post-project/post-project.component';
 import { MyProjectsComponent } from './components/myProjects/my-projects/my-projects.component';
+import { HomeComponent as ClientHomeComponent } from './module/client/home/home.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,16 @@ const routes: Routes = [
       {
         path: 'myProjects',
         component: MyProjectsComponent,
+        children:[
+          {
+            path:'client',
+            loadChildren:()=> import('./module/client/client.module').then(m=>m.ClientModule),
+          },
+          {
+            path:'freelancer',
+            loadChildren:()=> import('./module/freelancer/freelancer.module').then(m=>m.FreelancerModule),
+          }
+        ]
       },
       {
         path: 'users/:userId',
