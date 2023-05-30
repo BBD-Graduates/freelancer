@@ -19,6 +19,8 @@ import { UserProfileComponent } from './components/userProfile/user-profile/user
 import { PostProjectComponent } from './components/project/post-project/post-project.component';
 import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 import { MyProjectsComponent } from './components/myProjects/my-projects/my-projects.component';
+import { ClientModule } from './module/client/client.module';
+import { FreelancerModule } from './module/freelancer/freelancer.module';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { MyProjectsComponent } from './components/myProjects/my-projects/my-proj
     ReactiveFormsModule,
     FormsModule,
     GoogleSigninButtonModule,
+    ClientModule,
+    FreelancerModule
   ],
 })
 export class UserModule {}

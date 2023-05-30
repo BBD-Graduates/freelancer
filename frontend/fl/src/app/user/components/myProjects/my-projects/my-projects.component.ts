@@ -5,4 +5,13 @@ import { Component } from '@angular/core';
   templateUrl: './my-projects.component.html',
   styleUrls: ['./my-projects.component.css'],
 })
-export class MyProjectsComponent {}
+export class MyProjectsComponent {
+  IsClient = false;
+  IsFreelancer = true;
+
+  changeOption(){
+    this.IsClient = !this.IsClient;
+    this.IsFreelancer = !this.IsFreelancer;
+  }
+
+}
