@@ -43,6 +43,10 @@ const routes: Routes = [
         component: ProjectListComponent,
       },
       {
+        path: 'category/:categoryid/project-details/:id',
+        component: ProjectDetailsComponent,
+      },
+      {
         path: 'skill/:id/project-details/:id',
         component: ProjectDetailsComponent,
       },
@@ -61,7 +65,12 @@ const routes: Routes = [
           {
             path:'freelancer',
             loadChildren:()=> import('./module/freelancer/freelancer.module').then(m=>m.FreelancerModule),
-          }
+          },
+          {
+            path: '', 
+            redirectTo:'client',
+            pathMatch:'full'
+          },
         ]
       },
       {

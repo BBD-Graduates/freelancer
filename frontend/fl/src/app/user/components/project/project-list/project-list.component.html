@@ -6,26 +6,19 @@
                 <span class="text-3xl font-medium text">{{skillName}}</span>
             </div>
         </div>
-        <div class="grid grid-cols-5 gap-3">
-            <div class="flex flex-col mt-2">
+        <div class="grid grid-flow-row md:grid-cols-5 gap-3">
+            <div class="flex flex-col mt-2 ">
                 <div class="min-h-[20%]">
                     <div class="bg-white rounded-md gird grid-rows-2 container min-h-[20%]">
                         <div>
                             <div class="relative">
                                 <div>
                                     <button type="button"
-                                        class="inline-flex flex-initial w-full mt-2 justify-center items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                        (click)="toggleDropdown()">
+                                        class="inline-flex flex-initial w-full mt-2 justify-center items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                         {{ selectedOptions.length > 0 ? selectedOptions.length + ' selected' : 'Select Skills' }}
-                                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20" fill="currentColor" [class.rotate-180]="isDropdownOpen">
-                                            <path fill-rule="evenodd"
-                                                d="M10 16a1 1 0 01-.707-.293l-5-5a1 1 0 011.414-1.414L10 13.586l3.293-3.293a1 1 0 111.414 1.414l-4 4A1 1 0 0110 16z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
                                     </button>
                                 </div>
-                                <div class="overflow-auto w-full rounded-md bg-white shadow-lg mt-1" *ngIf="isDropdownOpen"
+                                <div class="overflow-y-scroll h-40 w-full rounded-md bg-white shadow-lg mt-1" *ngIf="isDropdownOpen"
                                     (clickOutside)="closeDropdown()">
                                     <ul>
                                         <li *ngFor="let option of options" class="p-2">
@@ -95,7 +88,7 @@
                     </div>
                 </div>
             </div>
-            <div class="md:col-span-4 sm:col-span-5 lg:col-span-4">
+            <div class="md:col-span-4 lg:col-span-4">
                 <div class="grid grid-cols-4 group mt-2 bg-slate-50 border rounded-lg"
                     *ngFor="let item of data.response">
                     <div class="col-span-3 group-hover:bg-slate-200 rounded-sm">
