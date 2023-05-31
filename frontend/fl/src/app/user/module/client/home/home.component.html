@@ -1,20 +1,21 @@
 <p class="text-lg">Home</p>
 <div class="p-2  mt-2 ">
-    <div class="grid md:grid-cols-6 gap-10 h-full container p-2">
-      <div class=" bg-white col-span-5 rounded-md">
-        <div class="p-2">
-            <router-outlet></router-outlet>
-        </div>
+  <div class="grid md:grid-cols-6 gap-10 h-full container p-2">
+    <div class=" bg-white col-span-6 sm:col-span-5 rounded-md">
+      <div class="p-2">
+        <router-outlet></router-outlet>
       </div>
-      <div class="">
-        <div class="flex flex-col bg-white rounded-md p-2">
-            <a class="my-2 cursor-pointer" [routerLink]="'./'">Open Projects</a>
-            <hr/>
-            <a class="my-2 cursor-pointer" >Work in progress</a>
-            <hr/>
-            <a class="my-2 cursor-pointer" [routerLink]="'past'">Past projects</a>
-            <hr/>
-          </div>
+    </div>
+    <div class="">
+      <div class="flex flex-col bg-white rounded-md">
+        <a class="my-2 cursor-pointer hover:bg-slate-300 p-2" [routerLink]="'./'">Open Projects</a>
+        <hr />
+        <a class="my-2 cursor-pointer hover:bg-slate-300 p-2">Work in progress</a>
+        <hr />
+        <a class="my-2 cursor-pointer hover:bg-slate-300 p-2" [routerLink]="'past'">Past projects</a>
+        <hr />
       </div>
     </div>
   </div>
+
+</div>
