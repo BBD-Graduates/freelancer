@@ -6,12 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./my-projects.component.css'],
 })
 export class MyProjectsComponent {
-  IsClient = false;
-  IsFreelancer = true;
+  IsClient = true;
+  IsFreelancer = false;
 
   changeOption(){
     this.IsClient = !this.IsClient;
     this.IsFreelancer = !this.IsFreelancer;
+    
   }
 
 }

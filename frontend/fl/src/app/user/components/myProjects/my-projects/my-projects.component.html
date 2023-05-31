@@ -15,12 +15,12 @@
             class="flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-1 px-2 rounded"
             value="Cancel">
         </div>
-        <div class="flex flex-initial items-center py-2 max-w-2xl rounded-md">
+        <div class="flex flex-initial items-center py-2 max-w-2xl">
           <button name="As Client" (click)="changeOption()" routerLink="client"
-            class="{{IsClient?'bg-emerald-600 text-emerald-50 hover:bg-emerald-700':'bg-white text-slate-700 hover:bg-slate-300'}} border border-emerald-600 disabled:opacity-30 duration-500 font-medium group overflow-clip px-5 py-2 relative rounded-lg text-md transition-all">As
+            class="{{IsClient?'bg-emerald-600 text-emerald-50 hover:bg-emerald-700':'bg-white text-slate-700 hover:bg-slate-300'}} rounded-l-lg border border-emerald-600 disabled:opacity-30 duration-500 font-medium group overflow-clip px-5 py-2 relative text-md transition-all">As
             Client</button>
           <button name="As Freelancer" (click)="changeOption()" routerLink="freelancer"
-            class="{{IsFreelancer?'bg-emerald-600 text-emerald-50 hover:bg-emerald-700':'bg-white text-slate-700 hover:bg-slate-300'}} border border-emerald-600 disabled:opacity-30 duration-500 font-medium group overflow-clip px-5 py-2 relative rounded-lg text-emerald-50 text-md transition-all">As
+            class="{{IsFreelancer?'bg-emerald-600 text-emerald-50 hover:bg-emerald-700':'bg-white text-slate-700 hover:bg-slate-300'}} rounded-r-lg border border-emerald-600 disabled:opacity-30 duration-500 font-medium group overflow-clip px-5 py-2 relative text-emerald-50 text-md transition-all">As
             Freelancer</button>
         </div>
       </form>
