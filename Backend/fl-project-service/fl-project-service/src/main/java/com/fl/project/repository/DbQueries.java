@@ -22,11 +22,11 @@ public class DbQueries {
     @Value("${db.queries.projects.selectProjectByProjectIds}")
     private String selectProjectByProjectIds;
     
-    @Value("${db.queries.projects.updateProjectByProjectid}")
-    private String updateProjectByProjectid;
+    @Value("${db.queries.projects.updateProjectByProjectId}")
+    private String updateProjectByProjectId;
 
-    @Value("${db.queries.projects.deleteProjectByProjectid}")
-    private String deleteProjectByProjectid;
+    @Value("${db.queries.projects.deleteProjectByProjectId}")
+    private String deleteProjectByProjectId;
     
     @Value("${db.queries.paymentType.insertPaymentType}")
     private String addPaymentType;
@@ -49,8 +49,8 @@ public class DbQueries {
     @Value("${db.queries.rating.selectRatingByProjectId}")
     private String ratingByProjectId;
 
-    @Value("${db.queries.rating.updateRatingByratingId}")
-    private String updateRatingByratingId;
+    @Value("${db.queries.rating.updateRatingByRatingId}")
+    private String updateRatingByRatingId;
 
     @Value("${db.queries.rating.removeRatingByRatingId}")
     private String removeRatingByRatingId;

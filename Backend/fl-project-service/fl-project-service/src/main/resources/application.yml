@@ -19,12 +19,12 @@ eureka:
 db:
   queries:
     projects:
-      insertProject: insert into projects(ClientId,ProjectName,ProjectDescription,IsConfidential,PaymentTypeId,BidStartDate,BidEndDate,MinPrice,MaxPrice) values(?,?,?,?,?,?,?,?,?)
+      insertProject: insert into projects(ClientId,ProjectName,ProjectDescription,IsConfidential,BidStartDate,BidEndDate,MinPrice,MaxPrice) values(?,?,?,?,?,?,?,?)
       selectAllProject: select * from projects
-      selectProjectByProjectId: select * from projects where projectid = ?
-      selectProjectByProjectIds: select * from projects where projectid in (%s)
-      updateProjectByProjectid: update project set projectName=?,projectDescription=?,paymentTypeId=?,minPrice=?,maxPrice=? where projectId=?
-      deleteProjectByProjectid: delete from projects where projectId=?
+      selectProjectByProjectId: select * from projects where projectId = ?
+      selectProjectByProjectIds: select * from projects where projectId in (%s)
+      updateProjectByProjectId: update project set projectName=?,projectDescription=?,minPrice=?,maxPrice=? where projectId=?
+      deleteProjectByProjectId: delete from projects where projectId=?
     paymentType:
       insertPaymentType: insert into paymentType(paymentType)values(?)
       selectAllPaymentType: select * from paymentType
@@ -34,7 +34,16 @@ db:
       selectRatingByRatingId: select * from ratings where ratingId = ?
       selectRatingByUserId: select * from ratings where userId = ?
       selectRatingByProjectId: select * from ratings where projectId = ?
-      updateRatingByratingId: update ratings set ratingDescription = ?,Rating =? where ratingId =?
+      updateRatingByRatingId: update ratings set ratingDescription = ?,Rating =? where ratingId =?
       removeRatingByRatingId: delete from ratings where ratingId =?
     projectAssignment:
       assignBid: insert into projectAssignment (bidId) values (?)
+
+
+service:
+  props:
+    webServices:
+      fl-skill-service:
+        endpoint: http://localhost:8082/project-skills
+      fl-bid-service:
+        endpoint: http://localhost:8084/bids

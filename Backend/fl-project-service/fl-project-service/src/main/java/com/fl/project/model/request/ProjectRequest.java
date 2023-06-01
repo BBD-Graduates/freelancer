@@ -13,15 +13,11 @@ public class ProjectRequest {
     @NotNull(message = "Please enter project name")
     private String projectName;
     @NotNull(message = "Please enter project description")
-    @Size(min = 10,message = "Project Description Should be atleast 10 characters")
+    @Size(min = 10,message = "Project Description Should be at least 10 characters")
     private String projectDescription;
-    @NotNull(message = "Please select isconfidential status")
+    @NotNull(message = "Please select is confidential status")
     private Boolean isConfidential;
-    @NotNull(message = "Please select payment method")
-    private int paymentTypeId;
-   //@NotNull(message = "Please select bid start date ")
     private Date bidStartDate;
-   // @NotNull(message = "Please select bid end date")
     private Date bidEndDate;
     @NotNull(message = "Please enter minimum price for your project")
     private Float minPrice;
