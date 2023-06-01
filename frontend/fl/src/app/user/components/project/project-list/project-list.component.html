@@ -1,42 +1,14 @@
 <section class="lg:py-52 sm:py-36 sm:px-2 md:px-5 py-36 bg-slate-100">
   <div class="w-full lg:container">
     <div
-      class="bg-emerald-600 items-center border rounded-md shadow-md hover:bg-emerald-500 transition duration-300 ease-in-out flex justify-between">
+      class="bg-emerald-500 items-center border rounded-xl shadow-md hover:bg-emerald-500 transition duration-300 ease-in-out flex justify-between">
       <div class="ml-3 text-white flex-auto py-2 inline-block ">
         <ng-container *ngIf="skillName;else elseTemplate">
           <span class="text-2xl font-medium text">{{skillName}}</span>
         </ng-container>
         <ng-template #elseTemplate>
           <span class="text-2xl font-medium text">All Projects</span>
-        </ng-template>       
-       </div>
-      <div class="grid grid-flow-row md:grid-cols-5 gap-3">
-            <div class="flex flex-col mt-2 ">
-                <div class="min-h-[20%]">
-                    <div class="bg-white rounded-md gird grid-rows-2 container min-h-[20%]">
-                        <div>
-                            <div class="relative">
-                                <div>
-                                    <button type="button"
-                                        class="inline-flex flex-initial w-full mt-2 justify-center items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                        {{ selectedOptions.length > 0 ? selectedOptions.length + ' selected' : 'Select Skills' }}
-                                    </button>
-                                </div>
-                                <div class="overflow-y-scroll h-40 w-full rounded-md bg-white shadow-lg mt-1" *ngIf="isDropdownOpen"
-                                    (clickOutside)="closeDropdown()">
-                                    <ul>
-                                        <li *ngFor="let option of options" class="p-2">
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox"
-                                                    class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                                                    [checked]="isSelected(option)" (change)="toggleOption(option)">
-                                                <span class="ml-2">{{ option }}</span>
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+        </ng-template>
       </div>
       <div class="p-2">
         <form class="bg-white rounded-md ">
@@ -56,26 +28,19 @@
         </form>
       </div>
     </div>
-    <div class="grid grid-cols-5 gap-3 mt-2">
-      <div class="flex flex-col mt-2">
+    <div class="grid grid-flow-row md:grid-cols-5 gap-3">
+      <div class="flex flex-col mt-2 ">
         <div class="min-h-[20%]">
           <div class="bg-white rounded-md gird grid-rows-2 container min-h-[20%]">
             <div>
               <div class="relative">
                 <div>
                   <button type="button"
-                    class="inline-flex flex-initial w-full mt-2 justify-center items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    (click)="toggleDropdown()">
+                    class="inline-flex flex-initial w-full mt-2 justify-center items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     {{ selectedOptions.length > 0 ? selectedOptions.length + ' selected' : 'Select Skills' }}
-                    <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                      fill="currentColor" [class.rotate-180]="isDropdownOpen">
-                      <path fill-rule="evenodd"
-                        d="M10 16a1 1 0 01-.707-.293l-5-5a1 1 0 011.414-1.414L10 13.586l3.293-3.293a1 1 0 111.414 1.414l-4 4A1 1 0 0110 16z"
-                        clip-rule="evenodd"></path>
-                    </svg>
                   </button>
                 </div>
-                <div class="overflow-auto w-full rounded-md bg-white shadow-lg mt-1" *ngIf="isDropdownOpen"
+                <div class="overflow-y-scroll h-40 w-full rounded-md bg-white shadow-lg mt-1" *ngIf="isDropdownOpen"
                   (clickOutside)="closeDropdown()">
                   <ul>
                     <li *ngFor="let option of options" class="p-2">
@@ -145,16 +110,15 @@
           </div>
         </div>
       </div>
-      <!-- Project Details -->
-      <div class="md:col-span-4 sm:col-span-5 lg:col-span-4 ">
+      <div class="md:col-span-4 lg:col-span-4">
         <div class="p-3 flex justify-between">
           <p class="font-semibold ">Top Results</p>
           <p>Sort By</p>
         </div>
-        <div class="grid grid-cols-4 group bg-white border rounded-lg  " *ngFor="let item of data.response">
+        <div class="grid grid-cols-4 group mt-2 bg-white border rounded-lg" *ngFor="let item of data.response">
           <div class="col-span-3 group-hover:bg-slate-200 rounded-sm">
-            <div class="grid grid-rows-3 gap-2 ml-5 ">
-              <div class=" text-emerald-500  text-xl items-center flex ">
+            <div class="grid grid-rows-3 items-center ml-5">
+              <div class="inline-block text-emerald-500  text-xl">
                 <h2><b>{{item.projectName}}</b></h2>
               </div>
               <div class="flex gap-2 items-center ">
@@ -162,49 +126,29 @@
                 <p>{{item.minPrice}} - {{item.maxPrice}}</p>
                 <p>INR</p>
               </div>
-              <div class="items-center  flex">
-                <p class="text-clip  overflow-hidden h-12">{{item.projectDescription}}
+              <div class="">
+                <p class="text-clip overflow-hidden h-12">{{item.projectDescription}}
                 </p>
               </div>
-              <div class="flex gap-2 text-emerald-500 ">
-                <div *ngFor="let userSkill of item.skills">
-                  <p>{{userSkill.skillName}}</p>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="grid grid-rows-3 min-h-full items-center group-hover:bg-slate-200">
-                            <div class="place-self-center">
-                                <p><span class="font-bold underline">₹ {{countAvgBid(item.bids)}} / hr</span> Avg Bid
-                                </p>
-                            </div>
-                            <div class="place-self-center">
-                                <p>{{item.bids.length}} Bids</p>
-                            </div>
-                            <div class="place-self-center">
-                                <fl-button class="hidden group-hover:block" size="S" name="Bid" shade="D"
-                                    [routerLink]="['project-details/',item.projectId]" />
-                            </div>
-                        </div>
-                    </div>
+              <div class="flex text-blue-400 gap-3">
+                <div class="" *ngFor="let userSkill of item.skills">
+                  <p>{{userSkill.skillName}}</p>
                 </div>
               </div>
             </div>
           </div>
-          <div class="">
+          <div>
             <div class="grid grid-rows-3 min-h-full items-center group-hover:bg-slate-200">
-              <div class="place-self-center flex gap-1">
-                <p><span class="font-bold underline">₹ {{countAvgBid(item.bids)}} </span></p>
-                <p> <span class=>Average Bid</span>
+              <div class="place-self-center">
+                <p><span class="font-bold underline">₹ {{countAvgBid(item.bids)}} / hr</span> Avg Bid
                 </p>
               </div>
               <div class="place-self-center">
                 <p>{{item.bids.length}} Bids</p>
               </div>
               <div class="place-self-center">
-                <fl-button class="hidden group-hover:block" size="S" name="Place Bid" shade="D"
+                <fl-button class="hidden group-hover:block" size="S" name="Bid" shade="D"
                   [routerLink]="['project-details/',item.projectId]" />
               </div>
             </div>
@@ -212,5 +156,6 @@
         </div>
       </div>
     </div>
+    <hr>
   </div>
 </section>

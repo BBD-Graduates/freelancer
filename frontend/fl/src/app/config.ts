@@ -11,7 +11,7 @@ export const config = {
     getProject: 'http://localhost:8083/projects?ProjectId=0',
     getProjectByCategoryId: 'http://localhost:8083/projects?categoryId=',
     getProjectBySkillId: 'http://localhost:8083/projects?skillId=',
-    getProjectByProjectId: 'http://localhost:8083/projects?ProjectId=',
+    getProjectByProjectId: 'http://localhost:8083/projects?projectId=',
     insertProject: 'http://localhost:8083/projects',
   },
   BidService: '',
