@@ -8,8 +8,35 @@
         </ng-container>
         <ng-template #elseTemplate>
           <span class="text-2xl font-medium text">All Projects</span>
-        </ng-template>
-
+        </ng-template>       
+       </div>
+      <div class="grid grid-flow-row md:grid-cols-5 gap-3">
+            <div class="flex flex-col mt-2 ">
+                <div class="min-h-[20%]">
+                    <div class="bg-white rounded-md gird grid-rows-2 container min-h-[20%]">
+                        <div>
+                            <div class="relative">
+                                <div>
+                                    <button type="button"
+                                        class="inline-flex flex-initial w-full mt-2 justify-center items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        {{ selectedOptions.length > 0 ? selectedOptions.length + ' selected' : 'Select Skills' }}
+                                    </button>
+                                </div>
+                                <div class="overflow-y-scroll h-40 w-full rounded-md bg-white shadow-lg mt-1" *ngIf="isDropdownOpen"
+                                    (clickOutside)="closeDropdown()">
+                                    <ul>
+                                        <li *ngFor="let option of options" class="p-2">
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox"
+                                                    class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                                                    [checked]="isSelected(option)" (change)="toggleOption(option)">
+                                                <span class="ml-2">{{ option }}</span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
       </div>
       <div class="p-2">
         <form class="bg-white rounded-md ">
@@ -142,6 +169,26 @@
               <div class="flex gap-2 text-emerald-500 ">
                 <div *ngFor="let userSkill of item.skills">
                   <p>{{userSkill.skillName}}</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="grid grid-rows-3 min-h-full items-center group-hover:bg-slate-200">
+                            <div class="place-self-center">
+                                <p><span class="font-bold underline">₹ {{countAvgBid(item.bids)}} / hr</span> Avg Bid
+                                </p>
+                            </div>
+                            <div class="place-self-center">
+                                <p>{{item.bids.length}} Bids</p>
+                            </div>
+                            <div class="place-self-center">
+                                <fl-button class="hidden group-hover:block" size="S" name="Bid" shade="D"
+                                    [routerLink]="['project-details/',item.projectId]" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
               </div>
             </div>

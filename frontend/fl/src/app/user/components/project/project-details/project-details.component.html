@@ -14,8 +14,8 @@
           </div>
       </div>
       <div class="m-2 sm:grid sm:grid-row-4 sm:grid-cols-3 sm:grid-flow-col gap-1">
-          <div class="bg-slate-50 col-span-2 row-span-4 rounded-lg border shadow-md">
-              <div class="container col-span-2 items-center mt-2 ">
+          <div class="col-span-2 row-span-4 ">
+              <div class="bg-slate-50 container col-span-2 items-center rounded-lg border shadow-md">
                   <div class="relative my-2 grid grid-rows-3-4 items-center gap-2 ">
                       <div *ngFor="let item of data.response">
                           <p class="m-0">Description :</p>
@@ -44,9 +44,9 @@
                       <div>
                           <fl-rating [value]="4" />
                       </div>
-                      <div *ngFor="let item of locationData.response">
+                      <!-- <div *ngFor="let item of locationData.response">
                            {{item.stateName}}
-                      </div>
+                      </div> -->
                   </div>
               </div>
           </div>
