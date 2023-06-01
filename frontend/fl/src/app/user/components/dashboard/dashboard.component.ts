@@ -32,10 +32,10 @@ export class DashboardComponent {
   skills: any[] = [];
   languages: any[] = [];
 
-  sessionStatus = sessionStorage.getItem('userEmail') == null;
+  sessionStatus = localStorage.getItem('userEmail') == null;
 
   async getUserDetails() {
-    let userEmail = sessionStorage.getItem('userEmail') ?? '';
+    let userEmail = localStorage.getItem('userEmail') ?? '';
     const user = await this.userapiService.getAllUsers({
       email: userEmail,
     });
