@@ -59,7 +59,7 @@ public class RatingImpl implements RatingService {
     @Override
     public String updateRating(Integer ratingId, RatingRequest rating) {
         try {
-            int updated = jdbcTemplate.update(dbQueries.getUpdateRatingByratingId(), rating.getRatingDescription(),
+            int updated = jdbcTemplate.update(dbQueries.getUpdateRatingByRatingId(), rating.getRatingDescription(),
                     rating.getRating(), ratingId);
             if (updated > 0) {
                 return UPDATED_SUCCESSFULLY;

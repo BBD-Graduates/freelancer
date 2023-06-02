@@ -28,7 +28,8 @@
           <div *ngFor="let users of userDetailsList">
             <div class="flex h-46 ">
               <div class="p-3 w-40 h-40">
-                <img [src]="users.profileUrl" referrerpolicy="no-referrer" class="rounded-md w-full" alt="" />
+                <img [src]="users.profileUrl" referrerpolicy="no-referrer" class="rounded-md w-full" alt=""
+                  onerror="this.src='./assets/images/UserAltImage.jpg'" />
               </div>
               <div class="p-2 w-auto space-y-2 flex-auto">
                 <div class="font-semibold flex gap-1">
@@ -48,11 +49,11 @@
                   </div>
                 </div>
                 <div class="max-w-xl h-12">
-                  <p class="break-words truncate "> {{users.summary}}</p>
+                  <p class=" overflow-hidden truncate"> {{users.summary}}</p>
                 </div>
-                <div class="flex justify-left gap-4">
-                  <div *ngFor="let skill of users.skills" class="">
-                    {{skill.skillName}}
+                <div class="flex justify-left gap-4 max-w-xl truncate ">
+                  <div *ngFor="let skill of users.skills " class="text-emerald-500">
+                    <p class="text-green-600 ">{{skill.skillName}}</p>
                   </div>
                 </div>
               </div>

@@ -75,7 +75,7 @@ const routes: Routes = [
       },
       {
         path: 'users/:userId',
-        component: MyProjectsComponent,
+        component: UserProfileComponent,
       },
       {
         path: 'post-project',

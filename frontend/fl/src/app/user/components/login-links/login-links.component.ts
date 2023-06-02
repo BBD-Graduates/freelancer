@@ -12,26 +12,26 @@ export class LoginLinksComponent {
   profileUrl: any;
   firstName: any;
   lastName: any;
-  sessionStatus = sessionStorage.getItem('userEmail') == null;
+  sessionStatus = localStorage.getItem('userEmail') == null;
 
   ngOnInit() {
     this.getUserDetails();
   }
 
   ngOnChanges() {
-    this.sessionStatus = sessionStorage.getItem('userEmail') == null;
+    this.sessionStatus = localStorage.getItem('userEmail') == null;
   }
 
   logout() {
-    sessionStorage.clear();
-    this.sessionStatus = sessionStorage.getItem('userEmail') == null;
+    localStorage.clear();
+    this.sessionStatus = localStorage.getItem('userEmail') == null;
     this.router.navigate(['/home']).then(() => {
       window.location.reload();
     });
   }
 
   async getUserDetails() {
-    let userEmail = sessionStorage.getItem('userEmail') ?? '';
+    let userEmail = localStorage.getItem('userEmail') ?? '';
     const user = await this.userapiService.getAllUsers({
       email: userEmail,
     });

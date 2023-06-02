@@ -11,7 +11,7 @@ export class JobLinksComponent {
   menuData: any;
   constructor(private _httpClient: HttpClient) {}
 
-  sessionStatus = sessionStorage.getItem('userEmail') == null;
+  sessionStatus = localStorage.getItem('userEmail') == null;
 
   ngOnInit(): void {
     this._httpClient.get(config.skillApi.getCategorySkills).subscribe((res) => {
@@ -19,6 +19,6 @@ export class JobLinksComponent {
     });
   }
   ngOnChange(): void {
-    this.sessionStatus = sessionStorage.getItem('userEmail') == null;
+    this.sessionStatus = localStorage.getItem('userEmail') == null;
   }
 }

@@ -11,7 +11,7 @@
             <!-- User profile photo -->
             <div>
               <img [src]="photoUrl" referrerpolicy="no-referrer" class=" w-64 ml-8 object-cover  rounded-full"
-                alt="User Profile Photo" />
+                alt="User Profile Photo" onerror="this.src='./assets/images/UserAltImage.jpg'" />
               <div class="mt-4 ml-8 w-64">
                 <hr class="">
                 <div class="flex gap-2 justify-left mt-3">
@@ -34,11 +34,14 @@
               </div>
             </div>
             <!-- User profile details -->
-            <div class="flex-auto  p-5">
-              <div class="mr-32">
+            <div class="flex-auto p-5">
+              <div class="mr-32 flex justify-between">
+                <div>
+                  <h1 class="text-emerald-600 font-semibold text-2xl  mb-2">WELCOME</h1>
+                </div>
                 <div class="mb-12">
                   <h1 class="text-emerald-600 font-semibold text-2xl  mb-2">{{firstName}}{{lastName}}</h1>
-                  <p class="text-slate-600 text-xl mb-4">{{headLine}}</p>
+                  <p class="text-slate-600 text-xl font-bold mb-4">{{headLine}}</p>
                   <p class="text-slate-600 text-xl mb-4"><fl-rating [value]="4.5" /></p>
                   <!-- User summary details -->
                 </div>

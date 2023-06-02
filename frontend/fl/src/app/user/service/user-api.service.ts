@@ -1,23 +1,22 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserModel } from 'src/app/shared/model/userModel';
 import { ApiResponse } from 'src/app/shared/model/apiResponse';
+import { config } from 'src/app/config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserapiService {
   constructor(private http: HttpClient, private router: Router) {}
-  baseUrl = 'http://localhost:8081/';
-  userUrl = 'users';
 
   async loginUser(userData: UserModel) {
     try {
       const userStatus = await this.getAllUsers({ email: userData.email });
       if (userStatus?.response.length > 0) {
         console.log('User Exist');
-        sessionStorage.setItem('userEmail', userStatus?.response[0]['email']);
+        localStorage.setItem('userEmail', userStatus?.response[0]['email']);
         if (userStatus?.response[0]['userRole'] == 'Admin') {
         } else {
           this.router.navigate(['/home/dashboard']).then(() => {
@@ -30,7 +29,7 @@ export class UserapiService {
           const newUser = await this.registerUser(userData);
           if (newUser?.message == 'Registration successful') {
             console.log('New User Registered');
-            sessionStorage.setItem('userEmail', userData.email);
+            localStorage.setItem('userEmail', userStatus?.response[0]['email']);
             this.router.navigate(['/home/dashboard']).then(() => {
               window.location.reload();
             });
@@ -64,7 +63,7 @@ export class UserapiService {
       params = this.addParamsIfNotEmpty(params, 'email', email);
       const options = { params: params };
       const userResponse = await this.http
-        .get(this.baseUrl + this.userUrl, options)
+        .get(config.UserApi.getUser, options)
         .toPromise();
 
       const response = userResponse as ApiResponse;
@@ -78,7 +77,7 @@ export class UserapiService {
   async registerUser(userData: UserModel) {
     try {
       const userResponse = await this.http
-        .post(this.baseUrl + this.userUrl, userData)
+        .post(config.UserApi.postUser, userData)
         .toPromise();
       const response = userResponse as ApiResponse;
       return response;
