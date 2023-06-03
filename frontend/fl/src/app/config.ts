@@ -8,7 +8,7 @@ export const config = {
     getCategorySkills: 'http://localhost:8082/categories',
   },
   projectApi: {
-    getProject: 'http://localhost:8083/projects?ProjectId=0',
+    getProject: 'http://localhost:8083/projects?projectId=0',
     getProjectByCategoryId: 'http://localhost:8083/projects?categoryId=',
     getProjectBySkillId: 'http://localhost:8083/projects?skillId=',
     getProjectByProjectId: 'http://localhost:8083/projects?projectId=',

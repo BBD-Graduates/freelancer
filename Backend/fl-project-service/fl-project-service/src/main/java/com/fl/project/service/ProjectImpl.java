@@ -51,7 +51,7 @@ public class ProjectImpl implements ProjectService {
             parameters.put("ProjectName", project.getProjectName());
             parameters.put("ProjectDescription", project.getProjectDescription());
             parameters.put("IsConfidential", project.getIsConfidential());
-            parameters.put("PaymentTypeId", project.getPaymentTypeId());
+            // parameters.put("PaymentTypeId", project.getPaymentTypeId());
             parameters.put("BidStartDate", project.getBidStartDate());
             parameters.put("BidEndDate", project.getBidEndDate());
             parameters.put("MinPrice", project.getMinPrice());
