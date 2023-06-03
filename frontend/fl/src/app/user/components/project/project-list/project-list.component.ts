@@ -102,7 +102,8 @@ export class ProjectListComponent implements OnInit {
       for (let i = 0; i < bid.length; i++) {
         bidTotal += bid[i].amount;
       }
-      return bidTotal / bid.length;
+      const averageBid = bidTotal / bid.length;
+      return parseFloat(averageBid.toFixed(2));
     } else {
       return 0;
     }
