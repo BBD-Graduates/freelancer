@@ -17,6 +17,7 @@ export class UserapiService {
       if (userStatus?.response.length > 0) {
         console.log('User Exist');
         localStorage.setItem('userEmail', userStatus?.response[0]['email']);
+        localStorage.setItem('userId', userStatus?.response[0]['userId']);
         if (userStatus?.response[0]['userRole'] == 'Admin') {
         } else {
           this.router.navigate(['/home/dashboard']).then(() => {
@@ -29,7 +30,8 @@ export class UserapiService {
           const newUser = await this.registerUser(userData);
           if (newUser?.message == 'Registration successful') {
             console.log('New User Registered');
-            localStorage.setItem('userEmail', userStatus?.response[0]['email']);
+            localStorage.setItem('userEmail', userData.email);
+            localStorage.setItem('userId', newUser.response);
             this.router.navigate(['/home/dashboard']).then(() => {
               window.location.reload();
             });

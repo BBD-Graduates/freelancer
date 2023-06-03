@@ -19,11 +19,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Service;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -38,13 +41,22 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public String insertUser(UserRequest userRequest) {
+    public Integer insertUser(UserRequest userRequest) {
         try {
-            int insertStatus = jdbcTemplate.update(dbQueries.getAddUser(), userRequest.getFirstName(), userRequest.getLastName(), userRequest.getEmail(), userRequest.getPhotoUrl());
-            if (insertStatus > 0) {
-                return Constant.REGISTERED_SUCCESSFULLY;
+            SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
+                    .withTableName("users")
+                    .usingGeneratedKeyColumns("userId");
+
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("firstName", userRequest.getFirstName());
+            parameters.put("lastName",userRequest.getLastName());
+            parameters.put("email", userRequest.getEmail());
+            parameters.put("photoUrl", userRequest.getPhotoUrl());
+            Number userId = jdbcInsert.executeAndReturnKey(parameters);
+            if (userId.intValue() > 0) {
+                return userId.intValue();
             } else {
-                return Constant.CANT_PROCESS_REQUEST;
+                return 0;
             }
         } catch (Exception e) {
             throw e;
