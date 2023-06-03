@@ -1,17 +1,14 @@
 <section class="lg:py-52 sm:py-36 sm:px-2 md:px-5 py-36 bg-slate-100">
   <div class="w-full lg:container" >
       <div
-      class="bg-emerald-600 items-center border rounded-xl shadow-md hover:bg-emerald-500 transition duration-300 ease-in-out">
-      <!-- class="flex text-white transition-all duration-300 fixed bottom-5 right-5 w-10 h-10 bg-emerald-600 hover:bg-slate-800 rounded-full"> -->
-
+          class="bg-emerald-600 items-center border rounded-xl shadow-md hover:bg-emerald-500 transition duration-300 ease-in-out">
           <div class="ml-3 text-white py-2" *ngFor="let item of data.response">
               <div class="grid grid-flow-col gap-1"  >
                   <div>
-                      <h2 class="text-3xl font-medium "> Need Expert for {{item.projectName}}</h2>
+                      <h2 class="text-3xl font-medium ">{{item.projectName}}</h2>
                   </div>
                   <div >
-                      <h2 class="right-0"> BUDGET
-                       {{item.minPrice}}-{{item.maxPrice}} INR</h2>
+                      <p class="right-0">${{item.minPrice}}-{{item.maxPrice}}</p>
                   </div>
               </div>
           </div>
@@ -21,19 +18,17 @@
               <div class="bg-slate-50 container col-span-2 items-center rounded-lg border shadow-md">
                   <div class="relative my-2 grid grid-rows-3-4 items-center gap-2 ">
                       <div *ngFor="let item of data.response">
-                          <p class="m-0"> <b>Job Description :</b></p>
-                          <br/>
+                          <p class="m-0">Description :</p>
                           <p class="indent-8 text-justify w-72 sm:w-full">
                               {{item.projectDescription}}
-                          </p><br/>
-                          <b>Skills:</b> <br/>
+                          </p>
                           <div class=" flex text-blue-400">
                               <div class=" mr-2" *ngFor="let userSkill of item.skills">
                                   <p>{{userSkill.skillName}}</p>
                               </div>
-                              <!-- <div class=" mr-2" *ngFor="let projects of data.response"><br/>
+                              <div class=" mr-2" *ngFor="let projects of data.response"><br/>
                                   <p>Project Id : #{{projects.projectId}}</p>
-                              </div> -->
+                              </div>
                           </div>
                       </div>
                   </div>
