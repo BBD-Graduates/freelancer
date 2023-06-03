@@ -13,6 +13,7 @@ export class PostProjectComponent implements OnInit{
 
   projectdata:any=[];
   alert:boolean=false
+  skillName:any=[];
   insertProject = new FormGroup({
     projectName : new FormControl('',Validators.required),
     projectDescription : new FormControl('',Validators.required),
@@ -24,9 +25,13 @@ export class PostProjectComponent implements OnInit{
     status : new FormControl('',Validators.required)
 
 })
+  skillList: any;
 constructor (private _httpClient:HttpClient,private route:ActivatedRoute){}
   ngOnInit(): void {
-
+    this._httpClient.get(config.skillApi.getSkills).subscribe((response)=>{
+      this.skillList=response;
+      console.log(this.skillList);
+    })
   }
   saveProject(projectdata: any) {
     return this._httpClient.post(config.projectApi.insertProject,projectdata);
