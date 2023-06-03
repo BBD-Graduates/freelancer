@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { config } from 'src/app/config';
 import { ApiResponse } from 'src/app/shared/model/apiResponse';
+import { ProjectResponse } from 'src/app/shared/model/projectResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class ProjectApiService {
     clientId?: number;
     status?: String[];
     categoryId?: number;
-  }): Promise<ApiResponse | null> {
+  }): Promise<ProjectResponse[] | null> {
     try {
       let params = new HttpParams();
       params = this.addParamsIfNotEmpty(params, 'projectId', projectId);
@@ -35,8 +36,13 @@ export class ProjectApiService {
         .get(config.projectApi.getProjects, options)
         .toPromise();
 
-      const response = projectResponse as ApiResponse;
-      return response;
+      const data = projectResponse as ApiResponse;
+      if (data.response != null) {
+        const projects = data.response as ProjectResponse[];
+        return projects;
+      } else {
+        return null;
+      }
     } catch (error) {
       console.error('GetProjectsApi_ERROR', error);
       return null;

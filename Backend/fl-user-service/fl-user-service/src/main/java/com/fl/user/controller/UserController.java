@@ -26,7 +26,7 @@ public class UserController {
     private final FlResponseUtil flResponseUtil;
 
     @PostMapping
-    public ResponseEntity<FlResponse<String>> addUser(@Valid @RequestBody UserRequest userRequest) {
+    public ResponseEntity<FlResponse<Integer>> addUser(@Valid @RequestBody UserRequest userRequest) {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, userService.insertUser(userRequest), REGISTERED_SUCCESSFULLY);
         } catch (Exception e) {
