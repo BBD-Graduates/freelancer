@@ -12,6 +12,7 @@ import { SkillApiService } from 'src/app/user/service/skill-api.service';
 })
 export class PostProjectComponent {
 
+
   projectdata: any = [];
   alert: boolean = false
   skillName: any = [];
@@ -29,6 +30,7 @@ export class PostProjectComponent {
   skillList: any;
   constructor(private _httpClient: HttpClient, private route: ActivatedRoute, private skillAPi: SkillApiService) { 
     this.loadSkills();
+
   }
   
   saveProject(projectdata: any) {

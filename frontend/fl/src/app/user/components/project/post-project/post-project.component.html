@@ -26,11 +26,13 @@
           <div class="w-full md:w-1/2 mb-4 pr-2">
             <input
               class="appearance-none block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+
               id="min" formControlName="minPrice" type="number" placeholder="minimum price" />
           </div>
           <div class="w-full md:w-1/2 mb-4 pl-2">
             <input
               class="appearance-none block w-full border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+
               id="max" formControlName="maxPrice" type="number" placeholder="maximum price" />
           </div>
         </div>
@@ -38,12 +40,14 @@
           <div class="w-full md:w-1/2 mb-4 pr-2">
             <input
               class="appearance-none block w-full border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 datepicker"
+
               id="startBidDate" formControlName="bidStartDate" type="datetime-local"
               title="Usage: Select 'Start Date of the bidding.'" />
           </div>
           <div class="w-full md:w-1/2 mb-4 pl-2">
             <input
               class="appearance-none block w-full border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 datepicker"
+
               id="endBidDate" formControlName="bidEndDate" type="datetime-local"
               title="Usage: Select 'End Date of the bidding.'" />
 
@@ -54,6 +58,7 @@
             <div class="relative">
               <select
                 class="block appearance-none w-full border border-green-300 py-4 px-4 mb-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-green-500 "
+
                 id="Confidencial" formControlName="isConfidential"
                 title="Usage: Select 'Confidential-TRUE' if you want to keep the project details private.">
                 >
@@ -61,6 +66,7 @@
                 <option>true</option>
                 <option>false</option>
               </select>
+
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                   <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
@@ -71,6 +77,7 @@
         </div>
 
         <div class="flex flex-wrap -mx-3 mb-8">
+
           <div class="bg-white rounded-md gird grid-rows-2 container min-h-[20%]">
             <div>
               <div class="relative">
@@ -114,9 +121,12 @@
         </div>
 
         <div class="my-2">
+
           <fl-button name="Submit" size="S" shade="D" animation="C" type="nfSubmit" />
         </div>
       </form>
     </div>
   </div>
+
 </section>
+
