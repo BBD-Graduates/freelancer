@@ -20,11 +20,12 @@ db:
   queries:
     projects:
       insertProject: insert into projects(ClientId,ProjectName,ProjectDescription,IsConfidential,BidStartDate,BidEndDate,MinPrice,MaxPrice) values(?,?,?,?,?,?,?,?)
-      selectAllProject: select * from projects
-      selectProjectByProjectId: select * from projects where projectId = ?
-      selectProjectByProjectIds: select * from projects where projectId in (%s)
-      updateProjectByProjectId: update project set projectName=?,projectDescription=?,minPrice=?,maxPrice=? where projectId=?
-      deleteProjectByProjectId: delete from projects where projectId=?
+      selectAllProject: select * from projects WHERE Status IN ('POSTED','BID_IN_PROGRESS','BID_COMPLETE')
+      selectProjectByProjectId: select * from projects where ProjectId = ?
+      selectProjectByProjectIds: select * from projects where Status IN ('POSTED','BID_IN_PROGRESS','BID_COMPLETE') AND ProjectId in (%s)
+      updateProjectByProjectId: update project set ProjectName=?,ProjectDescription=?,MinPrice=?,MaxPrice=? where ProjectId=?
+      deleteProjectByProjectId: delete from projects where ProjectId=?
+      selectProjectsByClientIdAndStatus : select * from projects WHERE ClientId = :clientId AND  Status IN (:status)
     paymentType:
       insertPaymentType: insert into paymentType(paymentType)values(?)
       selectAllPaymentType: select * from paymentType

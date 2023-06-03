@@ -9,10 +9,8 @@ export class MyProjectsComponent {
   IsClient = true;
   IsFreelancer = false;
 
-  changeOption(){
+  changeOption() {
     this.IsClient = !this.IsClient;
     this.IsFreelancer = !this.IsFreelancer;
-    
   }
-
 }

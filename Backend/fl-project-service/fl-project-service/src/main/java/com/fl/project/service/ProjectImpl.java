@@ -14,6 +14,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapperResultSetExtractor;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
@@ -30,6 +33,7 @@ import static com.fl.project.config.Constant.*;
 public class ProjectImpl implements ProjectService {
 
     private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final DbQueries dbQueries;
     private final ProjectSkillService projectSkillService;
     private final ProjectBidService projectBidService;
@@ -48,10 +52,10 @@ public class ProjectImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectResponse> getProject(Integer projectId, Integer skillId, Integer categoryId) {
+    public List<ProjectResponse> getProject(Integer projectId, Integer skillId, Integer categoryId,Integer clientId,List<String> status) {
         List<ProjectResponse> projects;
         try {
-            if (projectId.equals(0) && skillId.equals(0) && categoryId.equals(0)) {
+            if (projectId.equals(0) && skillId.equals(0) && categoryId.equals(0) && clientId.equals(0)) {
                 projects = jdbcTemplate.query(dbQueries.getSelectAllProject(),
                         BeanPropertyRowMapper.newInstance(ProjectResponse.class));
             } else if (!skillId.equals(0)) {
@@ -78,6 +82,11 @@ public class ProjectImpl implements ProjectService {
                     projects = jdbcTemplate.query(dbQueries.getSelectProjectByProjectId(),
                             BeanPropertyRowMapper.newInstance(ProjectResponse.class), projectId);
                 }
+            } else if (!clientId.equals(0) && !status.isEmpty() ) {
+                SqlParameterSource parameters = new MapSqlParameterSource()
+                        .addValue("clientId",clientId)
+                        .addValue("status",status);
+                projects = namedParameterJdbcTemplate.query(dbQueries.getSelectProjectsByClientIdAndStatus(),parameters,BeanPropertyRowMapper.newInstance(ProjectResponse.class));
             } else if (!categoryId.equals(0)) {
                 FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService.getProjectSkill(0,
                         0, categoryId);
