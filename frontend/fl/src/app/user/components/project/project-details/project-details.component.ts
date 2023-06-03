@@ -17,7 +17,7 @@ export class ProjectDetailsComponent implements OnInit{
   data:any=[];
   alert:boolean=false
   insertBid = new FormGroup({
-    projectId : new FormControl(this.route.snapshot.paramMap.get('id')),
+    projectId : new FormControl(this.route.snapshot.paramMap.get('projectId')),
     freelancerId : new FormControl('',Validators.required),
     amount : new FormControl('',Validators.required),
     description : new FormControl('',Validators.required),
@@ -28,7 +28,7 @@ export class ProjectDetailsComponent implements OnInit{
   http: any;
   constructor (private _httpClient:HttpClient,private route:ActivatedRoute){}
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('projectId');
     this._httpClient.get(config.projectApi.getProjectByProjectId+id).subscribe((response: any)=>{
       this.data=response;
       console.log(this.data);
