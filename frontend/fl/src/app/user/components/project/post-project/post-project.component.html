@@ -3,65 +3,150 @@
   <!-- <div class=" h-40 mt-5 bg-cover "
       style="background-image: url('/assets/images/dashboardBGImage.jpg');">
     </div> -->
-  <div class="flex justify-center items-center">
+  <div class="flex justify-center items-center h-full mb-10" >
     <div class="w-2/3 bg-white rounded-lg shadow-lg p-28">
+      <h2 class="text-3xl mb-2 font-bold text-green-600 ">
+        Tell us what you need done.
+      </h2>
+      <h1 class="text-md mb-10 text-gray-500" >
+        Contact skilled freelancers within minutes.
+         View profiles, ratings and portfolios of them and get satisfied with their work.
+      </h1>
+      <form
+        class="w-full"
+        [formGroup]="insertProject"
+        (ngSubmit)="collectProject()"
+      >
+        <div class="flex flex-wrap -mx-2 mb-8">
+          <input
+            class="appearance-none block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-12 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+            id="projectName"
+            formControlName="projectName"
+            type="text"
+            placeholder="Enter Peoject Name"
+          />
+          <textarea
+            class="appearance-none block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-5 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black h-32"
+            id="projectDescription"
+            formControlName="projectDescription"
+            type="text"
+            placeholder="Enter Project Description"
+          ></textarea>
+        </div>
+        <div class="flex flex-wrap -mx-2 mb-8">
+          <div class="w-full md:w-1/2 mb-4 pr-2">
+            <input
+              class="appearance-none block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+              id="min"
+              formControlName="minPrice"
+              type="number"
+              placeholder="minimum price"
+            />
+          </div>
+          <div class="w-full md:w-1/2 mb-4 pl-2">
+            <input
+              class="appearance-none block w-full border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+              id="max"
+              formControlName="maxPrice"
+              type="number"
+              placeholder="maximum price"
+            />
+          </div>
+        </div>
+        <div class="flex flex-wrap -mx-2 mb-8">
+          <div class="w-full md:w-1/2 mb-4 pr-2">
+            <input
+              class="appearance-none block w-full border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 datepicker"
+              id="startBidDate"
+              formControlName="bidStartDate"
+              type="datetime-local"
+              title="Usage: Select 'Start Date of the bidding.'"
+            />
+          </div>
+          <div class="w-full md:w-1/2 mb-4 pl-2">
+            <input
+              class="appearance-none block w-full border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 datepicker"
+              id="endBidDate"
+              formControlName="bidEndDate"
+              type="datetime-local"
+              title="Usage: Select 'End Date of the bidding.'"/>
 
-<form class="w-full " [formGroup]="insertProject" (ngSubmit)="collectProject()" >
+          </div>
+        </div>
+        <div class="flex flex-wrap -mx-3 mb-8">
+          <div class="w-full mb-4 ">
+            <div class="relative">
+              <select
+                class="block appearance-none w-full border border-green-300 py-4 px-4 mb-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-green-500 "
+                id="Confidencial"
+                formControlName="isConfidential"
+                title="Usage: Select 'Confidential-TRUE' if you want to keep the project details private.">
+              >
+                <option value="" selected disabled>Confidencial</option>
+                <option>true</option>
+                <option>false</option>
+              </select>
+              <div
+                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+              >
+                <svg
+                  class="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <div class="flex flex-wrap -mx-2 mb-8">
-      <input class="appearance-none block w-full m:w-2/3  border border-green-300 rounded py-4 px-4 mb-10 leading-tight focus:outline-none focus:bg-white focus:border-green-500" id="projectName" formControlName="projectName" type="text" placeholder="Enter Peoject Name" >
-      <textarea class="appearance-none block w-full m:w-2/3 border border-green-300 rounded py-8 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500" id="projectDescription" formControlName="projectDescription" type="text" placeholder="Enter Project Description"></textarea>
-  </div>
-  <div class="flex flex-wrap -mx-2 mb-8">
-    <div class="w-full md:w-1/2 mb-4 pr-2">
-      <input class="appearance-none block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-1 leading-tight focus:outline-none focus:bg-white focus:border-green-500" id="min" formControlName="minPrice" type="number" placeholder="minimum price">
-    </div>
-    <div class="w-full md:w-1/2 mb-4 pl-2">
-      <input class="appearance-none block w-full border border-green-300 rounded py-4 px-4 mb-1 leading-tight focus:outline-none focus:bg-white focus:border-green-500" id="max" formControlName="maxPrice" type="number" placeholder="maximum price">
-    </div>
-  </div>
-  <div class="flex flex-wrap -mx-2 mb-8">
-      <div class="w-full md:w-1/2 mb-4 pr-2 ">
-        <input class="appearance-none block w-full border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 datepicker" id="startBidDate" formControlName="bidStartDate" type="datetime-local" >
-      </div>
-     <div class="w-full md:w-1/2 mb-4 pl-2">
-      <input class="appearance-none block w-full border border-green-300 rounded py-4 px-4 mb-5 leading-tight focus:outline-none focus:bg-white focus:border-green-500 datepicker" id="endBidDate" formControlName="bidEndDate" type="datetime-local" >
-    </div>
-  </div>
-<div class="flex flex-wrap -mx-2 mb-8">
-  <div class="w-full md:w-1/2 mb-4 pr-2">
-    <div class="relative">
-      <select class="block appearance-none w-full border border-green-300 py-4 px-4 mb-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-green-500" id="status" formControlName="status">
-        <option value="" selected disabled>status</option>
-        <option>Posted</option>
-        <option>Assigned</option>
-        <option>Removed</option>
-      </select>
-      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-      </div>
-    </div>
-    </div>
-    <div class="w-full md:w-1/2 mb-4 pl-2">
-    <div class="relative">
-      <select class="block appearance-none w-full border border-green-300 py-4 px-4 mb-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-green-500" id="Confidencial" formControlName="isConfidential">
-        <option value="" selected disabled>Confidencial</option>
-        <option>true</option>
-        <option>false</option>
-      </select>
-      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-      </div>
-    </div>
-  </div>
-</div>
+        <div class="flex flex-wrap -mx-3 mb-8">
+          <div class="w-full mb-4 ">
+            <div class="relative">
+              <select
+                class="block appearance-none w-full border border-green-300 py-4 px-4 mb-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-green-500 "
+                id="Confidencial"
+                formControlName="isConfidential"
+                title="Usage: Select 'Skills' that you required">
+              >
+                <option value="" selected disabled>Skills</option>
+                <option *ngFor="let skills of skillList.response ">
+                  {{skills.skillName}}
+                </option>
 
-<div class="my-2">
-  <fl-button  name="Submit" size="S" shade="D" animation="C" type="nfSubmit" />
-  <!-- <fl-button type="ngSubmit" name="Submit" size="S" shade="W" animation="F" /> -->
-</div>
-</form>
-</div>
-</div>
+              </select>
+              <div
+                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+              >
+                <svg
+                  class="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="my-2">
+          <fl-button
+            name="Submit"
+            size="S"
+            shade="D"
+            animation="C"
+            type="nfSubmit"
+
+          />
+          <!-- <fl-button type="ngSubmit" name="Submit" size="S" shade="W" animation="F" /> -->
+        </div>
+      </form>
+    </div>
+  </div>
 </section>
-
