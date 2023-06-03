@@ -42,23 +42,26 @@ export class UserapiService {
   }
 
   async getAllUsers({
-    languageId,
+    languageIds,
     userId,
-    skillId,
+    skillIds,
+    categoryId,
     countryId,
     email,
   }: {
-    languageId?: number;
+    languageIds?: number[];
     userId?: number;
-    skillId?: number;
+    skillIds?: number[];
+    categoryId?: number;
     countryId?: number;
     email?: string;
   }): Promise<ApiResponse | null> {
     try {
       let params = new HttpParams();
-      params = this.addParamsIfNotEmpty(params, 'languageId', languageId);
+      params = this.addParamsIfNotEmpty(params, 'languageId', languageIds);
       params = this.addParamsIfNotEmpty(params, 'userId', userId);
-      params = this.addParamsIfNotEmpty(params, 'skillId', skillId);
+      params = this.addParamsIfNotEmpty(params, 'skillId', skillIds);
+      params = this.addParamsIfNotEmpty(params, 'categoryId', categoryId);
       params = this.addParamsIfNotEmpty(params, 'countryId', countryId);
       params = this.addParamsIfNotEmpty(params, 'email', email);
       const options = { params: params };

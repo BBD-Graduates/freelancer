@@ -13,6 +13,7 @@ export const config = {
     getProjectBySkillId: 'http://localhost:8083/projects?skillId=',
     getProjectByProjectId: 'http://localhost:8083/projects?projectId=',
     insertProject: 'http://localhost:8083/projects',
+    getProjects: 'http://localhost:8083/projects',
   },
   BidService: '',
   BidApi: {
