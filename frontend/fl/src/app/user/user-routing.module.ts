@@ -43,11 +43,11 @@ const routes: Routes = [
         component: ProjectListComponent,
       },
       {
-        path: 'category/:categoryid/project-details/:id',
+        path: 'category/:categoryid/project-details/:projectId',
         component: ProjectDetailsComponent,
       },
       {
-        path: 'skill/:id/project-details/:id',
+        path: 'skill/:id/project-details/:projectId',
         component: ProjectDetailsComponent,
       },
       {

@@ -17,13 +17,17 @@ import org.springframework.jdbc.core.RowMapperResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.fl.project.config.Constant.*;
@@ -40,15 +44,32 @@ public class ProjectImpl implements ProjectService {
 
     @Override
     public String saveProject(ProjectRequest project) {
-        int isInserted = jdbcTemplate.update(
-                dbQueries.getAddProject(), project.getClientId(), project.getProjectName(),
-                project.getProjectDescription(), project.getIsConfidential(),
-                project.getBidStartDate(), project.getBidEndDate(), project.getMinPrice(), project.getMaxPrice());
-        if (isInserted > 0) {
-            return INSERTED_SUCCESSFULLY;
-        } else {
-            return CANT_PROCESS_REQUEST;
+        try {
+            SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
+                    .withTableName("projects")
+                    .usingGeneratedKeyColumns("projectId");
+
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("ClientId", project.getClientId());
+            parameters.put("ProjectName", project.getProjectName());
+            parameters.put("ProjectDescription", project.getProjectDescription());
+            parameters.put("IsConfidential", project.getIsConfidential());
+            // parameters.put("PaymentTypeId", project.getPaymentTypeId());
+            parameters.put("BidStartDate", project.getBidStartDate());
+            parameters.put("BidEndDate", project.getBidEndDate());
+            parameters.put("MinPrice", project.getMinPrice());
+            parameters.put("MaxPrice", project.getMaxPrice());
+            
+            Number projectId = jdbcInsert.executeAndReturnKey(parameters);
+            if (projectId.intValue() > 0) {
+                return INSERTED_SUCCESSFULLY;
+            } else {
+                return CANT_PROCESS_REQUEST;
+            }
+        } catch (Exception ex) {
+            throw ex;
         }
+
     }
 
     @Override
@@ -62,7 +83,8 @@ public class ProjectImpl implements ProjectService {
                 FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService.getProjectSkill(0,
                         skillId, 0);
                 if (!skillList.getResponse().isEmpty()) {
-                    List<Integer> projectIds = skillList.getResponse().stream().map(project -> project.getProjectId()).toList();
+                    List<Integer> projectIds = skillList.getResponse().stream().map(project -> project.getProjectId())
+                            .toList();
 
                     String inSql = String.join(",", Collections.nCopies(projectIds.size(), "?"));
 
