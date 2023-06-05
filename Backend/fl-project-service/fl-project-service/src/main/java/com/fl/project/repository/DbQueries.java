@@ -28,6 +28,9 @@ public class DbQueries {
     @Value("${db.queries.projects.updateProjectByProjectId}")
     private String updateProjectByProjectId;
 
+    @Value("${db.queries.projects.updateProjectStatus}")
+    private String updateProjectStatus;
+
     @Value("${db.queries.projects.deleteProjectByProjectId}")
     private String deleteProjectByProjectId;
     

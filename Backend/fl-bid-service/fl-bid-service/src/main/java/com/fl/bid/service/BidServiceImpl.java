@@ -58,6 +58,15 @@ public class BidServiceImpl implements BidService {
         }
     }
 
+    public String updateBidStatusToApprove(Integer bidId, Integer projectId){
+        try {
+           return "";
+        } catch (Exception e) {
+            throw e;
+        }
+
+    }
+
     @Override
     public List<Bid> getBids(Integer bidId, Integer projectId, Integer freelancerId) {
         try {

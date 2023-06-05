@@ -26,4 +26,5 @@ db:
       selectBidByBidId: SELECT * from bids WHERE BidId = ?
       selectBidByProjectId: SELECT * from bids WHERE ProjectId = ?
       selectBidByFreelancerId: SELECT * from bids WHERE FreelancerId = ?
-
+      approveBid: UPDATE bids set Status = ? WHERE BidId=?
+      rejectBid: UPDATE bids set Status = ? WHERE ProjectId=? and BidId != ?[
