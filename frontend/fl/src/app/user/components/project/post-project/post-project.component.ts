@@ -13,7 +13,6 @@ import { ProjectModel } from 'src/app/shared/model/projectModel';
 })
 export class PostProjectComponent {
 
-
   projectdata: any = [];
   alert: boolean = false
   skillName: any = [];
@@ -25,11 +24,11 @@ export class PostProjectComponent {
     bidEndDate: new FormControl('', [Validators.required]),
     minPrice: new FormControl('', [Validators.required]),
     maxPrice: new FormControl('', [Validators.required]),
-    status: new FormControl('', [Validators.required]),
-
+    status: new FormControl('', [Validators.required])
   });
   skillList: any;
   errorMessage: string;
+
   constructor(private _httpClient: HttpClient, private route: ActivatedRoute, private skillAPi: SkillApiService,private projectApi:ProjectApiService) {
     this.loadSkills();
     this.errorMessage='';
@@ -67,7 +66,6 @@ export class PostProjectComponent {
     }
 
   }
-
   closeAlert() {
     this.errorMessage = '';
   }

@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-
+import { ProjectResponse } from 'src/app/shared/model/projectResponse';
+import { ProjectModel } from 'src/app/shared/model/projectModel';
 import { Router } from '@angular/router';
 import { config } from 'src/app/config';
 import { ApiResponse } from 'src/app/shared/model/apiResponse';
