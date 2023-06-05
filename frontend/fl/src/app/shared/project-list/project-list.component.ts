@@ -16,13 +16,11 @@ export class ProjectListComponent {
     this.route.params.subscribe(params => {
       this.projectId = params['projectId'];
     });
-    console.log(this.projectId);
     this.getProjectData(this.projectId);
 
   }
   async getProjectData(projectId:number){
     this.data = await this.projectService.getProject({projectId: this.projectId});
-    console.log(this.data,'shared projectList')
   }
   
 }
