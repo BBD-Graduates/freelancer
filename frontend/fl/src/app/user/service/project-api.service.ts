@@ -4,8 +4,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { config } from 'src/app/config';
 import { ApiResponse } from 'src/app/shared/model/apiResponse';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ProjectModel } from 'src/app/shared/model/projectModel';
+
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +25,7 @@ data:any=[];
     clientId?: number;
     status?: String[];
     categoryId?: number;
-  }): Promise<ApiResponse | null> {
+  }): Promise<ProjectResponse[] | null> {
     try {
       let params = new HttpParams();
       params = this.addParamsIfNotEmpty(params, 'projectId', projectId);
@@ -39,8 +38,13 @@ data:any=[];
         .get(config.projectApi.getProjects, options)
         .toPromise();
 
-      const response = projectResponse as ApiResponse;
-      return response;
+      const data = projectResponse as ApiResponse;
+      if (data.response != null) {
+        const projects = data.response as ProjectResponse[];
+        return projects;
+      } else {
+        return null;
+      }
     } catch (error) {
       console.error('GetProjectsApi_ERROR', error);
       return null;

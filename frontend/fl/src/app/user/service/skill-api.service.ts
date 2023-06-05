@@ -6,11 +6,11 @@ import { ApiResponse } from 'src/app/shared/model/apiResponse';
 import { skillResponse } from 'src/app/shared/model/skillResponse';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SkillApiService {
+  constructor(private http: HttpClient, private router: Router) {}
 
-  constructor(private http: HttpClient, private router: Router) { }
   async getSkill(): Promise<skillResponse[] | null> {
     try {
       const skillResponse = await this.http
@@ -18,15 +18,13 @@ export class SkillApiService {
         .toPromise();
 
       const data = skillResponse as ApiResponse;
-      if(data.response!=null){
+      if (data.response != null) {
         const skills = data.response as skillResponse[];
         return skills;
-      }
-      else{
+      } else {
         return null;
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error('getSkill_ERROR', error);
       return null;
     }

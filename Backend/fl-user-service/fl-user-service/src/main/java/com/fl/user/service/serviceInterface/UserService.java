@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserService {
 
-    String insertUser(UserRequest userRequest);
+    Integer insertUser(UserRequest userRequest);
 
     String updateUser(Integer userId, UserRequest userRequest);
 
