@@ -67,7 +67,7 @@
                     <strong class="text-green-800">Success!! Data Successfully Entered.</strong>
                     <button (click)="closeAlert()" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
-                  <form [formGroup]="insertBid" (ngSubmit)="collectBid()">
+                  <form [formGroup]="insertBid" (ngSubmit)="saveBid(data)">
                     <div class="my-2" >
                       <div class="grid-flow-row">
                           <h2>Your bid for this job</h2>

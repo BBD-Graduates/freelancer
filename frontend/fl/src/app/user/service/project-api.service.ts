@@ -1,15 +1,19 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
+
 import { Router } from '@angular/router';
 import { config } from 'src/app/config';
 import { ApiResponse } from 'src/app/shared/model/apiResponse';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ProjectModel } from 'src/app/shared/model/projectModel';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProjectApiService {
-  constructor(private http: HttpClient, private router: Router) {}
 
+export class ProjectApiService {
+constructor(private http: HttpClient, private router: Router) {}
+data:any=[];
   async getProject({
     projectId,
     skillId,
@@ -42,6 +46,23 @@ export class ProjectApiService {
       return null;
     }
   }
+  postProject(data: ProjectModel) {
+    return this.http.post(config.projectApi.insertProject, data);
+  }
+
+
+  // async postProject(data: ProjectModel) {
+  //   try {
+  //     const insertBid = await this.http
+  //       .post(config.projectApi.insertProject, data)
+  //       .toPromise();
+  //     const response = insertBid as ApiResponse;
+  //     return response;
+  //   } catch (error) {
+  //     console.error('Posting_Project_Error', error);
+  //     return null;
+  //   }
+  // }
 
   addParamsIfNotEmpty(params: any, key: string, value: any): any {
     if (value !== null && value !== undefined && value !== '') {
@@ -49,4 +70,8 @@ export class ProjectApiService {
     }
     return params;
   }
+
+
+
+
 }

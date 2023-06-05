@@ -39,15 +39,22 @@ export class ProjectDetailsComponent implements OnInit{
   })
 }
 saveBid(data: any) {
-  return this._httpClient.post(config.BidApi.insertBid, data);
-}
-collectBid() {
   console.log(this.insertBid.value);
-  this.saveBid(this.insertBid.value).subscribe((response) => {
+  this._httpClient.post(config.BidApi.insertBid,data).subscribe((response:any)=>{
+    this.data = response;
+
     this.alert = true;
     this.insertBid.reset();
-  });
+  })
+  // return this._httpClient.post(config.BidApi.insertBid, data);
 }
+// collectBid() {
+//   console.log(this.insertBid.value);
+//   this.saveBid(this.insertBid.value).subscribe((response) => {
+//     this.alert = true;
+//     this.insertBid.reset();
+//   });
+// }
 closeAlert() {
   this.alert = false;
 }
