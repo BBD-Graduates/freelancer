@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'fl-mobile',
@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./mobile.component.css']
 })
 export class MobileComponent {
-
+  @Input('align')
+  align = 'center';
 }

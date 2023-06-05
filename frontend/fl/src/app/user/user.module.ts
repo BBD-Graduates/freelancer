@@ -26,6 +26,7 @@ import {
   SocialAuthServiceConfig,
   SocialLoginModule,
 } from '@abacritt/angularx-social-login';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {
     PostProjectComponent,
     MyProjectsComponent,
     GoogleAuthComponent,
+    FooterComponent,
   ],
   imports: [
     CommonModule,
