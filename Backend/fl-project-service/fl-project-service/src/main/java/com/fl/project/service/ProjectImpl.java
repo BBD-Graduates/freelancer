@@ -18,19 +18,17 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.fl.project.config.Constant.*;
+import static com.fl.project.config.ProjectStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -58,7 +56,7 @@ public class ProjectImpl implements ProjectService {
             parameters.put("BidEndDate", project.getBidEndDate());
             parameters.put("MinPrice", project.getMinPrice());
             parameters.put("MaxPrice", project.getMaxPrice());
-            
+
             Number projectId = jdbcInsert.executeAndReturnKey(parameters);
             if (projectId.intValue() > 0) {
                 return INSERTED_SUCCESSFULLY;
@@ -72,7 +70,7 @@ public class ProjectImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectResponse> getProject(Integer projectId, Integer skillId, Integer categoryId,Integer clientId,List<String> status) {
+    public List<ProjectResponse> getProject(Integer projectId, Integer skillId, Integer categoryId, Integer clientId, List<String> status) {
         List<ProjectResponse> projects;
         try {
             if (projectId.equals(0) && skillId.equals(0) && categoryId.equals(0) && clientId.equals(0)) {
@@ -103,11 +101,11 @@ public class ProjectImpl implements ProjectService {
                     projects = jdbcTemplate.query(dbQueries.getSelectProjectByProjectId(),
                             BeanPropertyRowMapper.newInstance(ProjectResponse.class), projectId);
                 }
-            } else if (!clientId.equals(0) && !status.isEmpty() ) {
+            } else if (!clientId.equals(0) && !status.isEmpty()) {
                 SqlParameterSource parameters = new MapSqlParameterSource()
-                        .addValue("clientId",clientId)
-                        .addValue("status",status);
-                projects = namedParameterJdbcTemplate.query(dbQueries.getSelectProjectsByClientIdAndStatus(),parameters,BeanPropertyRowMapper.newInstance(ProjectResponse.class));
+                        .addValue("clientId", clientId)
+                        .addValue("status", status);
+                projects = namedParameterJdbcTemplate.query(dbQueries.getSelectProjectsByClientIdAndStatus(), parameters, BeanPropertyRowMapper.newInstance(ProjectResponse.class));
             } else if (!categoryId.equals(0)) {
                 FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService.getProjectSkill(0,
                         0, categoryId);
@@ -192,4 +190,33 @@ public class ProjectImpl implements ProjectService {
             throw ex;
         }
     }
+
+    @Scheduled(cron = "0 0 * * * *")
+    public void updateProjectStatus() {
+        List<String> status = new ArrayList<>();
+        status.add(POSTED.toString());
+        status.add(BID_IN_PROGRESS.toString());
+        status.add(BID_COMPLETE.toString());
+
+        List<ProjectResponse> projectStatus = getProject(0, 0, 0, 0, status);
+        Date currentDate = new Date();
+
+        for (ProjectResponse project : projectStatus) {
+            Date bidStartDate = project.getBidStartDate();
+            Date bidEndDate = project.getBidEndDate();
+            if (project.getStatus().equals(POSTED.toString())) {
+                if (currentDate.after(bidStartDate) && currentDate.before(bidEndDate)) {
+                    project.setStatus(BID_IN_PROGRESS.toString());
+                }
+            } else if (project.getStatus().equals(BID_IN_PROGRESS.toString()) && (currentDate.after(bidEndDate))) {
+                    project.setStatus(BID_COMPLETE.toString());
+            }
+            else{
+                break;
+            }
+            jdbcTemplate.update(dbQueries.getUpdateProjectStatus(), project.getStatus(),project.getProjectId());
+
+        }
+    }
+
 }

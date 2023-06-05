@@ -1,40 +1,24 @@
 <div>
-  <div class="grid grid-cols-4 group mt-2 bg-slate-50 border rounded-lg">
-    <div class="grid grid-cols-4 group mt-2 bg-white border rounded-lg" *ngFor="let projects of projects">
-      <div class="col-span-3 group-hover:bg-slate-200 rounded-sm">
-        <div class="grid grid-rows-3 items-center ml-5">
-          <div class="inline-block text-emerald-500  text-xl">
-            <h2><b>{{projects.projectName}}</b></h2>
-          </div>
-          <div class="flex gap-2 items-center ">
-            <p class="">Budget</p>
-            <p>{{projects.minPrice}} - {{projects.maxPrice}}</p>
-            <p>INR</p>
-          </div>
-          <div class="">
-            <p class="text-clip overflow-hidden h-12">{{projects.projectDescription}}
-            </p>
-          </div>
 
-          <div class="flex text-blue-400 gap-3">
-            <div class="" *ngFor="let projectSkills of projects.skills">
-              <p>{{projectSkills.skillName}}</p>
-            </div>
-          </div>
+  <div class="grid grid-cols-4 group mt-2 bg-white border rounded-lg" *ngFor="let projects of projects">
+    <div class="col-span-3 group-hover:bg-slate-200 rounded-sm">
+      <div class="grid grid-rows-3 items-center ml-5">
+        <div class="inline-block text-emerald-500  text-xl">
+          <h2><b>{{projects.projectName}}</b></h2>
         </div>
-      </div>
-      <div>
-        <div class="grid grid-rows-3 min-h-full items-center group-hover:bg-slate-200">
-          <div class="place-self-center">
-            <p><span class="font-bold underline">₹ {{countAvgBid(projects.bids)}} / hr</span> Avg Bid
-            </p>
-          </div>
-          <div class="place-self-center">
-            <p>{{projects.bids.length}} Bids</p>
-          </div>
-          <div class="place-self-center">
-            <fl-button class="hidden group-hover:block" size="S" name="Bid" shade="D"
-              [routerLink]="['project-details/',projects.projectId]" />
+        <div class="flex gap-2 items-center ">
+          <p class="">Budget</p>
+          <p>{{projects.minPrice}} - {{projects.maxPrice}}</p>
+          <p>INR</p>
+        </div>
+        <div class="">
+          <p class="text-clip overflow-hidden h-12">{{projects.projectDescription}}
+          </p>
+        </div>
+
+        <div class="flex text-blue-400 gap-3">
+          <div class="" *ngFor="let projectSkills of projects.skills">
+            <p>{{projectSkills.skillName}}</p>
           </div>
         </div>
       </div>
@@ -42,18 +26,34 @@
     <div>
       <div class="grid grid-rows-3 min-h-full items-center group-hover:bg-slate-200">
         <div class="place-self-center">
-          <p><span class="font-bold underline">₹ Avg Bid / hr</span> Avg Bid
+          <p><span class="font-bold underline">₹ {{countAvgBid(projects.bids)}} / hr</span> Avg Bid
           </p>
         </div>
         <div class="place-self-center">
-          <p>10 Bids</p>
+          <p>{{projects.bids.length}} Bids</p>
         </div>
         <div class="place-self-center">
           <fl-button class="hidden group-hover:block" size="S" name="Bid" shade="D"
-            [routerLink]="['project-details/','projectid']" />
+            [routerLink]="['project-details/',projects.projectId]" />
         </div>
       </div>
     </div>
   </div>
+  <div>
+    <div class="grid grid-rows-3 min-h-full items-center group-hover:bg-slate-200">
+      <div class="place-self-center">
+        <p><span class="font-bold underline">₹ Avg Bid / hr</span> Avg Bid
+        </p>
+      </div>
+      <div class="place-self-center">
+        <p>10 Bids</p>
+      </div>
+      <div class="place-self-center">
+        <fl-button class="hidden group-hover:block" size="S" name="Bid" shade="D"
+          [routerLink]="['project-details/','projectid']" />
+      </div>
+    </div>
+  </div>
+
 
 </div>
