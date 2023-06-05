@@ -23,7 +23,8 @@ db:
       selectAllProject: select * from projects WHERE Status IN ('POSTED','BID_IN_PROGRESS','BID_COMPLETE')
       selectProjectByProjectId: select * from projects where ProjectId = ?
       selectProjectByProjectIds: select * from projects where Status IN ('POSTED','BID_IN_PROGRESS','BID_COMPLETE') AND ProjectId in (%s)
-      updateProjectByProjectId: update project set ProjectName=?,ProjectDescription=?,MinPrice=?,MaxPrice=? where ProjectId=?
+      updateProjectByProjectId: update projects set ProjectName=?,ProjectDescription=?,MinPrice=?,MaxPrice=? where ProjectId=?
+      updateProjectStatus: update projects set Status = ? WHERE ProjectId = ?
       deleteProjectByProjectId: delete from projects where ProjectId=?
       selectProjectsByClientIdAndStatus : select * from projects WHERE ClientId = :clientId AND  Status IN (:status)
     paymentType:

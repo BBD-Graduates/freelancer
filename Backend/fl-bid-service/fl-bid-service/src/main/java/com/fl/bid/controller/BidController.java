@@ -45,6 +45,18 @@ public class BidController {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + UPDATION_FAILED, BID));
         }
     }
+
+    public ResponseEntity<FlResponse<String>> updateBidStatusToApprove(
+            @RequestParam( required = false, name = "bidId") Integer bidId,
+            @RequestParam( required = false, name = "projectId") Integer projectId){
+
+        try {
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, bidService.updateBidStatusToApprove(bidId,projectId), String.format("%s" + APPROVED, BID));
+        } catch (Exception e) {
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + CANT_APPROVE_BID));
+        }
+
+    }
     @GetMapping
     public ResponseEntity<FlResponse<List<Bid>>> getBids(
             @RequestParam(defaultValue = "0", required = false, name = "bidId") Integer bidId,
