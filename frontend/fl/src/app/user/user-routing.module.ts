@@ -51,6 +51,10 @@ const routes: Routes = [
         component: ProjectDetailsComponent,
       },
       {
+        path: 'project-details/:projectId',
+        component: ProjectDetailsComponent,
+      },
+      {
         path: 'users',
         component: BrowseFreelancersComponent,
       },
