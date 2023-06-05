@@ -1,11 +1,10 @@
 <section class="lg:py-60 md:py-36 sm:px-2 md:px-4 py-60 bg-slate-100">
-  <!-- <div class="bg-cover bg-center h-full" style="background-image: url('/assets/images/dashboardBGImage.jpg')"> -->
-  <!-- <div class=" h-40 mt-5 bg-cover "
-      style="background-image: url('/assets/images/dashboardBGImage.jpg');">
-    </div> -->
+    <div *ngIf="errorMessage" class="bg-red-500 text-white p-4 mb-4">
+      {{ errorMessage }}
+    </div>
   <div class="flex justify-center items-center h-full mb-10">
-    <div class="w-2/3 bg-white rounded-lg shadow-lg container">
-      <h2 class="text-3xl mb-2 font-bold text-green-600 mt-5">
+    <div class="w-2/3 bg-white rounded-lg shadow-lg p-28">
+      <h2 class="text-3xl mb-2 font-bold text-green-600 ">
         Tell us what you need done.
       </h2>
       <h1 class="text-md mb-10 text-gray-500">
@@ -13,7 +12,7 @@
         View profiles, ratings and portfolios of them and get satisfied with their work.
       </h1>
       <form class="w-full" [formGroup]="insertProject" (ngSubmit)="collectProject()">
-        <div class="flex flex-wrap">
+        <div class="flex flex-wrap -mx-2 mb-8">
           <input
             class="appearance-none block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-12 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
             id="projectName" formControlName="projectName" type="text" placeholder="Enter Peoject Name" />
@@ -22,7 +21,7 @@
             id="projectDescription" formControlName="projectDescription" type="text"
             placeholder="Enter Project Description"></textarea>
         </div>
-        <div class="flex flex-wrap">
+        <div class="flex flex-wrap -mx-2 mb-8">
           <div class="w-full md:w-1/2 mb-4 pr-2">
             <input
               class="appearance-none block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
@@ -34,16 +33,14 @@
               id="max" formControlName="maxPrice" type="number" placeholder="maximum price" />
           </div>
         </div>
-        <div class="flex flex-wrap">
+        <div class="flex flex-wrap -mx-2 mb-8">
           <div class="w-full md:w-1/2 mb-4 pr-2">
-            Bid start date
             <input
               class="appearance-none block w-full border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 datepicker"
               id="startBidDate" formControlName="bidStartDate" type="datetime-local"
               title="Usage: Select 'Start Date of the bidding.'" />
           </div>
           <div class="w-full md:w-1/2 mb-4 pl-2">
-            Bid end date
             <input
               class="appearance-none block w-full border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 datepicker"
               id="endBidDate" formControlName="bidEndDate" type="datetime-local"
@@ -51,7 +48,7 @@
 
           </div>
         </div>
-        <div class="flex flex-wrap">
+        <div class="flex flex-wrap -mx-3 mb-8">
           <div class="w-full mb-4 ">
             <div class="relative">
               <select
@@ -73,14 +70,14 @@
           </div>
         </div>
 
-        <div class="flex flex-wrap">
+        <div class="flex flex-wrap -mx-3 mb-8">
 
-          <div class="bg-white rounded-md gird grid-rows-2 w-full min-h-[20%]">
+          <div class="bg-white rounded-md gird grid-rows-2 container min-h-[20%]">
             <div>
               <div class="relative">
                 <div>
                   <button type="button"
-                    class="inline-flex flex-initial w-full mt-2 justify-center items-center px-4 py-2 border border-green-300 focus:border-green-500 text-sm leading-5 font-medium rounded-md text-gray-700 focus:outline-none"
+                    class="inline-flex flex-initial w-full mt-2 justify-center items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     (click)="toggleDropdown()">
                     {{ selectedOptions.length > 0 ? selectedOptions.length + ' Selected' : 'Selects Skills' }}
                     <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"

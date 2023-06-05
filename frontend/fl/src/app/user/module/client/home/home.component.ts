@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-
+  selectedMenu:String = 'open';
+  changeMenu(menu:String){
+    this.selectedMenu=menu;
+  }
 }

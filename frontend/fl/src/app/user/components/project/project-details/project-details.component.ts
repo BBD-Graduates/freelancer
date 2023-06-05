@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { config } from 'src/app/config';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserapiService } from 'src/app/user/service/user-api.service';
 
 
 
@@ -16,9 +17,10 @@ export class ProjectDetailsComponent implements OnInit{
   location:any=[];
   data:any=[];
   alert:boolean=false
+  isAllowBid:boolean=true;
   insertBid = new FormGroup({
     projectId : new FormControl(this.route.snapshot.paramMap.get('projectId')),
-    freelancerId : new FormControl('',Validators.required),
+    freelancerId : new FormControl(localStorage.getItem('userId'),Validators.required),
     amount : new FormControl('',Validators.required),
     description : new FormControl('',Validators.required),
     deliveryDays : new FormControl('',Validators.required),
@@ -26,12 +28,12 @@ export class ProjectDetailsComponent implements OnInit{
 })
   locationData:any=[];
   http: any;
-  constructor (private _httpClient:HttpClient,private route:ActivatedRoute){}
+  constructor (private _httpClient:HttpClient,private route:ActivatedRoute,private userService:UserapiService){
+  }
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('projectId');
     this._httpClient.get(config.projectApi.getProjectByProjectId+id).subscribe((response: any)=>{
       this.data=response;
-      console.log(this.data);
   })
   const pid = this.route.snapshot.paramMap.get('id');
   this._httpClient.get(config.UserApi.getLocation).subscribe((response:any)=>{
@@ -48,6 +50,7 @@ collectBid() {
     this.insertBid.reset();
   });
 }
+
 closeAlert() {
   this.alert = false;
 }

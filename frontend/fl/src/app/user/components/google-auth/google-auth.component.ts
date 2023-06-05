@@ -8,13 +8,13 @@ import {
   GoogleLoginProvider,
   SocialAuthService,
 } from '@abacritt/angularx-social-login';
-import { UserModel } from '../../model/userModel';
+import { UserModel } from '../../../shared/model/userModel';
 import { UserapiService } from 'src/app/user/service/user-api.service';
 
 @Component({
   selector: 'fl-google-auth',
   templateUrl: './google-auth.component.html',
-  styleUrls: ['./google-auth.component.css'],
+  styleUrls: ['./google-auth.component.css']
 })
 export class GoogleAuthComponent {
   constructor(
