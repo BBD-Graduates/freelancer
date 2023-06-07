@@ -113,7 +113,7 @@
           <p class="font-semibold ">Top Results</p>
           <p>Sort By</p>
         </div>
-        <div class="grid grid-cols-4 group mt-2 bg-white border rounded-lg" *ngFor="let item of data.response">
+        <div class="grid grid-cols-4 group mt-2 bg-white border rounded-lg" *ngFor="let item of data">
           <div class="col-span-3 group-hover:bg-slate-200 rounded-sm">
             <div class="grid grid-rows-3 items-center ml-5">
               <div class="inline-block text-emerald-500  text-xl">
@@ -139,14 +139,14 @@
           <div>
             <div class="grid grid-rows-3 min-h-full items-center group-hover:bg-slate-200">
               <div class="place-self-center">
-                <p><span class="font-bold underline">₹ {{countAvgBid(item.bids)}} / hr</span> Avg Bid
+                <p><span class="font-bold underline">₹ {{countAvgBid(item.bids)}} </span> Avg Bid
                 </p>
               </div>
               <div class="place-self-center">
                 <p>{{item.bids.length}} Bids</p>
               </div>
               <div class="place-self-center">
-                <fl-button class="hidden group-hover:block" size="S" name="Bid" shade="D"
+                <fl-button class="hidden group-hover:block" size="S" name="View Details" shade="D"
                   [routerLink]="['project-details/',item.projectId]" />
               </div>
             </div>

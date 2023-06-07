@@ -34,9 +34,9 @@ export class BrowseFreelancersComponent {
 
   async ngOnInit(): Promise<void> {
     this.userData = await this.userApiService.getAllUsers({});
-    const res = this.userData?.response;
+    const userRes = this.userData?.response;
 
-    res.forEach((userData: any) => {
+    userRes.forEach((userData: any) => {
       const response = userData || {};
       this.userDetails = {
         userId: response.userId || '',
