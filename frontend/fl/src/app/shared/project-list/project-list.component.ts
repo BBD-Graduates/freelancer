@@ -20,7 +20,7 @@ export class ProjectListComponent {
 
   }
   async getProjectData(projectId:number){
-    this.data = await this.projectService.getProject({projectId: this.projectId});
+    this.data = await this.projectService.getProjects({projectId: this.projectId});
   }
   
 }

@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { config } from 'src/app/config';
 import { ApiResponse } from 'src/app/shared/model/apiResponse';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -14,7 +13,7 @@ import { ApiResponse } from 'src/app/shared/model/apiResponse';
 export class ProjectApiService {
 constructor(private http: HttpClient, private router: Router) {}
 data:any=[];
-  async getProject({
+  async getProjects({
     projectId,
     skillId,
     clientId,
@@ -54,29 +53,10 @@ data:any=[];
   postProject(data: ProjectModel) {
     return this.http.post(config.projectApi.insertProject, data);
   }
-
-
-  // async postProject(data: ProjectModel) {
-  //   try {
-  //     const insertBid = await this.http
-  //       .post(config.projectApi.insertProject, data)
-  //       .toPromise();
-  //     const response = insertBid as ApiResponse;
-  //     return response;
-  //   } catch (error) {
-  //     console.error('Posting_Project_Error', error);
-  //     return null;
-  //   }
-  // }
-
   addParamsIfNotEmpty(params: any, key: string, value: any): any {
     if (value !== null && value !== undefined && value !== '') {
       params = params.set(key, value);
     }
     return params;
   }
-
-
-
-
 }

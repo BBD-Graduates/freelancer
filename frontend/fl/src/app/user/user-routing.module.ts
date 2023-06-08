@@ -29,7 +29,7 @@ const routes: Routes = [
         component: ProjectListComponent,
       },
       {
-        path: 'skill/:id',
+        path: 'skill/:skillId',
         component: ProjectListComponent,
         pathMatch: 'prefix',
       },
