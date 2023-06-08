@@ -4,6 +4,7 @@ import com.fl.project.feignClient.ProjectBidService;
 import com.fl.project.feignClient.ProjectSkillService;
 import com.fl.project.model.FlResponse;
 import com.fl.project.model.request.ProjectRequest;
+import com.fl.project.model.request.ProjectSkillsRequest;
 import com.fl.project.model.response.BidResponse;
 import com.fl.project.model.response.ProjectResponse;
 import com.fl.project.model.response.ProjectSkillsResponse;
@@ -17,16 +18,14 @@ import org.springframework.jdbc.core.RowMapperResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.stream.Collectors;
-
+import java.sql.Statement;
 import static com.fl.project.config.Constant.*;
 import static com.fl.project.config.ProjectStatus.*;
 
@@ -43,44 +42,70 @@ public class ProjectImpl implements ProjectService {
     @Override
     public String saveProject(ProjectRequest project) {
         try {
-            SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
-                    .withTableName("projects")
-                    .usingGeneratedKeyColumns("projectId");
-
-            Map<String, Object> parameters = new HashMap<>();
-            parameters.put("ClientId", project.getClientId());
-            parameters.put("ProjectName", project.getProjectName());
-            parameters.put("ProjectDescription", project.getProjectDescription());
-            parameters.put("IsConfidential", project.getIsConfidential());
-            parameters.put("BidStartDate", project.getBidStartDate());
-            parameters.put("BidEndDate", project.getBidEndDate());
-            parameters.put("MinPrice", project.getMinPrice());
-            parameters.put("MaxPrice", project.getMaxPrice());
-
-            Number projectId = jdbcInsert.executeAndReturnKey(parameters);
+            KeyHolder identityValue = new GeneratedKeyHolder();
+            jdbcTemplate.update(new PreparedStatementCreator() {
+                @Override
+                public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                    PreparedStatement ps = connection.prepareStatement(dbQueries.getAddProject(), Statement.RETURN_GENERATED_KEYS);
+                    ps.setInt(1, project.getClientId());
+                    ps.setString(2, project.getProjectName());
+                    ps.setString(3, project.getProjectDescription());
+                    ps.setBoolean(4, project.getIsConfidential());
+                    ps.setDate(5, new java.sql.Date(project.getBidStartDate().getTime()));
+                    ps.setDate(6, new java.sql.Date(project.getBidEndDate().getTime()));
+                    ps.setFloat(7, project.getMinPrice());
+                    ps.setFloat(8, project.getMaxPrice());
+                    return ps;
+                }
+            }, identityValue);
+            Number projectId = identityValue.getKey().intValue();
             if (projectId.intValue() > 0) {
-                return INSERTED_SUCCESSFULLY;
+                List<ProjectSkillsRequest> projectskills=new ArrayList<>();
+
+                project.getSkillIds().forEach(skillId->{
+                    projectskills.add(new ProjectSkillsRequest(projectId.intValue(),skillId));
+                });
+                FlResponse<String> status=projectSkillService.addProjectSkills(projectskills);
+                if(Objects.equals(status.getResponse(), PROJECT_SKILLS + INSERTED_SUCCESSFULLY))
+                {
+                    return PROJECT + INSERTED_SUCCESSFULLY;
+                }else {
+                    return PROJECT_SKILLS + INSERTION_FAILED;
+                }
+
             } else {
                 return CANT_PROCESS_REQUEST;
             }
         } catch (Exception ex) {
             throw ex;
         }
-
     }
 
     @Override
-    public List<ProjectResponse> getProject(Integer projectId, Integer skillId, Integer categoryId, Integer clientId, List<String> status) {
+    public List<ProjectResponse> getProject(Integer projectId, Integer skillId, Integer categoryId, Integer clientId,Integer freelancerId ,List<String> status) {
         List<ProjectResponse> projects;
         try {
-            if (projectId.equals(0) && skillId.equals(0) && categoryId.equals(0) && clientId.equals(0)) {
+            if (projectId.equals(0) && skillId.equals(0) && categoryId.equals(0) && clientId.equals(0) && freelancerId.equals(0)) {
                 projects = jdbcTemplate.query(dbQueries.getSelectAllProject(),
                         BeanPropertyRowMapper.newInstance(ProjectResponse.class));
-            } else if (!skillId.equals(0)) {
+            }
+            else if (!freelancerId.equals(0) && !status.isEmpty()) {
+                FlResponse<List<BidResponse>> freelancerBids= projectBidService.getBidByFreelancerId(freelancerId,APPROVED.toString());
+                List<Integer> bidProjectIds =new ArrayList<>();
+                freelancerBids.getResponse().forEach(bidResponse -> {
+                     bidProjectIds.add(bidResponse.getProjectId());
+                });
+                    SqlParameterSource parameters=new MapSqlParameterSource()
+                       .addValue("projectIds",bidProjectIds)
+                       .addValue("status",status);
+                    projects=namedParameterJdbcTemplate.query(dbQueries.getAssignedProjectsByProjectIds(),parameters,
+                            BeanPropertyRowMapper.newInstance(ProjectResponse.class));
+            }
+            else if (!skillId.equals(0)) {
                 FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService.getProjectSkill(0,
                         skillId, 0);
                 if (!skillList.getResponse().isEmpty()) {
-                    List<Integer> projectIds = skillList.getResponse().stream().map(project -> project.getProjectId())
+                    List<Integer> projectIds = skillList.getResponse().stream().map(ProjectSkillsResponse::getProjectId)
                             .toList();
 
                     String inSql = String.join(",", Collections.nCopies(projectIds.size(), "?"));
@@ -101,12 +126,14 @@ public class ProjectImpl implements ProjectService {
                     projects = jdbcTemplate.query(dbQueries.getSelectProjectByProjectId(),
                             BeanPropertyRowMapper.newInstance(ProjectResponse.class), projectId);
                 }
-            } else if (!clientId.equals(0) && !status.isEmpty()) {
+            }
+            else if (!clientId.equals(0) && !status.isEmpty()) {
                 SqlParameterSource parameters = new MapSqlParameterSource()
                         .addValue("clientId", clientId)
                         .addValue("status", status);
                 projects = namedParameterJdbcTemplate.query(dbQueries.getSelectProjectsByClientIdAndStatus(), parameters, BeanPropertyRowMapper.newInstance(ProjectResponse.class));
-            } else if (!categoryId.equals(0)) {
+            }
+            else if (!categoryId.equals(0)) {
                 FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService.getProjectSkill(0,
                         0, categoryId);
                 List<Integer> projectIds;
@@ -131,12 +158,13 @@ public class ProjectImpl implements ProjectService {
                     projects = jdbcTemplate.query(dbQueries.getSelectProjectByProjectId(),
                             BeanPropertyRowMapper.newInstance(ProjectResponse.class), projectId);
                 }
-            } else {
+            }
+            else {
                 projects = jdbcTemplate.query(dbQueries.getSelectProjectByProjectId(),
                         BeanPropertyRowMapper.newInstance(ProjectResponse.class), projectId);
             }
             if (!projects.isEmpty()) {
-                projects.stream().forEach(project -> {
+                projects.forEach(project -> {
                     FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService
                             .getProjectSkill(project.getProjectId(), 0, 0);
                     if (!skillList.getResponse().isEmpty()) {
@@ -153,7 +181,7 @@ public class ProjectImpl implements ProjectService {
                                 .amount(bidResponse.getAmount())
                                 .description(bidResponse.getDescription())
                                 .createdDate(bidResponse.getCreatedDate())
-                                .build()).collect(Collectors.toList()));
+                                .build()).toList());
                     }
                 });
             }
@@ -191,32 +219,5 @@ public class ProjectImpl implements ProjectService {
         }
     }
 
-    @Scheduled(cron = "0 0 * * * *")
-    public void updateProjectStatus() {
-        List<String> status = new ArrayList<>();
-        status.add(POSTED.toString());
-        status.add(BID_IN_PROGRESS.toString());
-        status.add(BID_COMPLETE.toString());
-
-        List<ProjectResponse> projectStatus = getProject(0, 0, 0, 0, status);
-        Date currentDate = new Date();
-
-        for (ProjectResponse project : projectStatus) {
-            Date bidStartDate = project.getBidStartDate();
-            Date bidEndDate = project.getBidEndDate();
-            if (project.getStatus().equals(POSTED.toString())) {
-                if (currentDate.after(bidStartDate) && currentDate.before(bidEndDate)) {
-                    project.setStatus(BID_IN_PROGRESS.toString());
-                }
-            } else if (project.getStatus().equals(BID_IN_PROGRESS.toString()) && (currentDate.after(bidEndDate))) {
-                    project.setStatus(BID_COMPLETE.toString());
-            }
-            else{
-                break;
-            }
-            jdbcTemplate.update(dbQueries.getUpdateProjectStatus(), project.getStatus(),project.getProjectId());
-
-        }
-    }
 
 }

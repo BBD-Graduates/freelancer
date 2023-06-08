@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 public class ProjectRequest {
@@ -23,5 +25,6 @@ public class ProjectRequest {
     private Float minPrice;
     @NotNull(message = "Please enter maximum price for your project ")
     private Float maxPrice;
+    private List<Integer> skillIds;
 
 }

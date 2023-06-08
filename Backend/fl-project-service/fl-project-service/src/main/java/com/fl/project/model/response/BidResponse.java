@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BidResponse {
     private int bidId;
-    @JsonIgnore
     private int projectId;
     private int freelancerId;
     private int amount;

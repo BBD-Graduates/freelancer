@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProjectService {
     String saveProject(ProjectRequest project);
-    List<ProjectResponse> getProject(Integer projectId,Integer skillId,Integer categoryId,Integer clientId,List<String> status);
+    List<ProjectResponse> getProject(Integer projectId,Integer skillId,Integer categoryId,Integer clientId, Integer freelancerId,List<String> status);
     String updateProject(ProjectRequest project, int projectId);
     String deleteProject(int projectId);
 }

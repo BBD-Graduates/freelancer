@@ -14,4 +14,9 @@ import java.util.List;
 public interface ProjectBidService {
     @GetMapping
     FlResponse<List<BidResponse>> getProjectBidByProjectId(@RequestParam("projectId") Integer projectId);
+
+    @GetMapping
+    FlResponse<List<BidResponse>> getBidByFreelancerId(@RequestParam("freelancerId") Integer freelancerId,
+                                                       @RequestParam("status") String status);
+
 }

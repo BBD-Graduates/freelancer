@@ -10,6 +10,6 @@ public interface BidService {
     String deleteBid(int bidId);
     String updateBid(BidRequest bidRequest,int bidId);
     String  updateBidStatusToApprove(Integer bidId, Integer projectId);
-    List<Bid> getBids(Integer bidId, Integer projectId, Integer freelancerId);
+    List<Bid> getBids(Integer bidId, Integer projectId, Integer freelancerId,String status);
 
 }

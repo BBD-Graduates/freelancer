@@ -1,104 +1,99 @@
 <section class="lg:py-52 sm:py-36 sm:px-2 md:px-5 py-36 bg-slate-100">
   <div class="w-full lg:container">
     <div
-        class="bg-emerald-500 items-center border rounded-xl shadow-md hover:bg-emerald-400 transition duration-300 ease-in-out">
-        <div class="ml-3 text-white py-2" *ngFor="let item of data.response">
-            <div class="grid grid-flow-col gap-1">
-                <div>
-                    <h2 class="text-3xl font-medium ">{{item.projectName}}</h2>
-                </div>
-                <div class="flex justify-end">
-                    <p class="">${{item.minPrice}}-{{item.maxPrice}}</p>
-                </div>
-                <div class="flex gap-2 justify-end">
-                    <div>
-                        <p class="text-xl font-medium">Bidding closes in <span class="text-red-500"> 6 days!
-                            </span></p>
-                    </div>
-                    <div class="grid justify-items-center">
-                        <button class="p-1 text-white rounded-full bg-emerald-600">2:00:00</button>
-                    </div>
-                </div>
+      class="bg-emerald-500 items-center border rounded-xl shadow-md hover:bg-emerald-400 transition duration-300 ease-in-out">
+      <div class="ml-3 text-white py-2" *ngFor="let item of data.response">
+        <div class="grid grid-flow-col gap-1">
+          <div>
+            <h2 class="text-3xl font-medium ">{{item.projectName}}</h2>
+          </div>
+          <div class="flex justify-end">
+            <p class="">${{item.minPrice}}-{{item.maxPrice}}</p>
+          </div>
+          <div class="flex gap-2 justify-end">
+            <div>
+              <p class="text-xl font-medium">Bidding closes in <span class="text-red-500"> 6 days!
+                </span></p>
             </div>
+            <div class="grid justify-items-center">
+              <button class="p-1 text-white rounded-full bg-emerald-600">2:00:00</button>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
     <div class="m-2 sm:grid sm:grid-row-4 sm:grid-cols-3 sm:grid-flow-col gap-1">
-        <div class="col-span-2 row-span-4">
-            <div class="bg-slate-50 container mb-3 col-span-3 items-center rounded-lg border shadow-md">
-                <div class="relative my-2 grid grid-rows-3-4 items-center gap-2 ">
-                    <div *ngFor="let item of data.response">
-                        <p class="m-0">Description :</p>
-                        <p class="indent-8 text-justify w-72 sm:w-full">
-                            {{item.projectDescription}}
-                        </p>
-                        <div class=" flex text-blue-400">
-                            <div class=" mr-2" *ngFor="let userSkill of item.skills">
-                                <p>{{userSkill.skillName}}</p>
-                            </div>
-                            <div class=" mr-2" *ngFor="let projects of data.response"><br />
-                                <p>Project Id : #{{projects.projectId}}</p>
-                            </div>
-                        </div>
-                    </div>
+      <div class="col-span-2 row-span-4">
+        <div class="bg-slate-50 container mb-3 col-span-3 items-center rounded-lg border shadow-md">
+          <div class="relative my-2 grid grid-rows-3-4 items-center gap-2 ">
+            <div *ngFor="let item of data.response">
+              <p class="m-0">Description :</p>
+              <p class="indent-8 text-justify w-72 sm:w-full">
+                {{item.projectDescription}}
+              </p>
+              <div class=" flex text-blue-400">
+                <div class=" mr-2" *ngFor="let userSkill of item.skills">
+                  <p>{{userSkill.skillName}}</p>
                 </div>
+              </div>
             </div>
-            <div class="bg-slate-50 rounded-lg border shadow-md">
-                <div class="m-2 grid grid-flow-row gap-1">
-                    <div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong class="text-green-800">Success!! Data Successfully Entered.</strong>
-                        <button (click)="closeAlert()" type="button" class="btn-close" data-bs-dismiss="alert"
-                            aria-label="Close"></button>
-                    </div>
-                    <form [formGroup]="insertBid" (ngSubmit)="collectBid()">
-                        <div class="p-2 bg-emerald-400 rounded-lg mb-2">
-                            <div class="grid-flow-row text-white text-lg">
-                                <h2>Your bid for this job</h2>
-                            </div>
-                        </div>
-                        <div class="grid grid-flow-col gap-3">
-                            <div>
-                                <input
-                                    class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
-                                    id="amount" formControlName="amount" type="text" placeholder="Amount" />
-                            </div>
-                            <div class="grid-flow-row">
-                                <input
-                                    class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
-                                    id="deliveryDays" formControlName="deliveryDays" type="text" placeholder="Delivery Days" />
-                            </div>
-                        </div>
-                        <div class="my-2">
-                            <div class="grid-flow-row">
-                                <textarea
-                                    class="appearance-none placeholder:text-slate-500 block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-5 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black h-32"
-                                    id="description" formControlName="description" type="text"
-                                    placeholder="Enter Project Description"></textarea>
-                            </div>
-                        </div>
-                        <div class="my-2">
-                            <fl-button type="ngSubmit" name="Place Bid" size="S" shade="W" animation="F" />
-                        </div>
-                    </form>
-                    </div>
+          </div>
+        </div>
+        <div class="bg-slate-50 rounded-lg border shadow-md">
+          <div class="m-2 grid grid-flow-row gap-1">
+            <div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong class="text-green-800">Success!! Data Successfully Entered.</strong>
+              <button (click)="closeAlert()" type="button" class="btn-close" data-bs-dismiss="alert"
+                aria-label="Close"></button>
+            </div>
+            <form [formGroup]="insertBid" (ngSubmit)="collectBid()">
+              <div class="p-2 bg-emerald-400 rounded-lg mb-2">
+                <div class="grid-flow-row text-white text-lg">
+                  <h2>Your bid for this job</h2>
                 </div>
+              </div>
+              <div class="grid grid-flow-col gap-3">
+                <div>
+                  <input
+                    class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+                    id="amount" formControlName="amount" type="text" placeholder="Amount" />
+                </div>
+                <div class="grid-flow-row">
+                  <input
+                    class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+                    id="deliveryDays" formControlName="deliveryDays" type="text" placeholder="Delivery Days" />
+                </div>
+              </div>
+              <div class="my-2">
+                <div class="grid-flow-row">
+                  <textarea
+                    class="appearance-none placeholder:text-slate-500 block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-5 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black h-32"
+                    id="description" formControlName="description" type="text"
+                    placeholder="Enter Bid Description"></textarea>
+                </div>
+              </div>
+              <div class="my-2">
+                <fl-button type="ngSubmit" name="Place Bid" size="S" shade="W" animation="F" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="bg-slate-50 rounded-lg border shadow-md">
+        <div class="m-2 grid grid-flow-row gap-1">
+          <div class="bg-emerald-600 rounded-lg">
+            <p class="ml-3 font-bold text-white">About the client</p>
+          </div>
+          <div class="grid sm:grid-flow-col grid-flow-row gap-1">
+            <div>
+              <fl-rating [value]="4" />
             </div>
-
-
-            <div class="bg-slate-50 rounded-lg border shadow-md">
-                <div class="m-2 grid grid-flow-row gap-1">
-                    <div class="bg-emerald-600 rounded-lg">
-                        <p class="ml-3 font-bold text-white">About the client</p>
-                    </div>
-                    <div class="grid sm:grid-flow-col grid-flow-row gap-1">
-                        <div>
-                            <fl-rating [value]="4" />
-                        </div>
-                        <!-- <div *ngFor="let item of locationData.response">
+            <!-- <div *ngFor="let item of locationData.response">
                            {{item.stateName}}
                       </div> -->
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </section>
