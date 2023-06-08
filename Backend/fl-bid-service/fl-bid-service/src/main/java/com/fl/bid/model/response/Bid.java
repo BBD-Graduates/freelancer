@@ -14,6 +14,7 @@ public class Bid {
     private float amount;
     private int deliveryDays;
     private String description;
+    private String status;
     private String createdDate;
 
 }

@@ -25,6 +25,14 @@ db:
       selectAllBid: SELECT * from bids
       selectBidByBidId: SELECT * from bids WHERE BidId = ?
       selectBidByProjectId: SELECT * from bids WHERE ProjectId = ?
-      selectBidByFreelancerId: SELECT * from bids WHERE FreelancerId = ?
+      getBidsByFreelancerIdAndStatus: SELECT * from bids WHERE FreelancerId = ? and status = ?
+      getBidByFreelancerIdAndProjectId : SELECT * from bids WHERE ProjectId=? and FreelancerId=?
       approveBid: UPDATE bids set Status = ? WHERE BidId=?
-      rejectBid: UPDATE bids set Status = ? WHERE ProjectId=? and BidId != ?[
+      rejectBid: UPDATE bids set Status = ? WHERE ProjectId=? and BidId != ?
+
+
+service:
+  props:
+    webServices:
+      fl-project-service:
+        endpoint: http://localhost:8083/projects
