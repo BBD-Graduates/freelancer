@@ -7,6 +7,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @AllArgsConstructor
+
 public class ProjectSkillsReq {
     private int projectId;
     private int skillId;

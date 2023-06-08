@@ -10,11 +10,8 @@ public class Constant {
     public static String INSERTION_FAILED = "Insertion Failed";
     public static String UPDATION_FAILED = "Updation Failed";
     public static String DELETION_FAILED = "Deletion Failed";
-    public static String APPROVED= "Approved";
     public static String CANT_APPROVE_BID= "Can't Approve Bid";
     public  static String BID="Bid ";
-    public  static String PROJECT_BID="Bid ";
-    public  static String FREELANCER_BID="Bid ";
 
     private Constant(){
 

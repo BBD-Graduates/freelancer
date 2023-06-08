@@ -16,14 +16,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,16 +48,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer insertUser(UserRequest userRequest) {
         try {
-            SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
-                    .withTableName("users")
-                    .usingGeneratedKeyColumns("userId");
+            KeyHolder identityValue = new GeneratedKeyHolder();
+            jdbcTemplate.update(connection -> {
+                PreparedStatement ps = connection.prepareStatement(dbQueries.getAddUser(), Statement.RETURN_GENERATED_KEYS);
+                ps.setString(1, userRequest.getFirstName());
+                ps.setString(2, userRequest.getLastName());
+                ps.setString(3, userRequest.getEmail());
+                ps.setString(4,userRequest.getPhotoUrl());
+                return ps;
+            }, identityValue);
 
-            Map<String, Object> parameters = new HashMap<>();
-            parameters.put("firstName", userRequest.getFirstName());
-            parameters.put("lastName",userRequest.getLastName());
-            parameters.put("email", userRequest.getEmail());
-            parameters.put("photoUrl", userRequest.getPhotoUrl());
-            Number userId = jdbcInsert.executeAndReturnKey(parameters);
+            Number userId = identityValue.getKey().intValue();
+
             if (userId.intValue() > 0) {
                 return userId.intValue();
             } else {

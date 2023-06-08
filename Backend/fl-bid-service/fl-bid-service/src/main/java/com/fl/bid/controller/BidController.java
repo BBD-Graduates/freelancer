@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import static com.fl.bid.config.Constant.*;
+import static com.fl.bid.config.BidStatus.*;
 
 import java.util.List;
 
@@ -45,13 +46,13 @@ public class BidController {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + UPDATION_FAILED, BID));
         }
     }
-
+    @PutMapping()
     public ResponseEntity<FlResponse<String>> updateBidStatusToApprove(
             @RequestParam( required = false, name = "bidId") Integer bidId,
             @RequestParam( required = false, name = "projectId") Integer projectId){
 
         try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, bidService.updateBidStatusToApprove(bidId,projectId), String.format("%s" + APPROVED, BID));
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, bidService.updateBidStatusToApprove(bidId,projectId), String.format("%s" +APPROVED.toString(), BID));
         } catch (Exception e) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + CANT_APPROVE_BID));
         }
@@ -61,9 +62,10 @@ public class BidController {
     public ResponseEntity<FlResponse<List<Bid>>> getBids(
             @RequestParam(defaultValue = "0", required = false, name = "bidId") Integer bidId,
             @RequestParam(defaultValue = "0", required = false, name = "projectId") Integer projectId,
+            @RequestParam(defaultValue = "", required = false, name = "status") String status,
             @RequestParam(defaultValue = "0", required = false, name = "freelancerId") Integer freelancerId){
         try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, bidService.getBids(bidId,projectId,freelancerId),String.format("%s" + FETCHED_SUCCESSFULLY, BID));
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, bidService.getBids(bidId,projectId,freelancerId,status),String.format("%s" + FETCHED_SUCCESSFULLY, BID));
         } catch (Exception e) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + NO_RECORD_FOUND));
         }

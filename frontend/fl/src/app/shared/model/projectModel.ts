@@ -1,4 +1,5 @@
 export interface ProjectModel {
+  clientId: number;
   projectName: string;
   projectDescription: string;
   isConfidential: boolean;
@@ -6,5 +7,5 @@ export interface ProjectModel {
   bidEndDate: Date;
   minPrice: number;
   maxPrice: number;
-  status: string;
+  skillIds: any[];
 }

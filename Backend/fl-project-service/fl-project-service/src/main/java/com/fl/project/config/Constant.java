@@ -15,6 +15,7 @@ public class Constant {
     public  static String PAYMENT_TYPE="Payment type ";
     public  static String PROJECT_ASSIGN="Project assign ";
     public  static String RATING ="Rating ";
+    public  static String PROJECT_SKILLS="Project Skills";
 
     private Constant(){
 
