@@ -5,8 +5,6 @@ import { ProjectModel } from 'src/app/shared/model/projectModel';
 import { Router } from '@angular/router';
 import { config } from 'src/app/config';
 import { ApiResponse } from 'src/app/shared/model/apiResponse';
-import { Observable } from 'rxjs';
-
 
 @Injectable({
   providedIn: 'root',
@@ -55,16 +53,10 @@ data:any=[];
   postProject(data: ProjectModel) {
     return this.http.post(config.projectApi.insertProject, data);
   }
-
-
   addParamsIfNotEmpty(params: any, key: string, value: any): any {
     if (value !== null && value !== undefined && value !== '') {
       params = params.set(key, value);
     }
     return params;
   }
-
-
-
-
 }

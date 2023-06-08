@@ -55,8 +55,8 @@ export class ProjectListComponent implements OnInit {
   
     let curDate = new Date().toISOString().slice(0, 10).toString();
 
-    if (this.route.snapshot.paramMap.get('skillid') != null) {
-      this.skillId =parseInt(this.route.snapshot.paramMap.get('skillid')||'');
+    if (this.route.snapshot.paramMap.get('skillId') != null) {
+      this.skillId =parseInt(this.route.snapshot.paramMap.get('skillId')||'');
       this.data= await this.projectApiService.getProjects({skillId :this.skillId})
       console.log('skilldata', this.data);
           this._httpClient
@@ -91,11 +91,6 @@ export class ProjectListComponent implements OnInit {
         this.locationData = response;
       });
   }
-
-
-
-
- 
 
   saveBid(data: any) {
     return this._httpClient.post(config.BidApi.insertBid, data);
@@ -166,31 +161,3 @@ export class ProjectListComponent implements OnInit {
     return formattedDate;
   }
 }
-
-
-  // options = ['Option 1', 'Option 2', 'Option 3', 'Option 4','Option 1', 'Option 2', 'Option 3', 'Option 4'];
-  // selectedOptions: string[] = [];
-  // isDropdownOpen = true;
-
-  // toggleDropdown() {
-  //   this.isDropdownOpen = !this.isDropdownOpen;
-  // }
-
-  // closeDropdown() {
-  //   this.isDropdownOpen = false;
-  // }
-
-  // toggleOption(option: string) {
-  //   const index = this.selectedOptions.indexOf(option);
-  //   if (index > -1) {
-  //     this.selectedOptions.splice(index, 1);
-  //   } else {
-  //     this.selectedOptions.push(option);
-  //   }
-  // }
-
-  // isSelected(option: string) {
-  //   return this.selectedOptions.includes(option);
-  // }
-
-
