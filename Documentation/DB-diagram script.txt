@@ -1,0 +1,234 @@
+Table Bids{
+  "BidId" int [not null, increment]
+  "ProjectId" int [not null]
+  "FreelancerId" int [not null]
+  "Amount" decimal(18,2) [not null]
+  "Description" varchar(500)
+   ''Status" Varchar(36)
+  "DeliveryDays" int
+  "CreatedDate" datetime
+  "ModifiedDate" datetime
+Indexes {
+  BidId [pk]
+}
+}
+Ref:Bids.ProjectId <> Projects.ProjectId
+Ref:Bids.FreelancerId <> Users.UserId
+
+Table Categories{
+  "CategoryId" int [not null, increment]
+  "CategoryName" varchar(32)
+  "LogoURl" varchar(128)
+  "IsDeleted" bool
+  "CreatedDate" datetime
+  "ModifiedDate" datetime
+Indexes {
+  CategoryId [pk]
+}
+}
+Ref:Skills.CategoryId <> Categories.CategoryId
+
+Table Skills {
+  "SkillId" int [not null, increment]
+  "SkillName" varchar(32)
+  "CategoryId" int
+  "IsDeleted" bit
+  "CreatedDate" datetime
+  "ModifiedDate" datetime
+Indexes {
+  SkillId [pk]
+}
+}
+
+Table UserSkills {
+  "UserId" int
+  "SkillId" int
+  "CreatedDate" datetime
+  "ModifiedDate" datetime
+Indexes {
+  (UserId,SkillId)[pk]
+}
+}
+ref:UserSkills.UserId > Users.UserId
+ref:UserSkills.SkillId <> Skills.SkillId
+
+Table ProjectSkills {
+  "ProjectId" int [not null]
+  "SkillId" int [not null]
+  "CreatedDate" datetime
+  "ModifiedDate" datetime
+Indexes {
+  (ProjectId, SkillId) [pk]
+}
+}
+ref:ProjectSkills.ProjectId > Projects.ProjectId
+ref:ProjectSkills.SkillId <> Skills.SkillId
+
+Table PaymentType {
+  "PaymetTypeId" int [not null, increment]
+  "paymentType" varchar(32)
+  "CreatedDate" datetime
+  "ModifiedDate" datetime
+Indexes {
+  PaymetTypeId [pk]
+}
+}
+ref:PaymentType.PaymetTypeId - Projects.PaymetTypeId
+
+Table Projects {
+  "ProjectId" int [not null, increment]
+  "ClientId" int
+  "ProjectName" varchar(32)
+  "ProjectDescription" varchar(232)
+  "IsConfidential" bit
+  "PaymetTypeId" int
+  "BidStartDate" datetime
+  "BidEndDate" datetime
+  "MinPrice" decimal(18,0)
+  "MaxPrice" decimal(18,0)
+  "Status" varchar(32)
+  "CreatedDate" datetime
+  "ModifiedDate" datetime
+Indexes {
+  ProjectId [pk]
+}
+}
+Ref:Projects.ClientId > Users.UserId
+
+Table Ratings {
+  "RatingId" int [not null, increment]
+  "UserId" int 
+  "ProjectId" int 
+  "RatingDescription" varchar(128)
+  "CreatedDate" datetime
+  "ModifiedDate" datetime
+  "Rating" int
+Indexes {
+  RatingId [pk]
+}
+}
+ref:Ratings.ProjectId > Projects.ProjectId
+ref:Ratings.UserId <> Users.UserId
+
+
+Table ProjectLanguages{
+  ProjectId int
+  LanguageId int
+  CreatedDate datetime
+  ModifiedDate datetime
+  Indexes {
+  (ProjectId,LanguageId)[pk]
+}
+}
+Ref:ProjectLanguages.ProjectId <> Projects.ProjectId
+Ref:ProjectLanguages.LanguageId <> Languages.LanguageId
+
+Table Users  {
+  "UserId" int [not null, increment]
+  "FirstName" varchar(16)
+  "LastName" varchar(16)
+  "HeadLine" varchar(64)
+  "Summary" varchar(3000)
+  "Company" varchar(256)
+  "Email" varchar(64)
+  "PhNo" varchar(13)
+  "IsVerified" bit
+  "PhotoUrl" varchar(255)
+  "UserRole" char(6)
+  "CreatedDate" datetime
+  "ModifiedDate" datetime
+Indexes {
+  UserId [pk]
+  PhNo [unique]
+  Email [unique]
+}
+}
+
+Table Languages {
+  "LanguageId" int [not null] 
+  "LanguageName" varchar(32)
+  "CreatedDate" datetime
+  "ModifiedDate" datetime
+  Indexes{
+    LanguageId [pk]
+  }
+}
+
+Table UserLanguages{
+  UserId int
+  LanguageId int
+  CreatedDate datetime
+  ModifiedDate datetime
+  Indexes {
+  (UserId,LanguageId)[pk]
+}
+}
+Ref: UserLanguages.UserId > Users.UserId
+Ref:UserLanguages.LanguageId <> Languages.LanguageId
+
+
+
+Table Countries{
+  "CountryId" int [not null, increment]
+  "CountryName" varchar(32)
+  "CreatedDate" datetime
+  "ModifiedDate" datetime
+Indexes {
+  CountryId [pk]
+}
+}
+ref:Countries.CountryId <> States.CountryId
+
+
+
+Table States {
+  "StateId" int [not null, increment]
+  "StateName" varchar(32)
+  "CountryId" int
+  "CreatedDate" datetime
+  "ModifiedDate" datetime
+Indexes {
+  StateId [pk]
+}
+}
+ref:States.StateId <> Cities.StateId
+
+Table Cities {
+  "CityId" int [not null, increment]
+  "CityName" varchar(32)
+  "StateId" int
+  "CreatedDate" datetime
+  "ModifiedDate" datetime
+Indexes {
+  CityId [pk]
+}
+}
+
+Table UserLocation{
+  "UserId" int [not null]
+  "CityId" int
+  "Pincode" varchar(6)
+  "Address1" varchar(256)
+  "Address2" varchar(256)
+  "CreatedDate" datetime
+  "ModifiedDate" datetime
+Indexes {
+  UserId [pk]
+}
+}
+ref:UserLocation.UserId - Users.UserId
+ref:UserLocation.CityId - Cities.CityId
+
+Table Portfolio{
+  "PortfolioId" int [not null]
+  "UserId" int
+  "Title" varchar(64)
+  "Description" varchar(1000)
+  "ImageURL" varchar(128)
+  "CreatedDate" datetime
+  "ModifiedDate" datetime
+Indexes {
+  PortfolioId [pk]
+}
+}
+ref:Portfolio.UserId - Users.UserId
