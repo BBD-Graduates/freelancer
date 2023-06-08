@@ -26,7 +26,7 @@ export class OpenProjectsComponent {
   projects: any;
 
   async ngOnInit(): Promise<void> {
-    this.projects = await this.projectApiService.getProject({
+    this.projects = await this.projectApiService.getProjects({
       clientId: this.userId,
       status: this.selectedStatus,
     });
