@@ -14,8 +14,8 @@ import { skillResponse } from 'src/app/shared/model/skillResponse';
 })
 export class PostProjectComponent {
   projectdata: any = [];
-  alert: boolean = false;
   skillName: any = [];
+   submitted = false;
   insertProject = new FormGroup({
     projectName: new FormControl('', [Validators.required]),
     projectDescription: new FormControl('', [Validators.required]),
@@ -40,7 +40,7 @@ export class PostProjectComponent {
   }
 
   collectProject() {
-    if (this.selectedOptions.length <= 5) {
+    if ( this.selectedOptions.length <= 5 ){
       const projectData: ProjectModel = {
         clientId: parseInt(localStorage.getItem('userId') ?? '0'),
         projectName: this.insertProject.value.projectName ?? '',
@@ -53,18 +53,21 @@ export class PostProjectComponent {
         skillIds: this.selectedSkills,
       };
 
+      this.submitted = true;
+
       this.projectApi.postProject(projectData).subscribe(
         (response) => {
           console.log(response);
-          this.alert = true;
           this.insertProject.reset();
           this.selectedSkills = [];
+
         },
         (error) => {
           console.error('Error calling postProject service:', error);
         }
       );
-    } else {
+    }
+    else {
       this.errorMessage = 'You can select a maximum of 5 Skills.';
     }
   }

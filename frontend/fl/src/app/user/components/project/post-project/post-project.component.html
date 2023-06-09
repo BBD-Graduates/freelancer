@@ -1,7 +1,4 @@
 <section class="lg:py-60 md:py-36 sm:px-2 md:px-4 py-60 bg-slate-100">
-  <div *ngIf="errorMessage" class="bg-red-500 text-white p-4 mb-4">
-    {{ errorMessage }}
-  </div>
   <div class="flex justify-center items-center h-full mb-10">
     <div class="w-2/3 bg-white rounded-lg shadow-lg p-20">
       <h2 class="text-3xl mb-2 font-bold text-green-600 ">
@@ -13,10 +10,18 @@
       </h1>
       <form class="w-full" [formGroup]="insertProject" (ngSubmit)="collectProject()">
         <div class="flex flex-wrap -mx-2 mb-8">
+          <div *ngIf="submitted && insertProject.controls.projectName.invalid"
+            class="text-red-500 mt-1">
+              Project name is required!
+            </div>
           <input
             class="appearance-none placeholder-gray-500 block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-12 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
             id="projectName" formControlName="projectName" type="text"
             placeholder="Give your project a suitable name." />
+            <div *ngIf="submitted && insertProject.controls.projectDescription.invalid"
+            class="text-red-500 mt-1">
+              Project Description is required!
+            </div>
           <textarea
             class="appearance-none placeholder-gray-500 block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-5 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black h-32"
             id="projectDescription" formControlName="projectDescription" type="text"
@@ -24,11 +29,19 @@
         </div>
         <div class="flex flex-wrap -mx-2 mb-8">
           <div class="w-full md:w-1/2 mb-4 pr-2">
+            <div *ngIf="submitted && insertProject.controls.minPrice.invalid"
+            class="text-red-500 mt-1">
+              Minimum Price is required!
+            </div>
             <input
               class="appearance-none placeholder-gray-500 block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
               id="min" formControlName="minPrice" type="number" placeholder="Minimum budget price" />
           </div>
           <div class="w-full md:w-1/2 mb-4 pl-2">
+            <div *ngIf="submitted && insertProject.controls.maxPrice.invalid"
+            class="text-red-500 mt-1">
+              Maximum Price is required!
+            </div>
             <input
               class="appearance-none placeholder-gray-500 block w-full border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
               id="max" formControlName="maxPrice" type="number" placeholder="Maximum budget price" />
@@ -36,27 +49,37 @@
         </div>
         <div class="flex flex-wrap -mx-2 mb-8">
           <div class="w-full md:w-1/2 mb-4 pr-2">
+            <div *ngIf="submitted && insertProject.controls.bidStartDate.invalid"
+            class="text-red-500 mt-1">
+              Select Start date of bidding!
+            </div>
             <input
-              class="appearance-none placeholder-gray-500 block w-full border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 datepicker"
-              id="startBidDate" formControlName="bidStartDate" type="datetime-local"
-              title="Usage: Select 'Start Date of the bidding.'" />
+              class="appearance-none placeholder-gray-500 block w-full border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 datepicker placeholder-gray-500"
+              placeholder="Bid Start Date" id="startBidDate" formControlName="bidStartDate" type="datetime-local"
+              title="Usage: Select 'Start Date of the bidding.'">
           </div>
           <div class="w-full md:w-1/2 mb-4 pl-2">
+            <div *ngIf="submitted && insertProject.controls.bidEndDate.invalid"
+            class="text-red-500 mt-1">
+            Select End date of bidding!
+            </div>
             <input
-              class="appearance-none placeholder-gray-500 block w-full border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 datepicker"
-              id="endBidDate" formControlName="bidEndDate" type="datetime-local"
+              class="appearance-none placeholder-gray-500 block w-full border border-green-300 rounded py-4 px-4 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-green-500 datepicker "
+              id="endBidDate" formControlName="bidEndDate" type="datetime-local" placeholder="Bid End Date"
               title="Usage: Select 'End Date of the bidding.'" />
-
           </div>
         </div>
         <div class="flex flex-wrap -mx-3 mb-8">
           <div class="w-full mb-4 ">
             <div class="relative">
+              <div *ngIf="submitted && insertProject.controls.maxPrice.invalid"
+              class="text-red-500 mt-1">
+                Select Confidencials!
+              </div>
               <select
                 class="block appearance-none w-full placeholder-gray-500 border border-green-300 py-4 px-4 mb-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-green-500 "
                 id="Confidencial" formControlName="isConfidential"
                 title="Usage: Select 'Confidential-TRUE' if you want to keep the project details private.">
-
                 <option value="" selected disabled>Confidencial</option>
                 <option>Yes</option>
                 <option>No</option>
@@ -69,23 +92,25 @@
             </div>
           </div>
         </div>
-
         <div class="flex flex-wrap -mx-3 mb-8">
-
-          <div class="bg-white rounded-md gird grid-rows-2 container min-h-[20%]">
-            <div>
+          <div class="w-full mb-4 ">
+            <div *ngIf="errorMessage" class="text-red-500 mt-1">
+              you can select a maximum of 5 skills!
+             </div>
+             <div *ngIf="submitted" class="text-red-500 mt-1">
+              select skills!
+             </div>
               <div class="relative">
                 <div>
                   <button type="button"
-                    class="inline-flex flex-initial w-full mt-2 justify-center items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    class="block appearance-none w-full placeholder-gray-500 border border-green-300 py-4 px-4 mb-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-green-500 "
                     (click)="toggleDropdown()">
                     {{ selectedOptions.length > 0 ? selectedOptions.length + ' Selected' : 'Select Skills ' }}
-                    <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                      fill="currentColor" [class.rotate-180]="isDropdownOpen">
-                      <path fill-rule="evenodd"
-                        d="M10 16a1 1 0 01-.707-.293l-5-5a1 1 0 011.414-1.414L10 13.586l3.293-3.293a1 1 0 111.414 1.414l-4 4A1 1 0 0110 16z"
-                        clip-rule="evenodd"></path>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                     </svg>
+                    </div>
                   </button>
                 </div>
                 <div class="overflow-y-scroll h-40 w-full rounded-md bg-white shadow-lg mt-1" *ngIf="isDropdownOpen"
@@ -102,7 +127,6 @@
                   </ul>
                 </div>
               </div>
-            </div>
             <div>
               <div class="mt-4">
                 Selected Skills:
@@ -113,11 +137,10 @@
             </div>
           </div>
         </div>
-        <div class="my-2 ">
-          <fl-button name="Post Project" size="S" shade="D" animation="C" type="nfSubmit" />
+        <div class="flex justify-center">
+          <fl-button name="Post Project" size="S" shade="D" animation="C" type="nfSubmit" class="text-2xl" />
         </div>
       </form>
     </div>
   </div>
-
 </section>
