@@ -32,7 +32,7 @@ export class BidApiService {
       params = this.addParamsIfNotEmpty(params, 'status', status);
       const options = { params: params };
       const bidResponse = await this.http
-        .get(config.BidApi.endPoint, options)
+        .get(config.BidApi.insertBid, options)
         .toPromise();
 
       const data = bidResponse as ApiResponse;
