@@ -1,4 +1,5 @@
 import { skillResponse } from './skillResponse';
+import { bidResponse } from './bidResponse';
 
 export interface ProjectResponse {
   projectId: number;
@@ -14,5 +15,5 @@ export interface ProjectResponse {
   createdDate: Date;
   status: String;
   skills: skillResponse[];
-  bids: any[];
+  bids: bidResponse[];
 }
