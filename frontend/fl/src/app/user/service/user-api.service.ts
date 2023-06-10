@@ -70,7 +70,6 @@ export class UserapiService {
       const userResponse = await this.http
         .get(config.UserApi.getUser, options)
         .toPromise();
-
       const response = userResponse as ApiResponse;
       return response;
     } catch (error) {
