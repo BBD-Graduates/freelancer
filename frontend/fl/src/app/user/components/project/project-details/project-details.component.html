@@ -1,96 +1,110 @@
 <section class="lg:py-52 sm:py-36 sm:px-2 md:px-5 py-36 bg-slate-100">
   <div class="w-full lg:container">
     <div
-        class="bg-emerald-500 items-center border rounded-xl shadow-md hover:bg-emerald-400 transition duration-300 ease-in-out">
-        <div class="ml-3 text-white py-2" *ngFor="let item of data">
-            <div class="grid grid-flow-col gap-1">
-                <div>
-                    <h2 class="text-3xl font-medium ">{{item.projectName}}</h2>
-                </div>
-                <div class="flex gap-2 justify-end">
-                    <div>
-                        <p class="text-xl font-medium">Bidding closes in <span> {{projectDaysLeft}} days!</span></p>
-                    </div>
-                </div>
+      class="bg-emerald-500 items-center border rounded-xl shadow-md hover:bg-emerald-400 transition duration-300 ease-in-out">
+      <div class="ml-3 text-white py-2" *ngFor="let item of data">
+        <div class="grid grid-flow-col gap-1">
+          <div>
+            <h2 class="text-3xl font-medium ">{{item.projectName}}</h2>
+          </div>
+          <div class="flex gap-2 justify-end p-2">
+            <div>
+              <p class="text-xl font-medium">Bidding closes in <span> {{projectDaysLeft}} days!</span></p>
             </div>
+<<<<<<< Updated upstream
+=======
+          </div>
+        </div>
+>>>>>>> Stashed changes
       </div>
     </div>
     <div class="m-2 sm:grid sm:grid-row-4 sm:grid-cols-3 sm:grid-flow-col gap-1">
-        <div class="col-span-2 row-span-4">
-            <div class="bg-slate-50 container mb-3 col-span-3 items-center rounded-lg border shadow-md">
-                <div class="relative my-2 grid grid-rows-3-4 items-center gap-2 ">
-                    <div *ngFor="let item of data">
-                    <p class="m-0">Budget :<span class="text-xl">${{item.minPrice}}-{{item.maxPrice}}</span></p>
-                        <hr/>
-                        <p class="indent-8 text-justify w-72 sm:w-full my-2">
-                            {{item.projectDescription}}
-                        </p>
-                        <hr/>
-                        <div class=" flex text-emerald-500 gap-3">
-                            <div class="mt-2 mr-2" *ngFor="let projectSkill of item.skills">
-                                <p>{{projectSkill.skillName}}</p>
-                            </div>
-                        </div>
-                    </div>
+      <div class="col-span-2 row-span-4">
+        <div class="bg-slate-50 container mb-3 col-span-3 items-center rounded-lg border shadow-md">
+          <div class="relative my-2 grid grid-rows-3-4 items-center gap-2 ">
+            <div *ngFor="let item of data">
+              <p class="my-2">Budget :<span class="text-xl text-emerald-500"> ₹
+                  {{item.minPrice}}-{{item.maxPrice}}</span></p>
+              <hr />
+              <p class="indent-8 text-justify w-72 sm:w-full my-2">
+                {{item.projectDescription}}
+              </p>
+              <hr />
+              <div class=" flex text-emerald-500 gap-3">
+                <div class="mt-2 mr-2" *ngFor="let projectSkill of item.skills">
+                  <p>{{projectSkill.skillName}}</p>
                 </div>
+              </div>
             </div>
-            <div class="bg-slate-50 rounded-lg border shadow-md">
-                <div class="m-2 grid grid-flow-row gap-1">
-                    <div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong class="text-green-800">Success!! Data Successfully Entered.</strong>
-                        <button (click)="closeAlert()" type="button" class="btn-close" data-bs-dismiss="alert"
-                            aria-label="Close"></button>
-                    </div>
-                    <form [formGroup]="insertBid" (ngSubmit)="collectBid()">
-                        <div class="p-2 bg-emerald-400 rounded-lg mb-2">
-                            <div class="grid-flow-row text-white text-lg">
-                                <h2>Your bid for this job</h2>
-                            </div>
-                        </div>
-                        <div class="grid grid-flow-col gap-3">
-                            <div>
-                                <input
-                                    class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
-                                    id="amount" formControlName="amount" type="text" placeholder="Amount" />
-                            </div>
-                            <div class="grid-flow-row">
-                                <input
-                                    class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
-                                    id="deliveryDays" formControlName="deliveryDays" type="text" placeholder="Delivery Days" />
-                            </div>
-                        </div>
-                        <div class="my-2">
-                            <div class="grid-flow-row">
-                                <textarea
-                                    class="appearance-none placeholder:text-slate-500 block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-5 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black h-32"
-                                    id="description" formControlName="description" type="text"
-                                    placeholder="Enter Project Description"></textarea>
-                            </div>
-                        </div>
-                        <div class="my-2">
-                            <fl-button type="ngSubmit" name="Place Bid" size="S" shade="W" animation="F" />
-                        </div>
-                    </form>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="bg-slate-50 rounded-lg border shadow-md">
-                <div class="m-2 grid grid-flow-row gap-1">
-                    <div class="bg-emerald-500 rounded-lg">
-                        <p class="ml-3 font-bold text-white">About the client</p>
-                    </div>
-                    <div class="grid sm:grid-flow-col grid-flow-row gap-1" *ngFor="let item of locationData.response">
-                        <div>
-                            <fl-rating [value]=countAvgRating(item.ratings) />
-                        </div>
-                        <div>
-                           {{item.stateName}}, {{item.countryName}}
-                      </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+        <div class="bg-slate-50 rounded-lg border shadow-md">
+          <div class="m-2 grid grid-flow-row gap-1">
+            <div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong class="text-green-800">Success!! Data Successfully Entered.</strong>
+              <button (click)="closeAlert()" type="button" class="btn-close" data-bs-dismiss="alert"
+                aria-label="Close"></button>
+            </div>
+            <form [formGroup]="insertBid" (ngSubmit)="collectBid()">
+              <div class="p-2 bg-emerald-400 rounded-lg mb-2">
+                <div class="grid-flow-row text-white text-lg">
+                  <h2>Your bid for this job</h2>
+                </div>
+              </div>
+              <div class="grid grid-flow-col gap-3">
+                <div>
+                  <input
+                    class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+                    id="amount" formControlName="amount" type="text" placeholder="Amount" />
+                </div>
+                <div class="grid-flow-row">
+                  <input
+                    class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+                    id="deliveryDays" formControlName="deliveryDays" type="text" placeholder="Delivery Days" />
+                </div>
+              </div>
+              <div class="my-2">
+                <div class="grid-flow-row">
+                  <textarea
+                    class="appearance-none placeholder:text-slate-500 block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-5 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black h-32"
+                    id="description" formControlName="description" type="text"
+                    placeholder="Enter Project Description"></textarea>
+                </div>
+              </div>
+              <div class="my-2 grid justify-items-center">
+                <div class="">
+                  <fl-button type="ngSubmit" name="Place Bid" size="M" shade="W" animation="F" />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="bg-slate-50 rounded-lg border shadow-md">
+        <div class="m-2 grid grid-flow-row gap-1">
+          <div class="bg-emerald-400 rounded-lg mb-2 ">
+            <h2 class="p-2 text-white text-lg">About the client</h2>
+          </div>
+          <div class="grid sm:grid-flow-row grid-flow-row gap-4 p-1" *ngFor="let item of locationData.response">
+            <div class="hover:text-emerald-500">
+              <a class="ml-1 text-xl cursor-pointer" [routerLink]="['/home/users/',item.userId]">{{item.firstName}} {{item.lastName}}</a>
+            </div>
+            <div>
+              <fl-rating [value]=countAvgRating(item.ratings) />
+            </div>
+            <div class="flex gap-1 hover:text-emerald-500">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                <path fill-rule="evenodd"
+                  d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.976.544l.062.029.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z"
+                  clip-rule="evenodd" />
+              </svg>
+              {{item.stateName}}, {{item.countryName}}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </section>

@@ -62,6 +62,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
   async getClientLocation(clientId: number) {
     this.locationData = await this.userService.getAllUsers({ userId: clientId });
+    console.log(this.locationData);
   }
 
 
