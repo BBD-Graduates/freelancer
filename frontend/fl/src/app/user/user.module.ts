@@ -19,6 +19,7 @@ import { UserProfileComponent } from './components/userProfile/user-profile/user
 import { PostProjectComponent } from './components/project/post-project/post-project.component';
 import { MyProjectsComponent } from './components/myProjects/my-projects/my-projects.component';
 import { GoogleAuthComponent } from './components/google-auth/google-auth.component';
+
 import {
   GoogleLoginProvider,
   GoogleSigninButtonModule,
@@ -54,10 +55,9 @@ import { FooterComponent } from './components/footer/footer.component';
     ReactiveFormsModule,
     FormsModule,
     SocialLoginModule,
-    GoogleSigninButtonModule
-    // ClientModule,
-    // FreelancerModule
-  ],exports:[ProjectDetailsComponent],
+    GoogleSigninButtonModule,
+  ],
+  exports: [ProjectDetailsComponent],
   providers: [
     SocialAuthService,
 

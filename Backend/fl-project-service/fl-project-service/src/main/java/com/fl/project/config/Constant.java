@@ -12,8 +12,8 @@ public class Constant {
     public static String DELETION_FAILED = "Deletion Failed";
     
     public  static String PROJECT="Project ";
+    public  static String PROJECT_STATUS="Project Status";
     public  static String PAYMENT_TYPE="Payment type ";
-    public  static String PROJECT_ASSIGN="Project assign ";
     public  static String RATING ="Rating ";
     public  static String PROJECT_SKILLS="Project Skills";
 

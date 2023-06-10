@@ -1,11 +1,8 @@
 package com.fl.project.controller;
 
-import com.fl.project.config.ProjectStatus;
 import com.fl.project.model.FlResponse;
-import com.fl.project.model.request.ProjectAssignmentRequest;
 import com.fl.project.model.request.ProjectRequest;
 import com.fl.project.model.response.ProjectResponse;
-import com.fl.project.service.serviceInterface.ProjectAssignmentService;
 import com.fl.project.service.serviceInterface.ProjectService;
 
 import jakarta.validation.Valid;
@@ -26,7 +23,6 @@ import static com.fl.project.config.Constant.*;
 public class ProjectController {
 
     private final ProjectService projectService;
-    private final ProjectAssignmentService projectAssignment;
     private final FlResponseUtil flResponseUtil;
 
     @PostMapping
@@ -58,14 +54,25 @@ public class ProjectController {
     }
 
     @PutMapping("/{projectId}")
-    public ResponseEntity<FlResponse<String>> updateProject(@PathVariable("projectId") int projectId,
+    public ResponseEntity<FlResponse<String>> updateProject(@PathVariable("projectId") Integer projectId,
             @Valid @RequestBody ProjectRequest project) {
         try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.updateProject(project, projectId),
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.updateProject(project, projectId,null),
                     String.format("%s" + UPDATED_SUCCESSFULLY, PROJECT));
         } catch (Exception ex) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,
                     String.format("%s " + UPDATION_FAILED, PROJECT));
+        }
+    }
+    @PutMapping()
+    public ResponseEntity<FlResponse<String>> updateProjectStatus(@RequestParam("projectId") Integer projectId,
+                                                                  @RequestParam("projectStatus") String projectStatus) {
+        try {
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.updateProject(null,projectId,projectStatus),
+                String.format("%s" + UPDATED_SUCCESSFULLY, PROJECT_STATUS));
+        } catch (Exception ex) {
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,
+                    String.format("%s " + UPDATION_FAILED, PROJECT_STATUS));
         }
     }
 
@@ -79,14 +86,5 @@ public class ProjectController {
                     String.format("%s " + DELETION_FAILED, PROJECT));
         }
     }
-    @PostMapping("/bids")
-    public ResponseEntity<FlResponse<String>> assignProjectBid(@Valid @RequestBody ProjectAssignmentRequest projectAssignmentRequest) {
-        try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectAssignment.assignBid(projectAssignmentRequest.getBidId()),
-                    PROJECT_ASSIGN+INSERTED_SUCCESSFULLY);
-        } catch (Exception e) {
-            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,
-                    String.format("%s " + INSERTION_FAILED, PROJECT));
-        }
-    }
+
 }

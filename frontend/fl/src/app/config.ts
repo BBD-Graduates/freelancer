@@ -18,6 +18,8 @@ export const config = {
   BidService: '',
   BidApi: {
     insertBid: 'http://localhost:8084/bids',
+    endPoint: 'http://localhost:8084/bids',
+    updateBid: 'http://localhost:8084/bids/updateBidStatus',
   },
 
   UserService: '',

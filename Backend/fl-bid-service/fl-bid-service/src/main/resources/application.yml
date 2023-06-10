@@ -34,5 +34,7 @@ db:
 service:
   props:
     webServices:
+      fl-user-service:
+        endpoint: http://localhost:8081/users
       fl-project-service:
         endpoint: http://localhost:8083/projects

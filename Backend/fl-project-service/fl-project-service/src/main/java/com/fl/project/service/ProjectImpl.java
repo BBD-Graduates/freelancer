@@ -21,13 +21,18 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.*;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
 import static com.fl.project.config.Constant.*;
-import static com.fl.project.config.ProjectStatus.*;
+import static com.fl.project.config.ProjectStatus.APPROVED;
 
 @Service
 @RequiredArgsConstructor
@@ -60,16 +65,15 @@ public class ProjectImpl implements ProjectService {
             }, identityValue);
             Number projectId = identityValue.getKey().intValue();
             if (projectId.intValue() > 0) {
-                List<ProjectSkillsRequest> projectskills=new ArrayList<>();
+                List<ProjectSkillsRequest> projectskills = new ArrayList<>();
 
-                project.getSkillIds().forEach(skillId->{
-                    projectskills.add(new ProjectSkillsRequest(projectId.intValue(),skillId));
+                project.getSkillIds().forEach(skillId -> {
+                    projectskills.add(new ProjectSkillsRequest(projectId.intValue(), skillId));
                 });
-                FlResponse<String> status=projectSkillService.addProjectSkills(projectskills);
-                if(Objects.equals(status.getResponse(), PROJECT_SKILLS + INSERTED_SUCCESSFULLY))
-                {
+                FlResponse<String> status = projectSkillService.addProjectSkills(projectskills);
+                if (Objects.equals(status.getResponse(), PROJECT_SKILLS + INSERTED_SUCCESSFULLY)) {
                     return PROJECT + INSERTED_SUCCESSFULLY;
-                }else {
+                } else {
                     return PROJECT_SKILLS + INSERTION_FAILED;
                 }
 
@@ -82,26 +86,24 @@ public class ProjectImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectResponse> getProject(Integer projectId, Integer skillId, Integer categoryId, Integer clientId,Integer freelancerId ,List<String> status) {
+    public List<ProjectResponse> getProject(Integer projectId, Integer skillId, Integer categoryId, Integer clientId, Integer freelancerId, List<String> status) {
         List<ProjectResponse> projects;
         try {
             if (projectId.equals(0) && skillId.equals(0) && categoryId.equals(0) && clientId.equals(0) && freelancerId.equals(0)) {
                 projects = jdbcTemplate.query(dbQueries.getSelectAllProject(),
                         BeanPropertyRowMapper.newInstance(ProjectResponse.class));
-            }
-            else if (!freelancerId.equals(0) && !status.isEmpty()) {
-                FlResponse<List<BidResponse>> freelancerBids= projectBidService.getBidByFreelancerId(freelancerId,APPROVED.toString());
-                List<Integer> bidProjectIds =new ArrayList<>();
+            } else if (!freelancerId.equals(0) && !status.isEmpty()) {
+                FlResponse<List<BidResponse>> freelancerBids = projectBidService.getBidByFreelancerId(freelancerId, APPROVED.toString());
+                List<Integer> bidProjectIds = new ArrayList<>();
                 freelancerBids.getResponse().forEach(bidResponse -> {
-                     bidProjectIds.add(bidResponse.getProjectId());
+                    bidProjectIds.add(bidResponse.getProjectId());
                 });
-                    SqlParameterSource parameters=new MapSqlParameterSource()
-                       .addValue("projectIds",bidProjectIds)
-                       .addValue("status",status);
-                    projects=namedParameterJdbcTemplate.query(dbQueries.getAssignedProjectsByProjectIds(),parameters,
-                            BeanPropertyRowMapper.newInstance(ProjectResponse.class));
-            }
-            else if (!skillId.equals(0)) {
+                SqlParameterSource parameters = new MapSqlParameterSource()
+                        .addValue("projectIds", bidProjectIds)
+                        .addValue("status", status);
+                projects = namedParameterJdbcTemplate.query(dbQueries.getAssignedProjectsByProjectIds(), parameters,
+                        BeanPropertyRowMapper.newInstance(ProjectResponse.class));
+            } else if (!skillId.equals(0)) {
                 FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService.getProjectSkill(0,
                         skillId, 0);
                 if (!skillList.getResponse().isEmpty()) {
@@ -126,14 +128,12 @@ public class ProjectImpl implements ProjectService {
                     projects = jdbcTemplate.query(dbQueries.getSelectProjectByProjectId(),
                             BeanPropertyRowMapper.newInstance(ProjectResponse.class), projectId);
                 }
-            }
-            else if (!clientId.equals(0) && !status.isEmpty()) {
+            } else if (!clientId.equals(0) && !status.isEmpty()) {
                 SqlParameterSource parameters = new MapSqlParameterSource()
                         .addValue("clientId", clientId)
                         .addValue("status", status);
                 projects = namedParameterJdbcTemplate.query(dbQueries.getSelectProjectsByClientIdAndStatus(), parameters, BeanPropertyRowMapper.newInstance(ProjectResponse.class));
-            }
-            else if (!categoryId.equals(0)) {
+            } else if (!categoryId.equals(0)) {
                 FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService.getProjectSkill(0,
                         0, categoryId);
                 List<Integer> projectIds;
@@ -158,8 +158,7 @@ public class ProjectImpl implements ProjectService {
                     projects = jdbcTemplate.query(dbQueries.getSelectProjectByProjectId(),
                             BeanPropertyRowMapper.newInstance(ProjectResponse.class), projectId);
                 }
-            }
-            else {
+            } else {
                 projects = jdbcTemplate.query(dbQueries.getSelectProjectByProjectId(),
                         BeanPropertyRowMapper.newInstance(ProjectResponse.class), projectId);
             }
@@ -192,11 +191,16 @@ public class ProjectImpl implements ProjectService {
     }
 
     @Override
-    public String updateProject(ProjectRequest project, int projectId) {
+    public String updateProject(ProjectRequest project, Integer projectId, String projectStatus) {
         try {
-            int isUpdated = jdbcTemplate.update(dbQueries.getUpdateProjectByProjectId(),
-                    project.getProjectName(), project.getProjectDescription(),
-                    project.getMinPrice(), project.getMaxPrice(), projectId);
+            int isUpdated;
+            if (projectStatus != null && projectId != null) {
+                isUpdated = jdbcTemplate.update(dbQueries.getUpdateProjectStatus(),projectStatus,projectId);
+            } else {
+                isUpdated = jdbcTemplate.update(dbQueries.getUpdateProjectByProjectId(),
+                        project.getProjectName(), project.getProjectDescription(),
+                        project.getMinPrice(), project.getMaxPrice(), projectId);
+            }
             if (isUpdated > 0)
                 return UPDATED_SUCCESSFULLY;
             else
