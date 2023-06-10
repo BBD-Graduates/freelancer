@@ -7,9 +7,9 @@ spring:
     name: fl-user-service
   #database configuration:mysql
   datasource:
-    url: jdbc:mysql://localhost:3306/fl_users?useSSL=false
-    username: root
-    password:
+    url: jdbc:mysql://mysqlffdb.chevdymucho3.eu-west-1.rds.amazonaws.com/fl_skills?useSSL=false
+    username: bheem
+    password: VNSGUfreelance
 
 eureka:
   client:
@@ -75,14 +75,3 @@ db:
 
     userLanguages:
       insertUserLanguages: INSERT INTO userlanguages(UserId,LanguageId) values(?,?)
-
-
-service:
-  props:
-    webServices:
-      fl-skill-service:
-        endpoint: http://localhost:8082/user-skills
-      fl-project-service:
-        endpoint: http://localhost:8083/projects/rating
-      fl-bid-service:
-        endpoint: http://localhost:8084/

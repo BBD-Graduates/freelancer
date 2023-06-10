@@ -14,9 +14,6 @@ export class MenubarComponent {
       this.isMenuScrolled = true;
     else
       this.isMenuScrolled = false;
-
-
-    console.log(this.isMenuScrolled);
   }
   openSidebar(){  
     this.isSidebarShowing = true;

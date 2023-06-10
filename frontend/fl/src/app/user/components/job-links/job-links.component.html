@@ -40,8 +40,8 @@
   </li>
   <ul class="bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute
     transition duration-150 ease-in-out origin-top min-w-32">
-    <div *ngIf="menuData?.response">
-      <div *ngFor="let categories of menuData?.response">
+    <div *ngIf="menuData">
+      <div *ngFor="let categories of menuData">
         <li class="rounded-sm relative px-3 py-3 hover:bg-gray-100">
           <button class="w-full text-left flex items-center outline-none focus:outline-none">
             <span class="pr-1 flex-1"><a
