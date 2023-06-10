@@ -1,1 +1,48 @@
-<p>user-bids works!</p>
+<section>
+  <div class=" bg-white col-span-3 rounded-md">
+    <div class="p-5 flex justify-between font-semibold text-xl">
+      <p class="font-semibold text-emerald-500">Bids on this project.</p>
+    </div>
+    <hr>
+    <div *ngFor="let bid of bids">
+      <div class="flex h-46 ">
+        <div class="p-3 w-40 h-40">
+          <img [src]="bid.freelancerDetails" referrerpolicy="no-referrer" class="rounded-md w-full" alt=""
+            onerror="this.src='./assets/images/UserAltImage.jpg'" />
+        </div>
+        <div class="p-2 w-auto space-y-2 flex-auto">
+          <div class="flex gap-10">
+            <div class="flex gap-1">
+              <p class="text-emerald-500 font-semibold ">₹ {{bid.amount}}</p>
+              <p>in</p>
+              <p class="text-emerald-500 font-semibold ">{{bid.deliveryDays}}</p>
+              <p>days</p>
+            </div>
+            <div>
+              <p class="text-emerald-500 font-semibold">{{bid.status}}</p>
+            </div>
+          </div>
+          <div class="flex justify-left">
+            <p class="text-slate-600 text-md"><fl-rating [value]="4.0" /></p>
+            <p class="text-slate-600 text-md"></p>
+          </div>
+          <div class="max-w-xl h-12">
+            <p class=" overflow-hidden truncate"> {{bid.description}}</p>
+          </div>
+        </div>
+        <div class="w-40 p-5 ">
+          <div>
+            <button
+              class="flex-shrink-0 bg-teal-500 container mt-10 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white p-1 rounded"
+              type="button" (click)="approveBid(bid.bidId)">
+              Approve Bid
+            </button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <hr>
+      </div>
+    </div>
+  </div>
+</section>

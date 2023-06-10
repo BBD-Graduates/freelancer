@@ -44,7 +44,6 @@ public class ProjectStatus {
                 break;
             }
             jdbcTemplate.update(dbQueries.getUpdateProjectStatus(), project.getStatus(),project.getProjectId());
-
         }
     }
 

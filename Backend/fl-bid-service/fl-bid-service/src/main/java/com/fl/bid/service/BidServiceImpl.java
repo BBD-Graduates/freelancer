@@ -1,8 +1,12 @@
 package com.fl.bid.service;
 
+import com.fl.bid.client.BidProjectClient;
+import com.fl.bid.client.BidUserClient;
 import com.fl.bid.config.Constant;
+import com.fl.bid.model.FlResponse;
 import com.fl.bid.model.request.BidRequest;
 import com.fl.bid.model.response.Bid;
+import com.fl.bid.model.response.UserResponse;
 import com.fl.bid.repository.DbQueries;
 import com.fl.bid.service.serviceInterface.BidService;
 import jakarta.transaction.Transactional;
@@ -12,6 +16,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,6 +28,9 @@ import static com.fl.bid.config.Constant.*;
 public class BidServiceImpl implements BidService {
     private final DbQueries dbQueries;
     private final JdbcTemplate jdbcTemplate;
+    private final BidUserClient bidUserClient;
+
+    private final BidProjectClient bidProjectClient;
 
 
     @Override
@@ -68,9 +76,10 @@ public class BidServiceImpl implements BidService {
 
     public String updateBidStatusToApprove(Integer bidId, Integer projectId) {
         try {
-             String bidApproveStatus =this.executeBidUpdateQueries(bidId,projectId);
-             if(Objects.equals(bidApproveStatus, BID + APPROVED.toString())){
-                 return BID+APPROVED.toString();
+             String bidApproveStatus = this.executeBidUpdateQueries(bidId,projectId);
+             if(Objects.equals(bidApproveStatus, BID + APPROVED)){
+                 bidProjectClient.updateProjectStatus(projectId,IN_PROGRESS.toString());
+                 return BID+APPROVED;
              }
              else {
                  return  UPDATION_FAILED;
@@ -78,7 +87,6 @@ public class BidServiceImpl implements BidService {
         } catch (Exception e) {
             throw e;
         }
-
     }
 
     @Transactional
@@ -88,7 +96,7 @@ public class BidServiceImpl implements BidService {
             jdbcTemplate.update(dbQueries.getRejectBid(), REJECTED.toString(), projectId, bidId);
             if(bidApproveStatus==1)
             {
-                return BID+APPROVED.toString();
+                return BID+APPROVED;
             }
             else {
                 return  UPDATION_FAILED;
@@ -101,6 +109,7 @@ public class BidServiceImpl implements BidService {
     @Override
     public List<Bid> getBids(Integer bidId, Integer projectId, Integer freelancerId,String status) {
         try {
+            List<Bid> bids=new ArrayList<>();
             if(!freelancerId.equals(0) && !status.isEmpty())
             {
                 if(status.equals(PENDING.toString())){
@@ -123,7 +132,14 @@ public class BidServiceImpl implements BidService {
                 return jdbcTemplate.query(dbQueries.getBidByBidId(),
                         BeanPropertyRowMapper.newInstance(Bid.class), bidId);
             } else if (!projectId.equals(0)) {
-                return jdbcTemplate.query(dbQueries.getBidByProjectId(), BeanPropertyRowMapper.newInstance(Bid.class), projectId);
+                bids= jdbcTemplate.query(dbQueries.getBidByProjectId(), BeanPropertyRowMapper.newInstance(Bid.class), projectId);
+                bids.forEach(bid -> {
+                    Integer bidFreelancerId=bid.getFreelancerId();
+                    FlResponse<List<UserResponse>> freelancerDetailsResponse= bidUserClient.getFreelancerById(bidFreelancerId);
+                    UserResponse freelancerDetails=freelancerDetailsResponse.getResponse().get(0);
+                    bid.setFreelancerDetails(freelancerDetails);
+                });
+                return bids;
             } else {
                 return jdbcTemplate.query(dbQueries.getAllBid(), BeanPropertyRowMapper.newInstance(Bid.class));
             }

@@ -1,43 +1,43 @@
 <div class="w-full lg:container">
-    <div id="projectDetails">
-        <div
-            class="bg-emerald-500 items-center border rounded-xl shadow-md hover:bg-emerald-400 transition duration-300 ease-in-out">
-            <div class="ml-3 text-white py-2" *ngFor="let project of data">
-                <div class="grid grid-flow-col gap-1 content-center">
-                    <div>
-                        <h2 class="text-3xl font-medium ">{{project.projectName}}</h2>
-                    </div>
-                    <div class="flex justify-end">
-                        <p class="">${{project.minPrice}}-{{project.maxPrice}}</p>
-                    </div>
-                    <div class="flex gap-2 justify-end">
-                        <div>
-                            <p class="text-xl font-medium">Bidding closes in 6 days.</p>
-                        </div>
-                    </div>
-                </div>
+  <div id="projectDetails">
+    <div
+      class="bg-emerald-500 items-center border rounded-xl shadow-md hover:bg-emerald-400 transition duration-300 ease-in-out">
+      <div class="ml-3 text-white py-2" *ngFor="let project of data">
+        <div class="grid grid-flow-col gap-1 content-center">
+          <div>
+            <h2 class="text-3xl font-medium ">{{project.projectName}}</h2>
+          </div>
+          <div class="flex justify-end">
+            <p class="">₹ {{project.minPrice}}-{{project.maxPrice}}</p>
+          </div>
+          <div class="flex gap-2 justify-end">
+            <div>
+              <p class="text-xl font-medium">Bidding closes in 6 days.</p>
             </div>
+          </div>
         </div>
-        <div class="m-2 sm:grid sm:grid-row-4 sm:grid-cols-3 sm:grid-flow-col gap-1">
-            <div class="col-span-3 row-span-4">
-                <div class="bg-slate-50 container mb-3 col-span-2 items-center rounded-lg border shadow-md">
-                    <div class="relative my-2 grid grid-rows-3-4 items-center gap-2 ">
-                        <div *ngFor="let project of data">
-                            <p class="text-xl">Description</p>
-                            <hr class="mb-2 " />
-                            <p class="indent-8 text-justify w-72 sm:w-full">
-                                {{project.projectDescription}}
-                            </p>
-                            <div class=" flex text-blue-400">
-                                <div class=" mr-2" *ngFor="let userSkill of project.skills">
-                                    <p>{{userSkill.skillName}}</p>
-                                </div>
-                                <div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-</div>
+    <div class="m-2 sm:grid sm:grid-row-4 sm:grid-cols-3 sm:grid-flow-col gap-1">
+      <div class="col-span-3 row-span-4">
+        <div class="bg-slate-50 container mb-3 col-span-2 items-center rounded-lg border shadow-md">
+          <div class="relative my-2 grid grid-rows-3-4 items-center gap-2 ">
+            <div *ngFor="let project of data">
+              <p class="text-xl">Description</p>
+              <hr class="mb-2 " />
+              <p class="indent-8 text-justify w-72 sm:w-full">
+                {{project.projectDescription}}
+              </p>
+              <div class=" flex text-blue-400">
+                <div class=" mr-2" *ngFor="let userSkill of project.skills">
+                  <p>{{userSkill.skillName}}</p>
+                </div>
+                <div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

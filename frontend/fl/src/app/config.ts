@@ -18,6 +18,7 @@ export const config = {
   BidService: '',
   BidApi: {
     insertBid: 'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8084/bids',
+    updateBid: 'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8084/bids/updateBidStatus',
   },
 
   UserService: '',
