@@ -19,6 +19,7 @@ import { UserProfileComponent } from './components/userProfile/user-profile/user
 import { PostProjectComponent } from './components/project/post-project/post-project.component';
 import { MyProjectsComponent } from './components/myProjects/my-projects/my-projects.component';
 import { GoogleAuthComponent } from './components/google-auth/google-auth.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import {
   GoogleLoginProvider,
@@ -48,6 +49,7 @@ import { FooterComponent } from './components/footer/footer.component';
     FooterComponent,
   ],
   imports: [
+    NgxPaginationModule,
     CommonModule,
     UserRoutingModule,
     HttpClientModule,
