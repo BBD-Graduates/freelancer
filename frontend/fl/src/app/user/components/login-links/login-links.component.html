@@ -10,7 +10,7 @@
         <button class="outline-none focus:outline-none rounded-sm flex items-center min-w-32"
           [routerLink]="['dashboard/']">
           <span class="pr-1 font-semibold flex-1"><img class="h-12 rounded-full" [src]="profileUrl"
-              referrerpolicy="no-referrer" alt="ProfilePic">
+              referrerpolicy="no-referrer" alt="ProfilePic" onerror="this.src='./assets/images/UserAltImage.jpg'">
           </span>
           <span>
             <p clas="pr-1 font-semibold flex-1">{{firstName}}{{lastName}}</p>
