@@ -1,1 +1,32 @@
-<p>bid works!</p>
+<div class="grid grid-cols-4 group mt-2 bg-white border rounded-lg" *ngFor="let bid of bids">
+  <div class="col-span-3 group-hover:bg-slate-200 rounded-sm">
+    <div class="grid grid-rows-3 items-center ml-5">
+      <div class="inline-block text-emerald-500  text-l">
+        <h2><b>{{bid.status}}</b></h2>
+      </div>
+      <div class="flex gap-2 items-center ">
+        <p class="">Bid amount</p>
+        <p>{{bid.amount}}</p>
+        <p>INR</p>
+      </div>
+      <div class="">
+        <p class="text-clip overflow-hidden h-12">{{bid.description}}
+        </p>
+      </div>
+
+      <div class="flex text-emerald-500 gap-3">
+        <div>
+          <a href="">View project details</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="grid grid-rows-3 min-h-full items-center group-hover:bg-slate-200">
+      <div class="place-self-center">
+        <a class="hidden group-hover:block group-hover:transition-all group-hover:duration-500 border bg-emerald-600 hover:bg-emerald-50 transition-all duration-1000 text-emerald-50 border-emerald-600 hover:text-slate-700 px-5 py-2 rounded-lg font-medium text-md"
+          [routerLink]="['project-details/',bid.projectId]">Edit Bid</a>
+      </div>
+    </div>
+  </div>
+</div>

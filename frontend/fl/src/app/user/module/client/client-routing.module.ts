@@ -5,31 +5,40 @@ import { OpenProjectsComponent } from './components/open-projects/open-projects.
 import { PastProjectsComponent } from './components/past-projects/past-projects.component';
 import { ProjectListComponent } from '../../../shared/project-list/project-list.component';
 import { ProjectDetailComponent } from './components/project-detail/project-detail.component';
+import { WorkInProgressComponent } from './components/workInProgress/work-in-progress/work-in-progress.component';
 
 const routes: Routes = [
   {
-    path:'',
-    component:HomeComponent,
-    children:[
+    path: '',
+    component: HomeComponent,
+    children: [
       {
-        path:'',
-        component:OpenProjectsComponent,
+        path: '',
+        component: OpenProjectsComponent,
       },
       {
-        path:'project-details/:projectId',
-        component:ProjectDetailComponent,
-        data:{ projectId:16}
+        path: 'project-details/:projectId',
+        component: ProjectDetailComponent,
+        data: { projectId: 16 },
       },
       {
-        path:'past',
-        component:PastProjectsComponent,
-      }
-    ]
-  }
+        path: 'past',
+        component: PastProjectsComponent,
+      },
+      {
+        path: 'workInProgress/project-details/:projectId',
+        component: ProjectDetailComponent,
+      },
+      {
+        path: 'workInProgress',
+        component: WorkInProgressComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ClientRoutingModule { }
+export class ClientRoutingModule {}

@@ -9,20 +9,21 @@ import { ApiResponse } from 'src/app/shared/model/apiResponse';
 @Injectable({
   providedIn: 'root',
 })
-
 export class ProjectApiService {
-constructor(private http: HttpClient, private router: Router) {}
-data:any=[];
+  constructor(private http: HttpClient, private router: Router) {}
+  data: any = [];
   async getProjects({
     projectId,
     skillId,
     clientId,
+    freelancerId,
     status,
     categoryId,
   }: {
     projectId?: number;
     skillId?: number;
     clientId?: number;
+    freelancerId?: number;
     status?: String[];
     categoryId?: number;
   }): Promise<ProjectResponse[] | null> {
@@ -31,6 +32,7 @@ data:any=[];
       params = this.addParamsIfNotEmpty(params, 'projectId', projectId);
       params = this.addParamsIfNotEmpty(params, 'skillId', skillId);
       params = this.addParamsIfNotEmpty(params, 'clientId', clientId);
+      params = this.addParamsIfNotEmpty(params, 'freelancerId', freelancerId);
       params = this.addParamsIfNotEmpty(params, 'status', status);
       params = this.addParamsIfNotEmpty(params, 'categoryId', categoryId);
       const options = { params: params };

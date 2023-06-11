@@ -8,6 +8,7 @@ import { PastProjectsComponent } from './components/past-projects/past-projects.
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProjectDetailComponent } from './components/project-detail/project-detail.component';
 import { UserBidsComponent } from './components/user-bids/user-bids.component';
+import { WorkInProgressComponent } from './components/workInProgress/work-in-progress/work-in-progress.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { UserBidsComponent } from './components/user-bids/user-bids.component';
     PastProjectsComponent,
     ProjectDetailComponent,
     UserBidsComponent,
+    WorkInProgressComponent,
   ],
   imports: [
     CommonModule,
