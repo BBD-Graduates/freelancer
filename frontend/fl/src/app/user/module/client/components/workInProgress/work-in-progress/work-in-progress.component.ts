@@ -4,13 +4,13 @@ import { ProjectStatus } from 'src/app/enums/projectStatusEnums';
 import { ProjectApiService } from 'src/app/user/service/project-api.service';
 
 @Component({
-  selector: 'fl-past-projects',
-  templateUrl: './past-projects.component.html',
-  styleUrls: ['./past-projects.component.css'],
+  selector: 'fl-work-in-progress',
+  templateUrl: './work-in-progress.component.html',
+  styleUrls: ['./work-in-progress.component.css'],
 })
-export class PastProjectsComponent {
+export class WorkInProgressComponent {
   userId: number = 0;
-  selectedStatus: String[] = [ProjectStatus.COMPLETED];
+  selectedStatus: String[] = [ProjectStatus.IN_PROGRESS];
 
   constructor(
     private projectApiService: ProjectApiService,

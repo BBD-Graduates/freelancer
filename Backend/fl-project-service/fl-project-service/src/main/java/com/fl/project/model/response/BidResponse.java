@@ -16,6 +16,7 @@ public class BidResponse {
     private int projectId;
     private int freelancerId;
     private int amount;
+    private String status;
     private String description;
     private String createdDate;
 }

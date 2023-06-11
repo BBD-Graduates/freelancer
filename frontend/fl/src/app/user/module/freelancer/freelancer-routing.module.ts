@@ -7,32 +7,27 @@ import { CompletedProjectComponent } from './components/completed-project/comple
 
 const routes: Routes = [
   {
-    path:'',
-    component:HomeComponent,
-    children:[
+    path: '',
+    component: HomeComponent,
+    children: [
       {
-        path:'',
-        component:BidComponent
+        path: '',
+        component: BidComponent,
       },
       {
-        path:'bids',
-        component:BidComponent
+        path: 'current-project',
+        component: CurrentProjectComponent,
       },
       {
-        path:'current-project',
-        component:CurrentProjectComponent
+        path: 'completed',
+        component: CompletedProjectComponent,
       },
-      {
-        path:'completed',
-        component:CompletedProjectComponent
-      },
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class FreelancerRoutingModule { 
-}
+export class FreelancerRoutingModule {}
