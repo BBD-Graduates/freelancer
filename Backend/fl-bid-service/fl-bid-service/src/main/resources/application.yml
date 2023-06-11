@@ -7,9 +7,9 @@ spring:
     name: fl-bid-service
   #database configuration:mysql
   datasource:
-    url: jdbc:mysql://localhost:3306/fl_bids?useSSL=false
-    username: root
-    password:
+    url: jdbc:mysql://mysqlffdb.chevdymucho3.eu-west-1.rds.amazonaws.com/fl_skills?useSSL=false
+    username: bheem
+    password: VNSGUfreelance
 
 eureka:
   client:
@@ -29,12 +29,3 @@ db:
       getBidByFreelancerIdAndProjectId : SELECT * from bids WHERE ProjectId=? and FreelancerId=?
       approveBid: UPDATE bids set Status = ? WHERE BidId=?
       rejectBid: UPDATE bids set Status = ? WHERE ProjectId=? and BidId != ?
-
-
-service:
-  props:
-    webServices:
-      fl-user-service:
-        endpoint: http://localhost:8081/users
-      fl-project-service:
-        endpoint: http://localhost:8083/projects

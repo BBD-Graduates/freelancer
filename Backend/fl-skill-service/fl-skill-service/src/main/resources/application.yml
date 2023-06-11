@@ -7,9 +7,9 @@ spring:
     name: fl-skill-service
   #database configuration:mysql
   datasource:
-    url: jdbc:mysql://localhost:3306/fl_skills?useSSL=false
-    username: root
-    password: 
+    url: jdbc:mysql://mysqlffdb.chevdymucho3.eu-west-1.rds.amazonaws.com/fl_skills?useSSL=false
+    username: bheem
+    password: VNSGUfreelance
 
 eureka:
   client:

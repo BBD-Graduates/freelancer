@@ -10,8 +10,6 @@ export class HomeComponent {
   scrollCheck() {
     if (window.pageYOffset > 100) this.isMenuScrolled = true;
     else this.isMenuScrolled = false;
-
-    console.log(this.isMenuScrolled);
   }
   scrollToTop() {
     document.body.scrollIntoView({ behavior: 'smooth' });

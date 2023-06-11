@@ -34,9 +34,6 @@ export class GoogleAuthComponent {
         email: user['email'],
         photoUrl: user['photoUrl'],
       };
-
-      console.log('authState user: ', user);
-      console.log('Token from state: ', user.authToken);
       await this.userapiService.loginUser(userData);
 
     });
