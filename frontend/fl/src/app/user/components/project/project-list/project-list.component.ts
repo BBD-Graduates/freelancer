@@ -31,6 +31,7 @@ export class ProjectListComponent implements OnInit {
       }
     });
   }
+  p:number=1;
   data: any = [];
   alert: boolean = false;
   skillName: String = '';

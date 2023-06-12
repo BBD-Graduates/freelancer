@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SkillApiService } from 'src/app/user/service/skill-api.service';
 import { UserapiService } from 'src/app/user/service/user-api.service';
 
 @Component({
@@ -8,7 +9,9 @@ import { UserapiService } from 'src/app/user/service/user-api.service';
   styleUrls: ['./browse-freelancers.component.css'],
 })
 export class BrowseFreelancersComponent {
-  constructor(private userApiService: UserapiService, private router: Router) {}
+  constructor(private userApiService: UserapiService, private router: Router,private skillApi:SkillApiService) {
+    this.loadSkills();
+  }
   userDetails:
     | {
         userId: number;
@@ -58,9 +61,16 @@ export class BrowseFreelancersComponent {
       this.userDetailsList.push(this.userDetails);
     });
   }
-  options = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
+  options:any = [];
   selectedOptions: string[] = [];
   isDropdownOpen = false;
+  async loadSkills() {
+    const skillList = await this.skillApi.getSkill();
+    skillList?.forEach(skills=>{
+      this.options.push(skills.skillName);
+    })
+    console.log(this.options,'skillnames')
+  }
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
