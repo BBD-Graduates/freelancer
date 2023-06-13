@@ -23,6 +23,8 @@ export class ProjectDetailsComponent implements OnInit {
   bidStartDate: Date | null = null;
   freelancerId: number = 0;
   isRejected: boolean = false;
+  btnText: String = "Place Bid";
+  bidId:Number|null=null;
 
   insertBid = new FormGroup({
     projectId: new FormControl(this.route.snapshot.paramMap.get('projectId')),
@@ -37,7 +39,6 @@ export class ProjectDetailsComponent implements OnInit {
   locationData: any = [];
   http: any;
   constructor(
-    private _httpClient: HttpClient,
     private route: ActivatedRoute,
     private userService: UserapiService,
     private projectService: ProjectApiService,
@@ -73,6 +74,8 @@ export class ProjectDetailsComponent implements OnInit {
     const bidData = await this.bidService.getBids({ freelancerId: freelancerId, projectId: this.projectId });
     if (bidData != null && bidData.length > 0) {
       const bid = bidData[0];
+      this.btnText = 'Update Bid';
+      this.bidId=bid.bidId;
 
       this.insertBid.patchValue({
         amount: bid.amount.toString(),
@@ -89,7 +92,13 @@ export class ProjectDetailsComponent implements OnInit {
 
 
   saveBid(data: any) {
-    return this._httpClient.post(config.BidApi.insertBid, data);
+    if(this.btnText == 'Update Bid'){
+      console.log('updated');
+      // return;
+      return this.bidService.updatetBid(data,Number(this.bidId));
+    }
+    else
+      return this.bidService.insertBid(data);
   }
 
   collectBid() {
