@@ -78,4 +78,10 @@ export class BidApiService {
     }
     return params;
   }
+  insertBid(data: any) {
+    return this.http.post(config.projectApi.insertProject, data);
+  }
+  updatetBid(data: any,bidId:number) {
+    return this.http.post(config.projectApi.insertProject+"/"+bidId, data);
+  }
 }
