@@ -68,7 +68,10 @@
                     placeholder="Enter Project Description"></textarea>
                 </div>
               </div>
-              <div class="my-2 grid justify-items-center">
+              <div class="my-2 grid justify-items-center {{isRejected?'flex':'hidden'}}">
+                  <p class="text-red-700">Oops! your bid has been rejected.</p>
+              </div>
+              <div class="my-2 grid justify-items-center {{isRejected?'hidden':'flex'}}">
                 <div class="">
                   <fl-button type="ngSubmit" name="Place Bid" size="M" shade="W" animation="F" />
                 </div>

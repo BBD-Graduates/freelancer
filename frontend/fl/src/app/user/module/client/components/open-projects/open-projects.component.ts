@@ -31,16 +31,4 @@ export class OpenProjectsComponent {
       status: this.selectedStatus,
     });
   }
-
-  countAvgBid(bid: any): number {
-    if (bid.length > 0) {
-      let bidTotal: number = 0;
-      for (let i = 0; i < bid.length; i++) {
-        bidTotal += bid[i].amount;
-      }
-      return bidTotal / bid.length;
-    } else {
-      return 0;
-    }
-  }
 }
