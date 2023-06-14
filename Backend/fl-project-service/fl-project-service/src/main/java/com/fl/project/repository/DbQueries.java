@@ -16,6 +16,9 @@ public class DbQueries {
     @Value("${db.queries.projects.selectAllProject}")
     private String selectAllProject;
 
+    @Value("${db.queries.projects.selectAllStatusProjects}")
+    private String allStatusProjects;
+
     @Value("${db.queries.projects.selectProjectByProjectId}")
     private String selectProjectByProjectId;
 

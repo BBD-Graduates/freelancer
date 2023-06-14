@@ -1,17 +1,15 @@
-// import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { AuthGuardService } from './auth-gaurd.service';
 
-// import { canActivate } from './auth-gaurd.service';
-// import { CanActivateFn } from '@angular/router';
+describe('AuthGuardService', () => {
+  let service: AuthGuardService;
 
-// describe('AuthGaurdService', () => {
-//   let service: CanActivateFn;
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(AuthGuardService);
+  });
 
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({});
-//     service = TestBed.inject(canActivate);
-//   });
-
-//   it('should be created', () => {
-//     expect(service).toBeTruthy();
-//   });
-// });
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});

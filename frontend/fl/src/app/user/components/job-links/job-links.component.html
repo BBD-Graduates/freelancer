@@ -35,8 +35,8 @@
   <li class="p-3 border-t lg:border-0">
     <!-- component -->
     <div class="group inline-block">
-  <li class="outline-none focus:outline-none rounded-sm flex items-center min-w-32">
-    <a [routerLink]="['project-list/']" > <span class="pr-1 font-semibold flex-1">Find Jobs</span></a>
+  <li class="outline-none focus:outline-none rounded-sm flex items-center min-w-32  hover:text-emerald-600">
+    <a [routerLink]="['project-list/']"> <span class="pr-1 font-semibold flex-1">Find Jobs</span></a>
   </li>
   <ul class="bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute
     transition duration-150 ease-in-out origin-top min-w-32">
@@ -44,7 +44,7 @@
       <div *ngFor="let categories of menuData">
         <li class="rounded-sm relative px-3 py-3 hover:bg-gray-100">
           <button class="w-full text-left flex items-center outline-none focus:outline-none">
-            <span class="pr-1 flex-1"><a
+            <span class="pr-1 flex-1 hover:text-emerald-600"><a
                 [routerLink]="['category/',categories.categoryId]">{{categories.categoryName}}</a></span>
             <span class="mr-auto">
               <svg class="fill-current h-4 w-4
@@ -58,7 +58,8 @@
         min-w-32
         ">
             <div *ngFor="let skill of categories.skills">
-              <li class="px-3 py-2 hover:bg-gray-100"><a [routerLink]="['skill/',skill.skillId]">{{skill.skillName}}</a>
+              <li class="px-3 py-2 hover:bg-gray-100 hover:text-emerald-600"><a
+                  [routerLink]="['skill/',skill.skillId]">{{skill.skillName}}</a>
               </li>
             </div>
           </ul>
@@ -69,11 +70,13 @@
   </div>
   </li>
   <li class="p-3 border-t lg:border-0">
-    <a [routerLink]="['users/']"> <span class="pr-1 font-semibold flex-1">Browse Freelancers</span></a>
+    <a [routerLink]="['users/']"> <span class="pr-1 font-semibold flex-1 hover:text-emerald-600">Browse
+        Freelancers</span></a>
   </li>
   <ng-container *ngIf="!sessionStatus">
     <li class="p-3 border-t lg:border-0">
-      <a [routerLink]="['myProjects/']"> <span class="pr-1 font-semibold flex-1">My Projects</span></a>
+      <a [routerLink]="['myProjects/']"> <span class="pr-1 font-semibold flex-1 hover:text-emerald-600">My
+          Projects</span></a>
     </li>
   </ng-container>
 

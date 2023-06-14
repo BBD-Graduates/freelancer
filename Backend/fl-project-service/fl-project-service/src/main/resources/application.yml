@@ -28,6 +28,7 @@ db:
       updateProjectStatus: update projects set Status = ? WHERE ProjectId = ?
       deleteProjectByProjectId: delete from projects where ProjectId=?
       selectProjectsByClientIdAndStatus : select * from projects WHERE ClientId = :clientId AND  Status IN (:status)
+      selectAllStatusProjects: select * from projects
     paymentType:
       insertPaymentType: insert into paymentType(paymentType)values(?)
       selectAllPaymentType: select * from paymentType
@@ -43,10 +44,10 @@ db:
       assignBid: insert into projectAssignment (bidId) values (?)
 
 
-# service:
-#   props:
-#     webServices:
-#       fl-skill-service:
-#         endpoint: http://localhost:8082/project-skills
-#       fl-bid-service:
-#         endpoint: http://localhost:8084/bids
+service:
+  props:
+    webServices:
+      fl-skill-service:
+        endpoint: http://localhost:8082/project-skills
+      fl-bid-service:
+        endpoint: http://localhost:8084/bids

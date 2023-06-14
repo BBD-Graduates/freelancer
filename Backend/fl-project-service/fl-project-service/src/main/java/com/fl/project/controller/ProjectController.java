@@ -53,6 +53,16 @@ public class ProjectController {
         }
     }
 
+    @GetMapping("/allStatusProjects")
+    public ResponseEntity<FlResponse<List<ProjectResponse>>> getProject( ){
+        try {
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.getAllStatusProjects(),
+                    String.format("%s" + FETCHED_SUCCESSFULLY, PROJECT));
+        } catch (Exception e) {
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,
+                    String.format(NO_RECORD_FOUND));
+        }
+    }
     @PutMapping("/{projectId}")
     public ResponseEntity<FlResponse<String>> updateProject(@PathVariable("projectId") Integer projectId,
             @Valid @RequestBody ProjectRequest project) {

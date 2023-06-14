@@ -222,6 +222,10 @@ public class ProjectImpl implements ProjectService {
             throw ex;
         }
     }
-
+    @Override
+    public List<ProjectResponse> getAllStatusProjects() {
+        return   jdbcTemplate.query(dbQueries.getAllStatusProjects(),
+                BeanPropertyRowMapper.newInstance(ProjectResponse.class));
+    }
 
 }

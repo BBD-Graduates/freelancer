@@ -10,6 +10,7 @@ import { UserProfileComponent } from './components/userProfile/user-profile/user
 import { PostProjectComponent } from './components/project/post-project/post-project.component';
 import { MyProjectsComponent } from './components/myProjects/my-projects/my-projects.component';
 import { HomeComponent as ClientHomeComponent } from './module/client/home/home.component';
+import { AuthGuardService } from './service/auth-gaurd.service';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent,
+        canActivate: [AuthGuardService],
       },
       {
         path: 'category/:categoryid',
@@ -36,8 +38,8 @@ const routes: Routes = [
       {
         path: 'skill/:id/project-details',
         component: ProjectDetailsComponent,
+        canActivate: [AuthGuardService],
       },
-
       {
         path: 'project-list',
         component: ProjectListComponent,
@@ -45,14 +47,17 @@ const routes: Routes = [
       {
         path: 'category/:categoryid/project-details/:projectId',
         component: ProjectDetailsComponent,
+        canActivate: [AuthGuardService],
       },
       {
         path: 'skill/:id/project-details/:projectId',
         component: ProjectDetailsComponent,
+        canActivate: [AuthGuardService],
       },
       {
         path: 'project-details/:projectId',
         component: ProjectDetailsComponent,
+        canActivate: [AuthGuardService],
       },
       {
         path: 'users',
@@ -61,29 +66,37 @@ const routes: Routes = [
       {
         path: 'myProjects',
         component: MyProjectsComponent,
-        children:[
+        children: [
           {
-            path:'client',
-            loadChildren:()=> import('./module/client/client.module').then(m=>m.ClientModule),
+            path: 'client',
+            loadChildren: () =>
+              import('./module/client/client.module').then(
+                (m) => m.ClientModule
+              ),
           },
           {
-            path:'freelancer',
-            loadChildren:()=> import('./module/freelancer/freelancer.module').then(m=>m.FreelancerModule),
+            path: 'freelancer',
+            loadChildren: () =>
+              import('./module/freelancer/freelancer.module').then(
+                (m) => m.FreelancerModule
+              ),
           },
           {
-            path: '', 
-            redirectTo:'client',
-            pathMatch:'full'
+            path: '',
+            redirectTo: 'client',
+            pathMatch: 'full',
           },
-        ]
+        ],
       },
       {
         path: 'users/:userId',
         component: UserProfileComponent,
+        canActivate: [AuthGuardService],
       },
       {
         path: 'post-project',
         component: PostProjectComponent,
+        canActivate: [AuthGuardService],
       },
     ],
   },
