@@ -66,6 +66,7 @@ const routes: Routes = [
       {
         path: 'myProjects',
         component: MyProjectsComponent,
+        canActivate: [AuthGuardService],
         children: [
           {
             path: 'client',

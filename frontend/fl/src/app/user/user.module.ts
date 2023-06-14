@@ -29,7 +29,6 @@ import {
   SocialLoginModule,
 } from '@abacritt/angularx-social-login';
 import { FooterComponent } from './components/footer/footer.component';
-import { AuthModelComponent } from './components/authModel/auth-model/auth-model.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +47,6 @@ import { AuthModelComponent } from './components/authModel/auth-model/auth-model
     MyProjectsComponent,
     GoogleAuthComponent,
     FooterComponent,
-    AuthModelComponent,
   ],
   imports: [
     NgxPaginationModule,
