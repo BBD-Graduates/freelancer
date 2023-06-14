@@ -6,6 +6,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserapiService } from 'src/app/user/service/user-api.service';
 import { ProjectApiService } from 'src/app/user/service/project-api.service';
 import { ProjectResponse } from 'src/app/shared/model/projectResponse';
+import { BidApiService } from 'src/app/user/service/bid-api.service';
+import { BidStatus } from 'src/app/enums/bidStatusEnums';
 
 @Component({
   selector: 'fl-project-details',
@@ -13,14 +15,17 @@ import { ProjectResponse } from 'src/app/shared/model/projectResponse';
   styleUrls: ['./project-details.component.css'],
 })
 export class ProjectDetailsComponent implements OnInit {
-  location: any = [];
   data: ProjectResponse[] | null = null;
   alert: boolean = false;
-  isAllowBid: boolean = true;
   projectId: number = 0;
   projectDaysLeft: number = 0;
   bidEndDate: Date | null = null;
   bidStartDate: Date | null = null;
+  freelancerId: number = 0;
+  isRejected: boolean = false;
+  btnText: String = "Place Bid";
+  bidId:Number|null=null;
+
   insertBid = new FormGroup({
     projectId: new FormControl(this.route.snapshot.paramMap.get('projectId')),
     freelancerId: new FormControl(
@@ -34,22 +39,23 @@ export class ProjectDetailsComponent implements OnInit {
   locationData: any = [];
   http: any;
   constructor(
-    private _httpClient: HttpClient,
     private route: ActivatedRoute,
     private userService: UserapiService,
-    private projectService: ProjectApiService
-  ) { }
+    private projectService: ProjectApiService,
+    private bidService: BidApiService
+  ) {
+    if (localStorage.getItem('userId') != null) {
+      this.freelancerId = Number(localStorage.getItem('userId'));
+    }
+  }
   ngOnInit(): void {
-    // const id = this.route.snapshot.paramMap.get('projectId');
     this.route.params.subscribe(params => {
       this.projectId = +params['projectId'];
     });
     this.getProjectById(this.projectId);
-    // this._httpClient
-    //   .get(config.UserApi.getLocation)
-    //   .subscribe((response: any) => {
-    //     this.locationData = response;
-    //   });
+    if (this.freelancerId != 0) {
+      this.getFreelancerBid(this.freelancerId);
+    }
   }
 
   async getProjectById(projectId: number) {
@@ -62,12 +68,37 @@ export class ProjectDetailsComponent implements OnInit {
   }
   async getClientLocation(clientId: number) {
     this.locationData = await this.userService.getAllUsers({ userId: clientId });
-    console.log(this.locationData);
+  }
+
+  async getFreelancerBid(freelancerId: number) {
+    const bidData = await this.bidService.getBids({ freelancerId: freelancerId, projectId: this.projectId });
+    if (bidData != null && bidData.length > 0) {
+      const bid = bidData[0];
+      this.btnText = 'Update Bid';
+      this.bidId=bid.bidId;
+
+      this.insertBid.patchValue({
+        amount: bid.amount.toString(),
+        deliveryDays: bid.deliveryDays.toString(),
+        description: bid.description
+      });
+      if (bid.status === BidStatus.REJECTED.toString()) {
+        this.isRejected = true
+      }
+
+      console.log(bidData);
+    }
   }
 
 
   saveBid(data: any) {
-    return this._httpClient.post(config.BidApi.insertBid, data);
+    if(this.btnText == 'Update Bid'){
+      console.log('updated');
+      // return;
+      return this.bidService.updatetBid(data,Number(this.bidId));
+    }
+    else
+      return this.bidService.insertBid(data);
   }
 
   collectBid() {

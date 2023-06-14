@@ -1,3 +1,4 @@
+<ng-container *ngIf="projects && projects.length > 0;else noProject">
 <div class="grid grid-cols-4 group mt-2 bg-white border rounded-lg" *ngFor="let projects of projects">
   <div class="col-span-3 group-hover:bg-slate-200 rounded-sm">
     <div class="grid grid-rows-3 items-center ml-5">
@@ -32,3 +33,11 @@
     </div>
   </div>
 </div>
+</ng-container>
+<ng-template #noProject>
+  <div class="grid justify-items-center py-20">
+    <img src="../../../../../../assets/images/project.svg" class="h-24" alt="No Bids">
+    <p class="text-xl mt-5">You don't have any Completed Project.</p>
+    <p><a class="text-emerald-500 cursor-pointer" routerLink="/home/project-list">Browse projects and start bidding now to get a job.</a></p>
+  </div>
+</ng-template>
