@@ -11,4 +11,5 @@ public interface ProjectService {
     List<ProjectResponse> getProject(Integer projectId,Integer skillId,Integer categoryId,Integer clientId, Integer freelancerId,List<String> status);
     String updateProject(ProjectRequest project, Integer projectId, String projectStatus);
     String deleteProject(int projectId);
+    List<ProjectResponse> getAllStatusProjects();
 }

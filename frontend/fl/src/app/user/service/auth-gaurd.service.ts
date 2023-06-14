@@ -1,30 +1,44 @@
-// import { Injectable, inject } from '@angular/core';
-// import {
-//   ActivatedRouteSnapshot,
-//   CanActivateChildFn,
-//   CanActivateFn,
-//   Router,
-//   RouterStateSnapshot,
-// } from '@angular/router';
+import { Injectable } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  Router,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthModelComponent } from '../components/authModel/auth-model/auth-model.component';
+import Swal from 'sweetalert2';
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthGuardService {
+  [x: string]: any;
+  constructor(private router: Router) {}
 
-// export const canActivate: CanActivateFn = (
-//   route: ActivatedRouteSnapshot,
-//   state: RouterStateSnapshot
-// ) => {
-//   const router = inject(Router);
-//   console.log('canactivate');
-//   if (sessionStorage.getItem('userEmail') == null) {
-//     router.navigate(['/home']);
-//     console.log('canactivate/home');
-//     return true;
-//   } else {
-//     router.navigate(['/home/dashboard']);
-//     console.log('canactivate/home/dashboard ');
-//     return false;
-//   }
-// };
-
-// export const canActivateChild: CanActivateChildFn = (
-//   route: ActivatedRouteSnapshot,
-//   state: RouterStateSnapshot
-// ) => canActivate(route, state);
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
+    if (localStorage.getItem('userId') != null) {
+      return true;
+    } else {
+      Swal.fire({
+        title: 'Sorry for the inconvenience!',
+        html: `
+            <div>
+              <p>You need to sign in with google to continue</p>
+              <div id="google-signin-button"></div>
+            </div>
+          `,
+        focusConfirm: false,
+        confirmButtonText: '<i class="fa fa-thumbs-up"></i> OK',
+        confirmButtonColor: '#14b8a6',
+      });
+      return false;
+    }
+  }
+}

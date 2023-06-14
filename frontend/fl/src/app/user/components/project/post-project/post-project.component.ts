@@ -6,6 +6,7 @@ import { SkillApiService } from 'src/app/user/service/skill-api.service';
 import { ProjectApiService } from 'src/app/user/service/project-api.service';
 import { ProjectModel } from 'src/app/shared/model/projectModel';
 import { skillResponse } from 'src/app/shared/model/skillResponse';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fl-post-project',
@@ -15,7 +16,7 @@ import { skillResponse } from 'src/app/shared/model/skillResponse';
 export class PostProjectComponent {
   projectdata: any = [];
   skillName: any = [];
-   submitted = false;
+  submitted: boolean | null = null;
   insertProject = new FormGroup({
     projectName: new FormControl('', [Validators.required]),
     projectDescription: new FormControl('', [Validators.required]),
@@ -24,7 +25,6 @@ export class PostProjectComponent {
     bidEndDate: new FormControl('', [Validators.required]),
     minPrice: new FormControl('', [Validators.required]),
     maxPrice: new FormControl('', [Validators.required]),
-    status: new FormControl('', [Validators.required]),
   });
   skillList: any;
   errorMessage: string;
@@ -39,37 +39,76 @@ export class PostProjectComponent {
     this.errorMessage = '';
   }
 
-  collectProject() {
-    if ( this.selectedOptions.length <= 5 ){
-      const projectData: ProjectModel = {
-        clientId: parseInt(localStorage.getItem('userId') ?? '0'),
-        projectName: this.insertProject.value.projectName ?? '',
-        projectDescription: this.insertProject.value.projectDescription ?? '',
-        isConfidential: this.insertProject.value.isConfidential === 'true',
-        bidStartDate: new Date(this.insertProject.value.bidStartDate ?? ''),
-        bidEndDate: new Date(this.insertProject.value.bidEndDate ?? ''),
-        minPrice: Number(this.insertProject.value.minPrice ?? ''),
-        maxPrice: Number(this.insertProject.value.maxPrice ?? ''),
-        skillIds: this.selectedSkills,
-      };
+  confirmPostProject() {
+    this.submitted = false;
 
+    const projectData: ProjectModel = {
+      clientId: parseInt(localStorage.getItem('userId') ?? '0'),
+      projectName: this.insertProject.value.projectName ?? '',
+      projectDescription: this.insertProject.value.projectDescription ?? '',
+      isConfidential: this.insertProject.value.isConfidential === 'true',
+      bidStartDate: new Date(this.insertProject.value.bidStartDate ?? ''),
+      bidEndDate: new Date(this.insertProject.value.bidEndDate ?? ''),
+      minPrice: Number(this.insertProject.value.minPrice ?? ''),
+      maxPrice: Number(this.insertProject.value.maxPrice ?? ''),
+      skillIds: this.selectedSkills,
+    };
+    localStorage.setItem('postProjectData', JSON.stringify(projectData));
+
+    if (this.insertProject.valid && this.selectedOptions.length > 0) {
       this.submitted = true;
-
-      this.projectApi.postProject(projectData).subscribe(
-        (response) => {
-          console.log(response);
-          this.insertProject.reset();
-          this.selectedSkills = [];
-
-        },
-        (error) => {
-          console.error('Error calling postProject service:', error);
+      if (this.selectedOptions.length <= 5) {
+        this.closeAlert();
+        if (projectData.maxPrice > projectData.minPrice) {
+          this.closeAlert();
+          if (projectData.bidEndDate > projectData.bidStartDate) {
+            this.closeAlert();
+            Swal.fire({
+              title: 'Post this project?',
+              text: "You won't be able to edit this project once it is posted.",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#14b8a6',
+              confirmButtonText: 'Yes',
+              cancelButtonText: 'No',
+            }).then((result) => {
+              if (result.value) {
+                this.collectProject(projectData).then(() => {
+                  Swal.fire({
+                    title: 'Project posted successfully',
+                    text: 'Please be patient until our talented freelancers bid on this project.',
+                    icon: 'success',
+                    confirmButtonColor: '#14b8a6',
+                    confirmButtonText: 'Ok',
+                  });
+                });
+              }
+            });
+          } else {
+            this.errorMessage =
+              'Bid end date must be greater than bid start date!';
+          }
+        } else {
+          this.errorMessage =
+            'Maximum budget price must be greater than minimum budget price!';
         }
-      );
+      } else {
+        this.errorMessage = 'You can select maximum 5 Skills!';
+      }
     }
-    else {
-      this.errorMessage = 'You can select a maximum of 5 Skills.';
-    }
+  }
+
+  collectProject(projectData: any): any {
+    this.projectApi.postProject(projectData).subscribe(
+      (response) => {
+        console.log(response);
+        this.insertProject.reset();
+        this.selectedSkills = [];
+      },
+      (error) => {
+        console.error('Error calling postProject service:', error);
+      }
+    );
   }
   closeAlert() {
     this.errorMessage = '';
