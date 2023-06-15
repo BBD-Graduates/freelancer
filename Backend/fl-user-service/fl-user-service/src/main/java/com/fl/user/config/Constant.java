@@ -9,6 +9,11 @@ public class Constant {
     public static String FETCHED_SUCCESSFULLY = "Fetched Successfully";
     public static String REGISTRATION_FAILED = "Registration Failed";
     public static String UPDATION_FAILED = "Updation Failed";
+    public static String INSERTION_FAILED = "Inserted failed";
+    public static String INSERTION_SUCCESSFUL = "Insertion Successful";
+    public static String DELETION_FAILED = "Deletion failed";
+    public static String PORTFOLIO = "Portfolio";
+    public static String USER_LOCATION = "User Location";
 
     private Constant(){
 

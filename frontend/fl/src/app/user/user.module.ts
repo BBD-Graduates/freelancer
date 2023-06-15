@@ -29,6 +29,8 @@ import {
   SocialLoginModule,
 } from '@abacritt/angularx-social-login';
 import { FooterComponent } from './components/footer/footer.component';
+import { EditUserProfileComponent } from './components/editUserProfile/edit-user-profile/edit-user-profile.component';
+import { EditPortfolioComponent } from './components/editPortfolio/edit-portfolio/edit-portfolio.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import { FooterComponent } from './components/footer/footer.component';
     MyProjectsComponent,
     GoogleAuthComponent,
     FooterComponent,
+    EditUserProfileComponent,
+    EditPortfolioComponent,
   ],
   imports: [
     NgxPaginationModule,

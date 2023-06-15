@@ -50,7 +50,7 @@ public class RatingController {
     }
 
     @PutMapping
-    public ResponseEntity<FlResponse<String>> updateRaing(@RequestParam("ratingId") Integer ratingId,
+    public ResponseEntity<FlResponse<String>> updateRating(@RequestParam("ratingId") Integer ratingId,
             @RequestBody() RatingRequest ratingReq) {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, ratingService.updateRating(ratingId, ratingReq),

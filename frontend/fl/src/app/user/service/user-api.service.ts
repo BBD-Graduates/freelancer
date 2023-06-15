@@ -91,6 +91,19 @@ export class UserapiService {
     }
   }
 
+  async updateUser(userData: UserModel) {
+    try {
+      const userResponse = await this.http
+        .post(config.UserApi.postUser, userData)
+        .toPromise();
+      const response = userResponse as ApiResponse;
+      return response;
+    } catch (error) {
+      console.error('RegisterUserApi_ERROR', error);
+      return null;
+    }
+  }
+
   addParamsIfNotEmpty(params: any, key: string, value: any): any {
     if (value !== null && value !== undefined && value !== '') {
       params = params.set(key, value);

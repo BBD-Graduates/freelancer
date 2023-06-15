@@ -9,8 +9,9 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { UserProfileComponent } from './components/userProfile/user-profile/user-profile.component';
 import { PostProjectComponent } from './components/project/post-project/post-project.component';
 import { MyProjectsComponent } from './components/myProjects/my-projects/my-projects.component';
-import { HomeComponent as ClientHomeComponent } from './module/client/home/home.component';
 import { AuthGuardService } from './service/auth-gaurd.service';
+import { EditUserProfileComponent } from './components/editUserProfile/edit-user-profile/edit-user-profile.component';
+import { EditPortfolioComponent } from './components/editPortfolio/edit-portfolio/edit-portfolio.component';
 
 const routes: Routes = [
   {
@@ -62,6 +63,14 @@ const routes: Routes = [
       {
         path: 'users',
         component: BrowseFreelancersComponent,
+      },
+      {
+        path: 'editProfile',
+        component: EditUserProfileComponent,
+      },
+      {
+        path: 'editportfolio',
+        component: EditPortfolioComponent,
       },
       {
         path: 'myProjects',

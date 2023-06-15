@@ -21,7 +21,7 @@ db:
   queries:
     users:
       insertUser: INSERT INTO users(FirstName,LastName,Email,PhotoUrl) values(?,?,?,?)
-      updateUser: UPDATE users set FirstName=?, LastName=?, HeadLine=?, Summary=?, Company=?, PhNo=?, PhotoUrl=? WHERE UserId=?
+      updateUser: UPDATE users set FirstName=?, LastName=?, HeadLine=?, Summary=?, Company=?, PhNo=? WHERE UserId=?
       getUserDetails:
         SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
         FROM users u
@@ -75,6 +75,20 @@ db:
 
     userLanguages:
       insertUserLanguages: INSERT INTO userlanguages(UserId,LanguageId) values(?,?)
+
+    userLocation:
+      addUserLocation: INSERT INTO userlocation(UserId, CityId, Pincode, Address1, Address2) values (?,?,?,?,?)
+      updateUserLocation: UPDATE userlocation set CityId = ?, Pincode = ?, Address1 = ?, Address2 = ? where UserId = ?
+      getUserLocation: SELECT ul.* , s.StateId, cnt.CountryId from userlocation ul
+                        INNER JOIN cities c on ul.CityId=c.CityId
+                        INNER JOIN states s on c.StateId = s.StateId
+                        INNER JOIN countries cnt ON cnt.CountryId = s.CountryId WHERE ul.UserId = ?
+
+
+    portfolio:
+      insertPortfolio: INSERT INTO portfolio(UserId,Title,Description,ImageURL) values(?,?,?,?)
+      getPortfolio: SELECT * from portfolio where UserId = ?
+      deletePortfolio: DELETE from portfolio where PortfolioId= ?
 
 
 service:

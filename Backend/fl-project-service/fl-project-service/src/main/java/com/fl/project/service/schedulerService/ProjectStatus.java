@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,23 +24,24 @@ public class ProjectStatus {
     @Autowired
     ProjectImpl projectImpl;
 
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void updateProjectStatus() {
         List<String> status = new ArrayList<>();
         status.add(POSTED.toString());
         status.add(BID_IN_PROGRESS.toString());
 
         List<ProjectResponse> projectStatus = projectImpl.getProject(0, 0, 0, 0, 0,status);
-        Date currentDate = new Date();
+
+        LocalDate currentDate = LocalDate.now();
 
         for (ProjectResponse project : projectStatus) {
-            Date bidStartDate = project.getBidStartDate();
-            Date bidEndDate = project.getBidEndDate();
+            LocalDate bidStartDate = project.getBidStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate bidEndDate = project.getBidEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             if (project.getStatus().equals(POSTED.toString())) {
-                if (currentDate.after(bidStartDate) && currentDate.before(bidEndDate)) {
+                if (currentDate.equals(bidStartDate) && currentDate.isBefore(bidEndDate)) {
                     project.setStatus(BID_IN_PROGRESS.toString());
                 }
-            } else if (project.getStatus().equals(BID_IN_PROGRESS.toString()) && (currentDate.after(bidEndDate))) {
+            } else if (project.getStatus().equals(BID_IN_PROGRESS.toString()) && (currentDate.isAfter(bidEndDate))) {
                 project.setStatus(BID_COMPLETE.toString());
             }
             else{
@@ -46,5 +50,4 @@ public class ProjectStatus {
             jdbcTemplate.update(dbQueries.getUpdateProjectStatus(), project.getStatus(),project.getProjectId());
         }
     }
-
 }

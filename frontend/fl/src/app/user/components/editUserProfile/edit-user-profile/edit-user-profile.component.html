@@ -1,0 +1,220 @@
+<section class=" flex lg:py-1 sm:py-36 bg-slate-100">
+  <div class="bg-scroll bg-cover w-full  ">
+    <div class=" h-96 mt-52 bg-cover  bg-no-repeat "
+      style="background-image: url('/assets/images/dashboardBGImage.jpg');">
+    </div>
+    <div class="" style="margin-top: -150px;">
+      <div class="grid md:grid-cols-3 gap-10 justify-between container">
+        <!-- User Profile -->
+        <div class=" bg-white col-span-2 max-h-max rounded-xl">
+          <div class=" max-w-4xl relative ">
+            <div class=" p-4">
+              <h1 class="text-emerald-600 font-semibold text-2xl ">Personal details</h1>
+            </div>
+            <form class="p-4" id="personalDetails">
+              <div class="grid grid-flow-col gap-3 mt-4">
+                <div>
+                  <input
+                    class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+                    id="firstName" formControlName="firstName" type="text" placeholder="First Name" />
+                </div>
+                <div class="grid-flow-row">
+                  <input
+                    class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+                    id="lastName" formControlName="lastName" type="text" placeholder="Last Name " />
+                </div>
+              </div>
+              <div class="grid grid-flow-col gap-3 mt-4">
+                <div>
+                  <input
+                    class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+                    id="headline" formControlName="headline" type="text" placeholder="Professional Headline" />
+                </div>
+                <div class="grid-flow-row">
+                  <input
+                    class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+                    id="company" formControlName="company" type="text" placeholder="Company" />
+                </div>
+              </div>
+              <div class="grid grid-flow-col gap-3 mt-4">
+                <div>
+                  <input
+                    class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+                    id="phNo" formControlName="phNo" type="text" placeholder="Phone Number" />
+                </div>
+              </div>
+              <div class="mt-4">
+                <div class="grid-flow-row">
+                  <textarea
+                    class="appearance-none placeholder:text-slate-500 block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-5 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black h-32"
+                    id="summary" formControlName="summary" type="text" placeholder="Summary"></textarea>
+                </div>
+              </div>
+              <div>
+                <fl-button type="ngSubmit" name="Update personal details" size="M" shade="W" animation="F" />
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- update skills and languages -->
+        <div class="row-span-2 mt-16">
+          <div class="grid grid-row-4 p-5 gap-10">
+            <div class="bg-white rounded-xl h-full p-2">
+              <div class="flex flex-wrap">
+                <div class="w-full mb-4 ">
+                  <div class="relative">
+                    <div>
+                      <button type="button"
+                        class="block appearance-none w-full text-gray-500 border border-green-300 py-4 px-4 mb-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-green-500 "
+                        (click)="toggleDropdown()">
+                        {{ selectedOptions.length > 0 ? selectedOptions.length + ' Selected' : 'Select your top
+                        skills'
+                        }}
+                        <div
+                          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        </div>
+                      </button>
+                    </div>
+                    <div class="overflow-y-scroll h-40 w-full rounded-md bg-white shadow-lg mt-1" *ngIf="isDropdownOpen"
+                      (clickOutside)="closeDropdown()">
+                      <ul>
+                        <li *ngFor="let skill of skillOptions" class="p-2">
+                          <label class="inline-flex items-center">
+                            <input type="checkbox"
+                              class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                              [checked]="isSelected(skill.skillId)"
+                              (change)="toggleOption(skill.skillName,skill.skillId)">
+                            <span class="ml-2">{{ skill.skillName }}</span>
+                          </label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="mt-4">
+                      Selected Skills:
+                      <ul class="px-5">
+                        <li *ngFor="let selectedOption of selectedOptions">- {{ selectedOption }}</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="flex flex-col items-center mt-8">
+                    <fl-button type="ngSubmit" name="Update skills" size="M" shade="W" animation="F" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-xl h-full p-2">
+              <div class="flex flex-wrap">
+                <div class="w-full mb-4 ">
+                  <div class="relative">
+                    <div>
+                      <button type="button"
+                        class="block appearance-none w-full text-gray-500 border border-green-300 py-4 px-4 mb-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-green-500 "
+                        (click)="toggleDropdown()">
+                        {{ selectedOptions.length > 0 ? selectedOptions.length + ' Selected' : 'Select your
+                        languages'
+                        }}
+                        <div
+                          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        </div>
+                      </button>
+                    </div>
+                    <div class="overflow-y-scroll h-40 w-full rounded-md bg-white shadow-lg mt-1" *ngIf="isDropdownOpen"
+                      (clickOutside)="closeDropdown()">
+                      <ul>
+                        <li *ngFor="let skill of skillOptions" class="p-2">
+                          <label class="inline-flex items-center">
+                            <input type="checkbox"
+                              class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                              [checked]="isSelected(skill.skillId)"
+                              (change)="toggleOption(skill.skillName,skill.skillId)">
+                            <span class="ml-2">{{ skill.skillName }}</span>
+                          </label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="mt-4">
+                      Selected languages:
+                      <ul class="px-5">
+                        <li *ngFor="let selectedOption of selectedOptions">- {{ selectedOption }}</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="flex flex-col items-center mt-8">
+                    <fl-button type="ngSubmit" name="Update languages" size="M" shade="W" animation="F" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--  update location -->
+        <div class=" bg-white col-span-2 max-h-max rounded-xl">
+          <div class=" max-w-4xl relative ">
+            <div class=" p-4">
+              <h1 class="text-emerald-600 font-semibold text-2xl ">Location details</h1>
+            </div>
+            <form class="p-4" id="locationDetails">
+              <div class="grid grid-flow-col gap-3 mt-4">
+                <div class="">
+                  <select name="country"
+                    class="block appearance-none w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
+                    id="country" [formControl]="selectcountry" required>
+                    <option value="" disabled>Country</option>
+                    <option value="">India </option>
+                    <option value="">USA</option>
+                  </select>
+                </div>
+                <div>
+                  <select name="state"
+                    class="block appearance-none w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
+                    id="state" [formControl]="selectstate" required>
+                    <option value="" disabled>State</option>
+                    <option value="">India </option>
+                    <option value="">USA</option>
+                  </select>
+                </div>
+              </div>
+              <div class="grid grid-flow-col gap-3 mt-4">
+                <select name="city"
+                  class="block appearance-none w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
+                  id="city" [formControl]="selectcity" required>
+                  <option value="" disabled>City</option>
+                  <option value="">India </option>
+                  <option value="">USA</option>
+                </select>
+              </div>
+              <div class="gap-3 mt-4">
+                <div class="">
+                  <input
+                    class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+                    id="pincode" formControlName="pincode" type="text" placeholder="Pincode" />
+                </div>
+              </div>
+              <div class="mt-4 gap-3">
+                <div class="grid-flow-row">
+                  <textarea
+                    class="appearance-none placeholder:text-slate-500 block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-5 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black h-32"
+                    id="address1" formControlName="address1" type="text" placeholder="Address Line 1"></textarea>
+                </div>
+              </div>
+              <div class="mt-4 gap-3">
+                <div class="grid-flow-row">
+                  <textarea
+                    class="appearance-none placeholder:text-slate-500 block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-5 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black h-32"
+                    id="address2" formControlName="address2" type="text" placeholder="Address Line 2"></textarea>
+                </div>
+              </div>
+              <div class="">
+                <fl-button type="ngSubmit" name="Update location details" size="M" shade="W" animation="F" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div> ​
+    </div>
+  </div>
+</section>
