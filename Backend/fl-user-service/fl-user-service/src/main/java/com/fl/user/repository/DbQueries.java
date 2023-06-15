@@ -38,4 +38,22 @@ public class DbQueries {
 
     @Value("${db.queries.userLanguages.insertUserLanguages}")
     private String adduserLanguages;
+
+    @Value("${db.queries.userLocation.addUserLocation}")
+    private String addUserLocation;
+
+    @Value("${db.queries.userLocation.updateUserLocation}")
+    private String updateUserLocation;
+
+    @Value("${db.queries.userLocation.getUserLocation}")
+    private String userLocation;
+
+    @Value("${db.queries.portfolio.insertPortfolio}")
+    private String addPortfolio;
+
+    @Value("${db.queries.portfolio.getPortfolio}")
+    private String userPortfolio;
+
+    @Value("${db.queries.portfolio.deletePortfolio}")
+    private String deletePortfolio;
 }

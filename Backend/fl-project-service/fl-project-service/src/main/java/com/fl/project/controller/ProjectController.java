@@ -54,7 +54,7 @@ public class ProjectController {
     }
 
     @GetMapping("/allStatusProjects")
-    public ResponseEntity<FlResponse<List<ProjectResponse>>> getProject( ){
+    public ResponseEntity<FlResponse<List<ProjectResponse>>> getAllStatusProject( ){
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.getAllStatusProjects(),
                     String.format("%s" + FETCHED_SUCCESSFULLY, PROJECT));

@@ -16,22 +16,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
-
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Service
@@ -74,7 +68,7 @@ public class UserServiceImpl implements UserService {
     public String updateUser(Integer userId, UserRequest userRequest) {
         try {
             int updateStatus = jdbcTemplate.update(dbQueries.getUpdateUser(), userRequest.getFirstName(), userRequest.getLastName()
-                    , userRequest.getHeadLine(), userRequest.getSummary(), userRequest.getCompany(), userRequest.getPhNo(), userRequest.getPhotoUrl(), userId);
+                    , userRequest.getHeadLine(), userRequest.getSummary(), userRequest.getCompany(), userRequest.getPhNo(), userId);
             if (updateStatus > 0) {
                 return Constant.UPDATED_SUCCESSFULLY;
             } else {
@@ -181,6 +175,4 @@ public class UserServiceImpl implements UserService {
     public List<LanguageResponse> getUserLanguage(Integer userId) {
         return jdbcTemplate.query(dbQueries.getLanguagesByUserId(), BeanPropertyRowMapper.newInstance(LanguageResponse.class), userId);
     }
-
-
 }

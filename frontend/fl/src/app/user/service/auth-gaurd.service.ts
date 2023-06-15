@@ -6,7 +6,6 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthModelComponent } from '../components/authModel/auth-model/auth-model.component';
 import Swal from 'sweetalert2';
 @Injectable({
   providedIn: 'root',
