@@ -17,7 +17,7 @@ import java.util.List;
 import static com.fl.skill.config.Constant.*;
 
 @RestController
-@RequestMapping("/skills")
+@RequestMapping("/fls/skills")
 @RequiredArgsConstructor
 @CrossOrigin("*")
 public class SkillController {

@@ -7,9 +7,14 @@
           <div>
             <h2 class="text-3xl font-medium ">{{item.projectName}}</h2>
           </div>
-          <div class="flex gap-2 justify-end p-2">
+          <div class="flex gap-2 justify-end pr-2">
             <div>
-              <p class="text-xl font-medium">Bidding closes in <span> {{projectDaysLeft}} days!</span></p>
+              <ng-container *ngIf="projectDaysLeft>0;else bidClosed">
+                <p class="text-xl font-medium">Bidding closes in <span> {{projectDaysLeft}} days!</span></p>
+              </ng-container>
+              <ng-template #bidClosed>
+                <p class="text-xl font-medium">Bidding Closed</p>
+              </ng-template>
             </div>
           </div>
         </div>
@@ -37,11 +42,6 @@
         </div>
         <div class="bg-slate-50 rounded-lg border shadow-md">
           <div class="m-2 grid grid-flow-row gap-1">
-            <div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
-              <strong class="text-green-800">Success!! Data Successfully Entered.</strong>
-              <button (click)="closeAlert()" type="button" class="btn-close" data-bs-dismiss="alert"
-                aria-label="Close"></button>
-            </div>
             <form [formGroup]="insertBid" (ngSubmit)="collectBid()">
               <div class="p-2 bg-emerald-400 rounded-lg mb-2">
                 <div class="grid-flow-row text-white text-lg">
@@ -69,9 +69,9 @@
                 </div>
               </div>
               <div class="my-2 grid justify-items-center {{isRejected?'flex':'hidden'}}">
-                  <p class="text-red-700">Oops! your bid has been rejected.</p>
+                <p class="text-red-700">Oops! your bid has been rejected.</p>
               </div>
-              <div class="my-2 grid justify-items-center {{isRejected?'hidden':'flex'}}">
+              <div class="my-2 grid justify-items-center {{isRejected||projectDaysLeft<0?'hidden':'flex'}}">
                 <div class="">
                   <fl-button type="ngSubmit" name="{{btnText}}" size="M" shade="W" animation="F" />
                 </div>
@@ -89,7 +89,8 @@
           </div>
           <div class="grid sm:grid-flow-row grid-flow-row gap-4 p-1" *ngFor="let item of locationData.response">
             <div class="hover:text-emerald-500">
-              <a class="ml-1 text-xl cursor-pointer" [routerLink]="['/home/users/',item.userId]">{{item.firstName}} {{item.lastName}}</a>
+              <a class="ml-1 text-xl cursor-pointer" [routerLink]="['/home/users/',item.userId]">{{item.firstName}}
+                {{item.lastName}}</a>
             </div>
             <div>
               <fl-rating [value]=countAvgRating(item.ratings) />

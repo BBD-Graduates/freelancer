@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 import static com.fl.project.config.Constant.*;
 
 @RestController
-@RequestMapping("/projects/paymentType")
+@RequestMapping("/flp/projects/paymentType")
 @RequiredArgsConstructor
 @CrossOrigin("*")
 public class PaymentTypeController {

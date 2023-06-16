@@ -94,7 +94,7 @@ db:
 service:
   props:
     webServices:
-      fl-skill-service:
-        endpoint: http://localhost:8082/user-skills
       fl-project-service:
-        endpoint: http://localhost:8083/projects/rating
+        endpoint: http://localhost:8083/flp/projects/rating
+      fl-skill-service:
+        endpoint: http://localhost:8082/fls/user-skills

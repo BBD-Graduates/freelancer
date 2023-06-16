@@ -48,6 +48,6 @@ service:
   props:
     webServices:
       fl-skill-service:
-        endpoint: http://localhost:8082/project-skills
+        endpoint: http://localhost:8082/fls/project-skills
       fl-bid-service:
-        endpoint: http://localhost:8084/bids
+        endpoint: http://localhost:8084/flb/bids

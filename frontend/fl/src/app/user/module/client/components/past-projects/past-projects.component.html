@@ -15,7 +15,7 @@
           </p>
         </div>
 
-        <div class="flex text-emerald-500 gap-3">
+        <div class="flex text-emerald-500 gap-3 my-2">
           <div class="" *ngFor="let projectSkills of projects.skills">
             <p>{{projectSkills.skillName}}</p>
           </div>
@@ -24,10 +24,6 @@
     </div>
     <div>
       <div class="grid grid-rows-3 min-h-full items-center group-hover:bg-slate-200">
-        <div class="place-self-center">
-          <p><span class="font-bold underline">₹ {{countAvgBid(projects.bids)}} </span> Avg Bid
-          </p>
-        </div>
         <div class="place-self-center">
           <p>{{projects.bids.length}} Bids</p>
         </div>

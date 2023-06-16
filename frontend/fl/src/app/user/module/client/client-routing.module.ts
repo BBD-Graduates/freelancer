@@ -26,6 +26,10 @@ const routes: Routes = [
         component: PastProjectsComponent,
       },
       {
+        path: 'past/project-details/:projectId',
+        component: ProjectDetailComponent,
+      },
+      {
         path: 'workInProgress/project-details/:projectId',
         component: ProjectDetailComponent,
       },

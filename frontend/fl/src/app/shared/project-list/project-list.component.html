@@ -7,10 +7,7 @@
           <div>
             <h2 class="text-3xl font-medium ">{{project.projectName}}</h2>
           </div>
-          <div class="flex justify-end">
-            <p class="">₹ {{project.minPrice}}-{{project.maxPrice}}</p>
-          </div>
-          <div class="flex gap-2 justify-end">
+          <div class="flex gap-2 justify-end pr-2">
             <div>
               <p class="text-xl font-medium">Bidding closes in 6 days.</p>
             </div>
@@ -18,17 +15,18 @@
         </div>
       </div>
     </div>
-    <div class="m-2 sm:grid sm:grid-row-4 sm:grid-cols-3 sm:grid-flow-col gap-1">
+    <div class="mt-2 sm:grid sm:grid-row-4 sm:grid-cols-3 sm:grid-flow-col gap-1">
       <div class="col-span-3 row-span-4">
         <div class="bg-slate-50 container mb-3 col-span-2 items-center rounded-lg border shadow-md">
           <div class="relative my-2 grid grid-rows-3-4 items-center gap-2 ">
             <div *ngFor="let project of data">
-              <p class="text-xl">Description</p>
-              <hr class="mb-2 " />
+              <p class="my-2">Budget :<span class="text-xl text-emerald-500"> ₹
+                  {{project.minPrice}}-{{project.maxPrice}}</span></p>
+              <hr />
               <p class="indent-8 text-justify w-72 sm:w-full">
                 {{project.projectDescription}}
               </p>
-              <div class=" flex text-blue-400">
+              <div class=" flex text-blue-400 my-2">
                 <div class=" mr-2" *ngFor="let userSkill of project.skills">
                   <p>{{userSkill.skillName}}</p>
                 </div>

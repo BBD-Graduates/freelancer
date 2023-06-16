@@ -15,7 +15,7 @@
           </p>
         </div>
 
-        <div class="flex text-emerald-500 gap-3">
+        <div class="flex text-emerald-500 gap-3 my-2">
           <div class="" *ngFor="let projectSkills of projects.skills">
             <p>{{projectSkills.skillName}}</p>
           </div>
@@ -24,6 +24,9 @@
     </div>
     <div>
       <div class="grid min-h-full items-center group-hover:bg-slate-200 justify-center">
+        <div class="place-self-center">
+          <p>{{projects.bids.length}} Bids</p>
+        </div>
         <div class="place-self-center">
           <a class="hidden group-hover:block group-hover:transition-all group-hover:duration-500 border bg-emerald-600 hover:bg-emerald-50 transition-all duration-1000 text-emerald-50 border-emerald-600 hover:text-slate-700 px-5 py-2 rounded-lg font-medium text-md"
             [routerLink]="['project-details/',projects.projectId]">View Details</a>

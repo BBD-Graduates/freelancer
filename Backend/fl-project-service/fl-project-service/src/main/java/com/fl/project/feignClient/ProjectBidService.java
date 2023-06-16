@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 @FeignClient(url = "${service.props.webservices.fl-bid-service.endpoint}" , name = "fl-bid-service")
-//@FeignClient(name = "FL-BID-SERVICE/bids")
+// @FeignClient(name = "FL-BID-SERVICE/api/bids")
 @Service
 public interface ProjectBidService {
     @GetMapping
