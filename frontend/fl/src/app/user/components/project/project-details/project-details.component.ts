@@ -8,6 +8,7 @@ import { ProjectApiService } from 'src/app/user/service/project-api.service';
 import { ProjectResponse } from 'src/app/shared/model/projectResponse';
 import { BidApiService } from 'src/app/user/service/bid-api.service';
 import { BidStatus } from 'src/app/enums/bidStatusEnums';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fl-project-details',
@@ -16,15 +17,14 @@ import { BidStatus } from 'src/app/enums/bidStatusEnums';
 })
 export class ProjectDetailsComponent implements OnInit {
   data: ProjectResponse[] | null = null;
-  alert: boolean = false;
   projectId: number = 0;
   projectDaysLeft: number = 0;
   bidEndDate: Date | null = null;
   bidStartDate: Date | null = null;
   freelancerId: number = 0;
   isRejected: boolean = false;
-  btnText: String = "Place Bid";
-  bidId:Number|null=null;
+  btnText: String = 'Place Bid';
+  bidId: Number | null = null;
 
   insertBid = new FormGroup({
     projectId: new FormControl(this.route.snapshot.paramMap.get('projectId')),
@@ -49,7 +49,7 @@ export class ProjectDetailsComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.projectId = +params['projectId'];
     });
     this.getProjectById(this.projectId);
@@ -60,57 +60,63 @@ export class ProjectDetailsComponent implements OnInit {
 
   async getProjectById(projectId: number) {
     this.data = await this.projectService.getProjects({ projectId: projectId });
-    this.bidEndDate = this.data && this.data[0]?.bidEndDate ? new Date(this.data[0].bidEndDate) : null;
-    this.bidStartDate = this.data && this.data[0]?.bidStartDate ? new Date(this.data[0].bidStartDate) : null;
-    const diffTimestamp = (this.bidEndDate?.getTime() ?? 0) - (this.bidStartDate?.getTime() ?? 0);
+    this.bidEndDate =
+      this.data && this.data[0]?.bidEndDate
+        ? new Date(this.data[0].bidEndDate)
+        : null;
+    this.bidStartDate =
+      this.data && this.data[0]?.bidStartDate
+        ? new Date(this.data[0].bidStartDate)
+        : null;
+    const diffTimestamp =
+      (this.bidEndDate?.getTime() ?? 0) - (this.bidStartDate?.getTime() ?? 0);
     this.projectDaysLeft = Math.ceil(diffTimestamp / (1000 * 60 * 60 * 24));
-    this.getClientLocation(this.data && this.data[0]?.clientId || 0)
+    this.getClientLocation((this.data && this.data[0]?.clientId) || 0);
   }
   async getClientLocation(clientId: number) {
-    this.locationData = await this.userService.getAllUsers({ userId: clientId });
+    this.locationData = await this.userService.getAllUsers({
+      userId: clientId,
+    });
   }
 
   async getFreelancerBid(freelancerId: number) {
-    const bidData = await this.bidService.getBids({ freelancerId: freelancerId, projectId: this.projectId });
+    const bidData = await this.bidService.getBids({
+      freelancerId: freelancerId,
+      projectId: this.projectId,
+    });
     if (bidData != null && bidData.length > 0) {
       const bid = bidData[0];
       this.btnText = 'Update Bid';
-      this.bidId=bid.bidId;
+      this.bidId = bid.bidId;
 
       this.insertBid.patchValue({
         amount: bid.amount.toString(),
         deliveryDays: bid.deliveryDays.toString(),
-        description: bid.description
+        description: bid.description,
       });
       if (bid.status === BidStatus.REJECTED.toString()) {
-        this.isRejected = true
+        this.isRejected = true;
       }
-
-      console.log(bidData);
     }
   }
 
-
   saveBid(data: any) {
-    if(this.btnText == 'Update Bid'){
-      console.log('updated');
-      // return;
-      return this.bidService.updatetBid(data,Number(this.bidId));
-    }
-    else
-      return this.bidService.insertBid(data);
+    if (this.btnText == 'Update Bid') {
+      return this.bidService.updatetBid(data, Number(this.bidId));
+    } else return this.bidService.insertBid(data);
   }
 
   collectBid() {
     console.log(this.insertBid.value);
     this.saveBid(this.insertBid.value).subscribe((response) => {
-      this.alert = true;
-      this.insertBid.reset();
+      Swal.fire({
+        title: 'Bid placed successfully',
+        text: 'You can update your bid untill the bidding gets closed.',
+        icon: 'success',
+        confirmButtonColor: '#14b8a6',
+        confirmButtonText: 'Ok',
+      });
     });
-  }
-
-  closeAlert() {
-    this.alert = false;
   }
 
   countAvgRating(ratings: any): number {

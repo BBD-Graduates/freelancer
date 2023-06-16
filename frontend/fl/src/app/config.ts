@@ -1,47 +1,37 @@
 export const config = {
-  apiGatewayUrl: 'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8085/',
+  apiGatewayUrl: 'https://d27tejefvay96.cloudfront.net:8085/',
   projectService: '',
   skillApi: {
     getCategoryByCategoryId:
-      'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8082/categories?categoryId=',
-    getSkills:
-      'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8082/skills',
+      'https://d27tejefvay96.cloudfront.net/fls/categories?categoryId=',
+    getSkills: 'https://d27tejefvay96.cloudfront.net/fls/skills',
     getSkillBySkillId:
-      'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8082/skills?skillId=',
-    getCategorySkills:
-      'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8082/categories',
+      'https://d27tejefvay96.cloudfront.net/fls/skills?skillId=',
+    getCategorySkills: 'https://d27tejefvay96.cloudfront.net/fls/categories',
   },
   projectApi: {
-    getProject:
-      'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8083/projects?projectId=0',
+    getProject: 'https://d27tejefvay96.cloudfront.net/flp/projects?projectId=0',
     getProjectByCategoryId:
-      'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8083/projects?categoryId=',
+      'https://d27tejefvay96.cloudfront.net/flp/projects?categoryId=',
     getProjectBySkillId:
-      'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8083/projects?skillId=',
+      'https://d27tejefvay96.cloudfront.net/flp/projects?skillId=',
     getProjectByProjectId:
-      'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8083/projects?projectId=',
-    insertProject:
-      'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8083/projects',
-    getProjects:
-      'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8083/projects',
+      'https://d27tejefvay96.cloudfront.net/flp/projects?projectId=',
+    insertProject: 'https://d27tejefvay96.cloudfront.ne/flp/projects',
+    getProjects: 'https://d27tejefvay96.cloudfront.net/flp/projects',
     getAllStatusProjects:
-      'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8083/projects/allStatusProjects',
+      'https://d27tejefvay96.cloudfront.net/flp/projects/allStatusProjects',
   },
   BidService: '',
   BidApi: {
-    insertBid:
-      'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8084/bids',
-    updateBid:
-      'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8084/bids/updateBidStatus',
+    insertBid: 'https://d27tejefvay96.cloudfront.net/flb/bids',
+    updateBid: 'https://d27tejefvay96.cloudfront.net/flb/bids/updateBidStatus',
   },
 
   UserService: '',
   UserApi: {
-    getLocation:
-      'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8081/users',
-    getUser:
-      'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8081/users',
-    postUser:
-      'http://ec2-3-253-70-13.eu-west-1.compute.amazonaws.com:8081/users',
+    getLocation: 'https://d27tejefvay96.cloudfront.net/flu/users',
+    getUser: 'https://d27tejefvay96.cloudfront.net/flu/users',
+    postUser: 'https://d27tejefvay96.cloudfront.net/flu/users',
   },
 };

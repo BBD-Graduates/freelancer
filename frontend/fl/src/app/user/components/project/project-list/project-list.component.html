@@ -71,11 +71,8 @@
           </div>
         </div>
       </div>
-      <div class="md:col-span-4 lg:col-span-4">
-        <div class="p-3 flex justify-between">
-          <p class="font-semibold ">Top Results</p>
-        </div>
-        <div class="grid grid-cols-4 group mt-2 bg-white border rounded-lg"
+      <div class="md:col-span-4 lg:col-span-4 mt-12">
+        <div class="grid grid-cols-4 group mt-2 bg-white border rounded-lg "
           *ngFor="let item of data | paginate: { itemsPerPage: 5, currentPage: p }">
           <div class="col-span-3 group-hover:bg-slate-200 rounded-sm">
             <div class="grid grid-rows-3 items-center ml-5">
@@ -92,7 +89,7 @@
                 </p>
               </div>
 
-              <div class="flex text-emerald-500  gap-3">
+              <div class="flex text-emerald-500 gap-3 my-2">
                 <div class="" *ngFor="let projectSkill of item.skills">
                   <p>{{projectSkill.skillName}}</p>
                 </div>

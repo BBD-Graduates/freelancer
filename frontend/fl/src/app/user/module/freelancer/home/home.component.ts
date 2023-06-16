@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
+  selectedMenu:String = 'open';
+  changeMenu(menu:String){
+    this.selectedMenu=menu;
+  }
 }

@@ -58,7 +58,9 @@ export class BrowseFreelancersComponent {
         skills: response['skills'] || [],
         languages: response['languages'] || [],
       };
-      this.userDetailsList.push(this.userDetails);
+      if(response.userId!= localStorage.getItem('userId')){
+        this.userDetailsList.push(this.userDetails);
+      }
     });
   }
   options:any = [];

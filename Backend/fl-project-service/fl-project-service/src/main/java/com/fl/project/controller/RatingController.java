@@ -17,7 +17,7 @@ import static com.fl.project.config.Constant.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/projects/rating")
+@RequestMapping("/flp/projects/rating")
 @RequiredArgsConstructor
 @CrossOrigin("*")
 public class RatingController {

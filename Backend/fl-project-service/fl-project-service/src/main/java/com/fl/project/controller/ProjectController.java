@@ -17,7 +17,7 @@ import com.fl.project.util.FlResponseUtil;
 import static com.fl.project.config.Constant.*;
 
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("/flp/projects")
 @RequiredArgsConstructor
 @CrossOrigin("*")
 public class ProjectController {

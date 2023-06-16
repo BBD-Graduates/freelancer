@@ -15,7 +15,7 @@ import static com.fl.bid.config.BidStatus.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/bids")
+@RequestMapping("/flb/bids")
 @RequiredArgsConstructor
 @CrossOrigin("*")
 public class BidController {
