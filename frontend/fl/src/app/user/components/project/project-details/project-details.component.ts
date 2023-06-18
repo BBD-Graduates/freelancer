@@ -72,6 +72,13 @@ export class ProjectDetailsComponent implements OnInit {
       (this.bidEndDate?.getTime() ?? 0) - (this.bidStartDate?.getTime() ?? 0);
     this.projectDaysLeft = Math.ceil(diffTimestamp / (1000 * 60 * 60 * 24));
     this.getClientLocation((this.data && this.data[0]?.clientId) || 0);
+
+    if (this.data && this.data.length > 0) {
+      console.log(this.data[0]?.status ?? 'No status available');
+    }
+    else{
+      
+    }
   }
   async getClientLocation(clientId: number) {
     this.locationData = await this.userService.getAllUsers({
