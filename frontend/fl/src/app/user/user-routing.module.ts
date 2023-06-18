@@ -61,6 +61,11 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
       },
       {
+        path: 'project-list/project-details/:projectId',
+        component: ProjectDetailsComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
         path: 'users',
         component: BrowseFreelancersComponent,
       },

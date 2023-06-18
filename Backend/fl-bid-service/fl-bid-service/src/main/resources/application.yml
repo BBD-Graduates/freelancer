@@ -35,6 +35,6 @@ service:
   props:
     webServices:
       fl-project-service:
-        endpoint: http://localhost:8083/flp/project
+        endpoint: http://localhost:8083/flp/projects
       fl-user-service:
-        endpoint: http://localhost:8081/flu/users
+        endpoint: http://localhost:8081/flu/users 

@@ -40,45 +40,55 @@
             </div>
           </div>
         </div>
-        <div class="bg-slate-50 rounded-lg border shadow-md">
-          <div class="m-2 grid grid-flow-row gap-1">
-            <form [formGroup]="insertBid" (ngSubmit)="collectBid()">
-              <div class="p-2 bg-emerald-400 rounded-lg mb-2">
-                <div class="grid-flow-row text-white text-lg">
-                  <h2>Your bid for this job</h2>
+        <ng-container *ngIf="data && data[0]?.status === 'POSTED'; else cantBid">
+          <div class="bg-slate-50 rounded-lg border shadow-md">
+            <div class="m-2 grid grid-flow-row gap-1">
+              <form [formGroup]="insertBid" (ngSubmit)="collectBid()">
+                <div class="p-2 bg-emerald-400 rounded-lg mb-2">
+                  <div class="grid-flow-row text-white text-lg">
+                    <h2>Your bid for this job</h2>
+                  </div>
                 </div>
-              </div>
-              <div class="grid grid-flow-col gap-3">
-                <div>
-                  <input
-                    class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
-                    id="amount" formControlName="amount" type="text" placeholder="Amount" />
+                <div class="grid grid-flow-col gap-3">
+                  <div>
+                    <input
+                      class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+                      id="amount" formControlName="amount" type="text" placeholder="Amount" />
+                  </div>
+                  <div class="grid-flow-row">
+                    <input
+                      class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
+                      id="deliveryDays" formControlName="deliveryDays" type="text" placeholder="Delivery Days" />
+                  </div>
                 </div>
-                <div class="grid-flow-row">
-                  <input
-                    class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
-                    id="deliveryDays" formControlName="deliveryDays" type="text" placeholder="Delivery Days" />
+                <div class="my-2">
+                  <div class="grid-flow-row">
+                    <textarea
+                      class="appearance-none placeholder:text-slate-500 block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-5 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black h-32"
+                      id="description" formControlName="description" type="text"
+                      placeholder="Enter Project Description"></textarea>
+                  </div>
                 </div>
-              </div>
-              <div class="my-2">
-                <div class="grid-flow-row">
-                  <textarea
-                    class="appearance-none placeholder:text-slate-500 block w-full m:w-2/3 border border-green-300 rounded py-4 px-4 mb-5 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black h-32"
-                    id="description" formControlName="description" type="text"
-                    placeholder="Enter Project Description"></textarea>
+                <div class="my-2 grid justify-items-center {{isRejected?'flex':'hidden'}}">
+                  <p class="text-red-700">Oops! your bid has been rejected.</p>
                 </div>
-              </div>
-              <div class="my-2 grid justify-items-center {{isRejected?'flex':'hidden'}}">
-                <p class="text-red-700">Oops! your bid has been rejected.</p>
-              </div>
-              <div class="my-2 grid justify-items-center {{isRejected||projectDaysLeft<0?'hidden':'flex'}}">
-                <div class="">
-                  <fl-button type="ngSubmit" name="{{btnText}}" size="M" shade="W" animation="F" />
+                <div class="my-2 grid justify-items-center {{isRejected||projectDaysLeft<0?'hidden':'flex'}}">
+                  <div class="">
+                    <fl-button type="ngSubmit" name="{{btnText}}" size="M" shade="W" animation="F" />
+                  </div>
                 </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
-        </div>
+        </ng-container>
+        <ng-template #cantBid>
+          <div class="bg-white rounded text-center p-2 shadow-lg">
+            <p class="text-xl mt-5">bid closed.</p>
+    <p><a class="text-emerald-500 cursor-pointer" routerLink="/home/project-list">Browse projects and start bidding now
+        to get a job.</a></p>
+          </div>
+        </ng-template>
+        
       </div>
 
 
