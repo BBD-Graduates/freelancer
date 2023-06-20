@@ -27,4 +27,7 @@ export class PastProjectsComponent {
       status: this.selectedStatus,
     });
   }
+  rating(projectid:number){
+    
+  }
 }
