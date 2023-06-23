@@ -27,8 +27,14 @@ public class UserResponse {
     private String photoUrl;
     private String userRole;
     private Date createdDate;
-    private String stateName;
+    private String countryId;    
     private String countryName;
+    private String stateId;
+    private String stateName;
+    private String cityId;
+    private String cityName;    
+    private String pincode;
+
     @Builder.Default
     List<LanguageResponse> languages = new ArrayList<>();
     @Builder.Default

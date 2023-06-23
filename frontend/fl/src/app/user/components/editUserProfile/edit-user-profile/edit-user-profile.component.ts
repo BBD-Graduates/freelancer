@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { skillResponse } from 'src/app/shared/model/skillResponse';
 import { SkillApiService } from 'src/app/user/service/skill-api.service';
@@ -15,32 +15,32 @@ export class EditUserProfileComponent {
     private userapiService: UserapiService,
     private router: Router,
     private skillAPi: SkillApiService
-  ) {}
-  selectcountry!: FormControl;
-  selectstate!: FormControl;
-  selectcity!: FormControl;
+  ) { }
+  updatedUserProfile = new FormGroup({
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    headLine: new FormControl('', Validators.required),
+    summary: new FormControl('', Validators.required),
+    company: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
+    phNo: new FormControl('', Validators.required),
+    createdDate: new FormControl('', Validators.required),
+    state: new FormControl('', Validators.required),
+    country: new FormControl('', Validators.required),
+    joiningDate: new FormControl('', Validators.required),
+    dateString: new FormControl('', Validators.required),
+    photoUrl: new FormControl('', Validators.required),
+  });
+  locationDetails=new FormGroup({
+    pincode:new FormGroup('',Validators.required),
+    address1:new FormGroup('',Validators.required),
+    address2:new FormGroup('',Validators.required),
+  })
+  userId: number | null = 0;
   ngOnInit() {
     this.getUserDetails();
-
-    this.selectcountry = new FormControl('');
-    this.selectstate = new FormControl('');
-    this.selectcity = new FormControl('');
+    this.userId = parseInt(localStorage.getItem('userId') || '0');
   }
-
-  profileUrl!: string;
-  firstName!: string;
-  lastName!: string;
-  headLine!: string;
-  summary!: string;
-  company!: string;
-  email!: string;
-  phNo!: number;
-  createdDate!: Date;
-  state!: string;
-  country!: string;
-  joiningDate!: Date;
-  dateString!: string;
-  photoUrl!: string;
 
   ratings: any[] = [];
   skills: any[] = [];
@@ -53,19 +53,24 @@ export class EditUserProfileComponent {
     const user = await this.userapiService.getAllUsers({
       userId: userId,
     });
+    this.updatedUserProfile.patchValue({
+      firstName: user?.response[0]['firstName'].toUpperCase(),
+      lastName : user?.response[0]['lastName'].toUpperCase(),
+      headLine : user?.response[0]['headLine'],
+      summary : user?.response[0]['summary'],
+      company : user?.response[0]['company'],
+      email : user?.response[0]['email'],
+      phNo  : user?.response[0]['phNo'],
+      createdDate : user?.response[0]['createdDate'],
+      state : user?.response[0]['stateName'],
+      country : user?.response[0]['countryName'],
+    })
+    this.locationDetails.patchValue({
+      pincode:user?.response[0]['countryName'],
+    })
 
-    this.profileUrl = user?.response[0]['photoUrl'];
-    this.firstName = user?.response[0]['firstName'].toUpperCase();
-    this.lastName = user?.response[0]['lastName'].toUpperCase();
-    this.headLine = user?.response[0]['headLine'];
-    this.summary = user?.response[0]['summary'];
-    this.company = user?.response[0]['company'];
-    this.email = user?.response[0]['email'];
-    this.phNo = user?.response[0]['phNo'];
-    this.createdDate = user?.response[0]['createdDate'];
-    this.state = user?.response[0]['stateName'];
-    this.country = user?.response[0]['countryName'];
-    this.photoUrl = this.profileUrl.replace('s96-c', 's400-c');
+    // this.profileUrl = user?.response[0]['photoUrl'];
+    // this.firstName = user?.response[0]['firstName'].toUpperCase();
     this.ratings = user?.response[0]['ratings'];
     this.skills = user?.response[0]['skills'];
     this.languages = user?.response[0]['languages'];
