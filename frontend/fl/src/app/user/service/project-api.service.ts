@@ -10,7 +10,7 @@ import { ApiResponse } from 'src/app/shared/model/apiResponse';
   providedIn: 'root',
 })
 export class ProjectApiService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
   data: any = [];
   async getProjects({
     projectId,
@@ -64,5 +64,29 @@ export class ProjectApiService {
       params = params.set(key, value);
     }
     return params;
+  }
+  async updateProject({ projectId, projectStatus, }: {
+    projectId?: number;
+    projectStatus?: String;
+  }): Promise<String | null> {
+    try {
+      let params = new HttpParams();
+      params = this.addParamsIfNotEmpty(params, 'projectId', projectId);
+      params = this.addParamsIfNotEmpty(params, 'projectStatus', projectStatus);
+      const options = { params: params };
+
+      const projectApiResponse = await this.http.put(config.projectApi.getProjects, {},options).toPromise();
+      const data = projectApiResponse as ApiResponse;
+      if (data.response != null) {
+        const projects = data.response as String;
+        return projects;
+      } else {
+        return null;
+      }
+    }
+    catch (error) {
+      console.log('update project error', error)
+      return null;
+    }
   }
 }
