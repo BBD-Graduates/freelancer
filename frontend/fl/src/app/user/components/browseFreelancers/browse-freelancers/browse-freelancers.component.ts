@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { skillResponse } from 'src/app/shared/model/skillResponse';
 import { SkillApiService } from 'src/app/user/service/skill-api.service';
 import { UserapiService } from 'src/app/user/service/user-api.service';
 
@@ -8,10 +9,23 @@ import { UserapiService } from 'src/app/user/service/user-api.service';
   templateUrl: './browse-freelancers.component.html',
   styleUrls: ['./browse-freelancers.component.css'],
 })
-export class BrowseFreelancersComponent {
+export class BrowseFreelancersComponent implements OnInit{
   constructor(private userApiService: UserapiService, private router: Router,private skillApi:SkillApiService) {
     this.loadSkills();
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.router.navigated = false;
+      }
+    });
   }
+  p:number=1;
+  userDetailsList: any[] = [];
+  userData: any;
+  locationData:any[]=[];
+  selectedSkills: number[] = [];
+  searchValue: string = '';
+
   userDetails:
     | {
         userId: number;
@@ -31,9 +45,8 @@ export class BrowseFreelancersComponent {
         languages: any;
       }
     | undefined;
-  userDetailsList: any[] = [];
-  userData: any;
-  locationData:any[]=[];
+
+
 
   async ngOnInit(): Promise<void> {
     this.userData = await this.userApiService.getAllUsers({});
@@ -63,16 +76,22 @@ export class BrowseFreelancersComponent {
       }
     });
   }
+  async getUsersBySkills()
+  {
+    this.userData = await this.userApiService.getAllUsers({skillIds :this.selectedSkills});
+   // console.log('filtered users',this.userData);
+  }
+
   options:any = [];
   selectedOptions: string[] = [];
   isDropdownOpen = false;
+  skillOptions: skillResponse[] | null = null;
+
   async loadSkills() {
-    const skillList = await this.skillApi.getSkill();
-    skillList?.forEach(skills=>{
-      this.options.push(skills.skillName);
-    })
-    console.log(this.options,'skillnames')
-  }
+    this.skillOptions = await this.skillApi.getSkill();
+ }
+
+
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
@@ -82,16 +101,19 @@ export class BrowseFreelancersComponent {
     this.isDropdownOpen = false;
   }
 
-  toggleOption(option: string) {
+  toggleOption(option: string, skillId: number) {
     const index = this.selectedOptions.indexOf(option);
     if (index > -1) {
       this.selectedOptions.splice(index, 1);
+      this.selectedSkills.splice(index, 1);
     } else {
       this.selectedOptions.push(option);
+      this.selectedSkills.push(skillId);
     }
+
   }
 
-  isSelected(option: string) {
-    return this.selectedOptions.includes(option);
+  isSelected(skillId: number) {
+    return this.selectedSkills.includes(skillId);
   }
 }

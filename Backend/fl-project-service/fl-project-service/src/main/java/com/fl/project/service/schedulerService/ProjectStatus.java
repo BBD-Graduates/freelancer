@@ -30,7 +30,7 @@ public class ProjectStatus {
         status.add(POSTED.toString());
         status.add(BID_IN_PROGRESS.toString());
 
-        List<ProjectResponse> projectStatus = projectImpl.getProject(0, 0, 0, 0, 0,status);
+        List<ProjectResponse> projectStatus = projectImpl.getProject(0, null, 0, 0, 0,status);
 
         LocalDate currentDate = LocalDate.now();
 

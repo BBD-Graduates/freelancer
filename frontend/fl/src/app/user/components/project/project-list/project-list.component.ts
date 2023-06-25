@@ -5,6 +5,8 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProjectApiService } from 'src/app/user/service/project-api.service';
 import { SkillApiService } from 'src/app/user/service/skill-api.service';
+import { async } from 'rxjs';
+import { skillResponse } from 'src/app/shared/model/skillResponse';
 
 @Component({
   selector: 'fl-project-list',
@@ -17,8 +19,7 @@ export class ProjectListComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private projectApiService: ProjectApiService,
-    private skillApi:SkillApiService
-
+    private skillApi: SkillApiService
   ) {
     this.loadSkills();
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -31,59 +32,59 @@ export class ProjectListComponent implements OnInit {
       }
     });
   }
-  p:number=1;
+  p: number = 1;
   data: any = [];
   alert: boolean = false;
   skillName: String = '';
-  projects:any;
-  categoryId!:number;
-  skillId!:number;
-
-  insertBid = new FormGroup({
-    projectId: new FormControl(this.route.snapshot.paramMap.get('id')),
-    freelancerId: new FormControl('', Validators.required),
-    amount: new FormControl('', Validators.required),
-    description: new FormControl('', Validators.required),
-    deliveryDays: new FormControl('', Validators.required),
-  });
+  projects: any;
+  categoryId!: number;
+  skillIds!: number[];
+  filteredSkillId!: number;
+  selectedSkills: number[] = [];
 
   bidStartdate = '';
   currentDate = '';
   locationData: any = [];
   http: any;
-  
+  searchValue: string = '';
   async ngOnInit(): Promise<void> {
-  
     let curDate = new Date().toISOString().slice(0, 10).toString();
 
     if (this.route.snapshot.paramMap.get('skillId') != null) {
-      this.skillId =parseInt(this.route.snapshot.paramMap.get('skillId')||'');
-      this.data= await this.projectApiService.getProjects({skillId :this.skillId})
+      this.skillIds.push(
+        parseInt(this.route.snapshot.paramMap.get('skillId') || '')
+      );
+      this.filteredSkillId = parseInt(
+        this.route.snapshot.paramMap.get('skillId') || ''
+      );
+      this.data = await this.projectApiService.getProjects({
+        skillIds: this.skillIds,
+      });
       console.log('skilldata', this.data);
-          this._httpClient
-            .get(config.skillApi.getSkillBySkillId + this.skillId)
-            .subscribe((data: any) => {
-              this.skillName = data.response[0].skillName;
-            });   
-    } 
-    else if (this.route.snapshot.paramMap.get('categoryid') != null){
-      this.categoryId = parseInt(this.route.snapshot.paramMap.get('categoryid')|| '');
-      this.data=await this.projectApiService.getProjects({categoryId :this.categoryId})
+      this._httpClient
+        .get(config.skillApi.getSkillBySkillId + this.filteredSkillId)
+        .subscribe((data: any) => {
+          this.skillName = data.response[0].skillName;
+        });
+    } else if (this.route.snapshot.paramMap.get('categoryid') != null) {
+      this.categoryId = parseInt(
+        this.route.snapshot.paramMap.get('categoryid') || ''
+      );
+      this.data = await this.projectApiService.getProjects({
+        categoryId: this.categoryId,
+      });
       console.log('catdata', this.data);
-      this._httpClient 
+      this._httpClient
         .get(config.skillApi.getCategoryByCategoryId + this.categoryId)
         .subscribe((data: any) => {
           this.skillName = data.response[0].categoryName;
-          
         });
-    } else{
-      this.data= await this.projectApiService.getProjects({});
-      console.log('Alldata', this.data);
+    } else {
+      this.data = await this.projectApiService.getProjects({});
+      // console.log('Alldata', this.data);
     }
-    console.log('data', this.data);
 
     this.bidStartdate = this.data.bidStartdate;
-    console.log('date', this.showDate(this.bidStartdate));
 
     const pid = this.route.snapshot.paramMap.get('id');
     this._httpClient
@@ -93,18 +94,12 @@ export class ProjectListComponent implements OnInit {
       });
   }
 
-  saveBid(data: any) {
-    return this._httpClient.post(config.BidApi.insertBid, data);
-  }
-  collectBid() {
-    console.log(this.insertBid.value);
-    this.saveBid(this.insertBid.value).subscribe((response) => {
-      this.alert = true;
-      this.insertBid.reset();
+
+  async getProjectsBySkills() {
+    this.data = await this.projectApiService.getProjects({
+      skillIds: this.selectedSkills,
     });
-  }
-  closeAlert() {
-    this.alert = false;
+    console.log('filtered projects', this.selectedSkills);
   }
 
   countAvgBid(bid: any): number {
@@ -119,16 +114,13 @@ export class ProjectListComponent implements OnInit {
       return 0;
     }
   }
-
-  options:any = [];
+  skillOptions: skillResponse[] | null = null;
+  options: any = [];
   selectedOptions: string[] = [];
   isDropdownOpen = false;
+
   async loadSkills() {
-    const skillList = await this.skillApi.getSkill();
-    skillList?.forEach(skills=>{
-      this.options.push(skills.skillName);
-    })
-    console.log(this.options,'skillnames')
+    this.skillOptions = await this.skillApi.getSkill();
   }
 
   toggleDropdown() {
@@ -139,18 +131,21 @@ export class ProjectListComponent implements OnInit {
     this.isDropdownOpen = false;
   }
 
-  toggleOption(option: string) {
+  toggleOption(option: string, skillId: number) {
     const index = this.selectedOptions.indexOf(option);
     if (index > -1) {
       this.selectedOptions.splice(index, 1);
+      this.selectedSkills.splice(index, 1);
     } else {
       this.selectedOptions.push(option);
+      this.selectedSkills.push(skillId);
     }
   }
 
-  isSelected(option: string) {
-    return this.selectedOptions.includes(option);
+  isSelected(skillId: number) {
+    return this.selectedSkills.includes(skillId);
   }
+
   showDate(dateTimeString: any) {
     const date = new Date(dateTimeString);
     const formattedDate = date.toLocaleString('en-US', {
