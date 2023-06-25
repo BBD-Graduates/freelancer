@@ -23,14 +23,14 @@ db:
       insertUser: INSERT INTO users(FirstName,LastName,Email,PhotoUrl) values(?,?,?,?)
       updateUser: UPDATE users set FirstName=?, LastName=?, HeadLine=?, Summary=?, Company=?, PhNo=? WHERE UserId=?
       getUserDetails:
-        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
+        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate,cr.CountryId, cr.CountryName, s.StateId , s.StateName ,c.cityId,c.cityName,ul.Pincode
         FROM users u
         LEFT join userlocation ul on u.UserId=ul.UserId
         LEFT join cities c on ul.CityId=c.CityId
         LEFT join states s on c.StateId =s.StateId
         LEFT JOIN countries cr on s.CountryId=cr.CountryId
       getUserDetailsByCountryId:
-        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
+        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate,cr.CountryId, cr.CountryName, s.StateId , s.StateName ,c.cityId,c.cityName,ul.Pincode
         FROM users u
         LEFT join userlocation ul on u.UserId=ul.UserId
         LEFT join cities c on ul.CityId=c.CityId
@@ -38,7 +38,7 @@ db:
         LEFT JOIN countries cr on s.CountryId=cr.CountryId
         WHERE cr.CountryId=?
       getUserDetailsByLanguageIds:
-        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate, 			s.StateName ,cr.CountryName
+        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate,cr.CountryId, cr.CountryName, s.StateId , s.StateName ,c.cityId,c.cityName,ul.Pincode
         FROM users u
         LEFT join userlocation ul on u.UserId=ul.UserId
         LEFT join cities c on ul.CityId=c.CityId
@@ -46,7 +46,7 @@ db:
         LEFT JOIN countries cr on s.CountryId=cr.CountryId
         WHERE u.UserId IN (SELECT DISTINCT UserId from userlanguages WHERE LanguageId IN(:languageIds))
       getUserDetailsByUserId:
-        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
+        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate,cr.CountryId, cr.CountryName, s.StateId , s.StateName ,c.cityId,c.cityName,ul.Pincode
         FROM users u
         LEFT join userlocation ul on u.UserId=ul.UserId
         LEFT join cities c on ul.CityId=c.CityId
@@ -54,7 +54,7 @@ db:
         LEFT JOIN countries cr on s.CountryId=cr.CountryId
         WHERE u.UserId=?
       getUserDetailsByEmail:
-        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
+        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate,cr.CountryId, cr.CountryName, s.StateId , s.StateName ,c.cityId,c.cityName,ul.Pincode
         FROM users u
         LEFT join userlocation ul on u.UserId=ul.UserId
         LEFT join cities c on ul.CityId=c.CityId
@@ -62,7 +62,7 @@ db:
         LEFT JOIN countries cr on s.CountryId=cr.CountryId
         WHERE u.Email=?
       getUserDetailsInUserIds:
-        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate, s.StateName ,cr.CountryName
+        SELECT u.UserId, u.FirstName, u.LastName,u.HeadLine,u.Summary,u.Company, u.Email, u.PhNo,u.IsVerified, u.PhotoUrl,u.UserRole,u.CreatedDate,cr.CountryId, cr.CountryName, s.StateId , s.StateName ,c.cityId,c.cityName,ul.Pincode
         FROM users u
         LEFT join userlocation ul on u.UserId=ul.UserId
         LEFT join cities c on ul.CityId=c.CityId
