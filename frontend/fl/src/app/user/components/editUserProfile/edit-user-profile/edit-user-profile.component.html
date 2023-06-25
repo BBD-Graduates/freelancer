@@ -11,7 +11,7 @@
             <div class=" p-4">
               <h1 class="text-emerald-600 font-semibold text-2xl ">Personal details</h1>
             </div>
-            <form class="p-4" [formGroup]="updatedUserProfile">
+            <form class="p-4" [formGroup]="updatedUserProfile" (ngSubmit)="updateUserdetails()">
               <div class="grid grid-flow-col gap-3 mt-4">
                 <div>
                   <input
@@ -28,7 +28,7 @@
                 <div>
                   <input
                     class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
-                    id="headline" formControlName="headline" type="text" placeholder="Professional Headline" />
+                    id="headLine" formControlName="headLine" type="text" placeholder="Professional Headline" />
                 </div>
                 <div class="grid-flow-row">
                   <input
@@ -65,15 +65,10 @@
                   <div class="relative">
                     <div>
                       <button type="button"
-                        class="block appearance-none w-full text-gray-500 border border-green-300 py-4 px-4 mb-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-green-500 "
-                        (click)="toggleDropdown()">
-                        {{ selectedOptions.length > 0 ? selectedOptions.length + ' Selected' : 'Select your top
-                        skills'
-                        }}
-                        <div
-                          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                        </div>
-                      </button>
+                      class="inline-flex flex-initial w-full mt-2 justify-center items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      (click)="toggleDropdown()">
+                      {{ selectedOptions.length > 0 ? selectedOptions.length + ' selected' : 'Select Skills' }}
+                    </button>
                     </div>
                     <div class="overflow-y-scroll h-40 w-full rounded-md bg-white shadow-lg mt-1" *ngIf="isDropdownOpen"
                       (clickOutside)="closeDropdown()">
@@ -82,8 +77,7 @@
                           <label class="inline-flex items-center">
                             <input type="checkbox"
                               class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                              [checked]="isSelected(skill.skillId)"
-                              (change)="toggleOption(skill.skillName,skill.skillId)">
+                              [checked]="isSelected(skill.skillId)" (change)="toggleOption(skill.skillName,skill.skillId)">
                             <span class="ml-2">{{ skill.skillName }}</span>
                           </label>
                         </li>
@@ -99,12 +93,12 @@
                     </div>
                   </div>
                   <div class="flex flex-col items-center mt-8">
-                    <fl-button type="ngSubmit" name="Update skills" size="M" shade="W" animation="F" />
+                    <fl-button type="ngSubmit" name="Update skills" size="M" shade="W" animation="F" (click)="updateSkillDetails()"/>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="bg-white rounded-xl h-full p-2">
+            <!-- <div class="bg-white rounded-xl h-full p-2">
               <div class="flex flex-wrap">
                 <div class="w-full mb-4 ">
                   <div class="relative">
@@ -148,7 +142,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <!--  update location -->
@@ -191,7 +185,7 @@
                 <div class="">
                   <input
                     class="block placeholder:text-slate-500 w-full m:w-2/3 border border-green-300 rounded py-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-500 placeholder-black"
-                    id="pincode" formControlName="pincode" type="text" placeholder="Pincode" />
+                    id="pincode" formControlName="pincode" type="text" [placeholder]="locationDetails.get('pincode')?.value ? '' : 'Pincode'" />
                 </div>
               </div>
               <div class="mt-4 gap-3">

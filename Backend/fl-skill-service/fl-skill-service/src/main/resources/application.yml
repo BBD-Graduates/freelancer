@@ -16,21 +16,12 @@ eureka:
     service-url:
       default-zone: http://localhost:8761/
 
-
-
-
-app:
-  file:
-    upload-dir: ./fl-skill-service/uploads/files
-    storage:
-      mapping: file:~/fl-skill-service/uploads/
-
 db:
   queries:
     categories:
       insertCategory: INSERT INTO categories (CategoryName) values (?)
       selectAllCategorySkills: SELECT c.CategoryId, c.CategoryName,c.LogoUrl, s.SkillId, s.SkillName,s.CategoryId,s.CreatedDate,s.isDeleted FROM categories c INNER JOIN skills s
-                               ON c.CategoryId=s.CategoryId and c.IsDeleted=0 and s.IsDeleted=0 ORDER BY c.CategoryId ;
+                               ON c.CategoryId=s.CategoryId and c.IsDeleted=0 and s.IsDeleted=0 ORDER BY c.CategoryName,s.SkillName ;
       selectCategorySkillsByCategoryId: SELECT c.CategoryId, c.CategoryName,c.LogoUrl, s.SkillId, s.SkillName,s.CategoryId, s.CreatedDate,s.isDeleted FROM categories c INNER JOIN skills s
                                         ON c.CategoryId=s.CategoryId and c.IsDeleted=0 and s.IsDeleted=0 and c.CategoryId=? ORDER BY c.CategoryId ;
       updateCategory: UPDATE categories set CategoryName = ? WHERE CategoryId = ? and IsDeleted=0
@@ -39,7 +30,7 @@ db:
 
     skills:
       insertSkill: INSERT INTO skills(SkillName,CategoryId) values(?,?)
-      selectAllSkills: SELECT * from skills WHERE IsDeleted=0
+      selectAllSkills: SELECT * from skills WHERE IsDeleted=0 ORDER BY SkillName
       selectSkillBySkillId: SELECT * from skills WHERE IsDeleted=0 and SkillId = ?
       selectSkillByCategoryId: SELECT * from skills WHERE IsDeleted=0 and CategoryId=?
       updateSkill: UPDATE skills set SkillName = ?, CategoryId=? WHERE SkillId= ? and IsDeleted=0

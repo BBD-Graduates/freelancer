@@ -91,15 +91,15 @@ export class UserapiService {
     }
   }
 
-  async updateUser(userData: UserModel) {
+  async updateUser({userId,userData}:{userId:number,userData: UserModel}) {
     try {
       const userResponse = await this.http
-        .post(config.UserApi.postUser, userData)
+        .post(config.UserApi.postUser+"/"+userId, userData)
         .toPromise();
       const response = userResponse as ApiResponse;
       return response;
     } catch (error) {
-      console.error('RegisterUserApi_ERROR', error);
+      console.error('UpdateApi_ERROR', error);
       return null;
     }
   }

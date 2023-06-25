@@ -34,6 +34,9 @@ public class UserResponse {
     private String cityId;
     private String cityName;    
     private String pincode;
+    private String address1;
+    private String address2;
+
 
     @Builder.Default
     List<LanguageResponse> languages = new ArrayList<>();

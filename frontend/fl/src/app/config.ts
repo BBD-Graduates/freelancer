@@ -8,6 +8,7 @@ export const config = {
     getSkillBySkillId:
       'https://d27tejefvay96.cloudfront.net/fls/skills?skillId=',
     getCategorySkills: 'https://d27tejefvay96.cloudfront.net/fls/categories',
+    userSkills:'https://d27tejefvay96.cloudfront.net/fls/user-skills',
   },
   projectApi: {
     getProject: 'https://d27tejefvay96.cloudfront.net/flp/projects?projectId=0',
