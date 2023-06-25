@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { ProjectStatus } from 'src/app/enums/projectStatusEnums';
 import { ProjectApiService } from 'src/app/user/service/project-api.service';
 
@@ -10,6 +10,7 @@ import { ProjectApiService } from 'src/app/user/service/project-api.service';
 })
 export class CurrentProjectComponent {
   userId: number = 0;
+  p:number=1;
   selectedStatus: String[] = [ProjectStatus.IN_PROGRESS];
 
   constructor(
@@ -17,6 +18,11 @@ export class CurrentProjectComponent {
     private router: Router
   ) {
     this.userId = Number(localStorage.getItem('userId'));
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.router.navigated = false;
+      }
+    });
   }
 
   projects: any;

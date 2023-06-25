@@ -17,7 +17,7 @@ import com.fl.project.model.response.ProjectSkillsResponse;
 @Service
 public interface ProjectSkillService {
     @GetMapping
-    FlResponse<List<ProjectSkillsResponse>> getProjectSkill(@RequestParam("projectId") Integer projectId,@RequestParam("skillId") Integer skillId,@RequestParam("categoryId") Integer categoryId);
+    FlResponse<List<ProjectSkillsResponse>> getProjectSkill(@RequestParam("projectId") Integer projectId,@RequestParam("skillIds") List<Integer> skillIds ,@RequestParam("categoryId") Integer categoryId);
     @PostMapping
     FlResponse<String> addProjectSkills(@RequestBody List<ProjectSkillsRequest> projectSkills);
 }

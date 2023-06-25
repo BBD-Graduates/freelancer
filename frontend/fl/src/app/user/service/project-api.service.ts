@@ -14,14 +14,14 @@ export class ProjectApiService {
   data: any = [];
   async getProjects({
     projectId,
-    skillId,
+    skillIds,
     clientId,
     freelancerId,
     status,
     categoryId,
   }: {
     projectId?: number;
-    skillId?: number;
+    skillIds?: number[];
     clientId?: number;
     freelancerId?: number;
     status?: String[];
@@ -30,15 +30,18 @@ export class ProjectApiService {
     try {
       let params = new HttpParams();
       params = this.addParamsIfNotEmpty(params, 'projectId', projectId);
-      params = this.addParamsIfNotEmpty(params, 'skillId', skillId);
+      params = this.addParamsIfNotEmpty(params, 'skillIds', skillIds);
       params = this.addParamsIfNotEmpty(params, 'clientId', clientId);
       params = this.addParamsIfNotEmpty(params, 'freelancerId', freelancerId);
       params = this.addParamsIfNotEmpty(params, 'status', status);
       params = this.addParamsIfNotEmpty(params, 'categoryId', categoryId);
       const options = { params: params };
+      console.log("params",params);
+
       const projectResponse = await this.http
         .get(config.projectApi.getProjects, options)
         .toPromise();
+
 
       const data = projectResponse as ApiResponse;
       if (data.response != null) {
@@ -52,6 +55,7 @@ export class ProjectApiService {
       return null;
     }
   }
+
   postProject(data: ProjectModel) {
     return this.http.post(config.projectApi.insertProject, data);
   }

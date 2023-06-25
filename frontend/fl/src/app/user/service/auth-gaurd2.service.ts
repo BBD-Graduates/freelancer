@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 
-export class AuthGuardService {
+export class AuthGuard2Service {
   [x: string]: any;
   constructor(private router: Router) {}
 
@@ -23,14 +23,14 @@ export class AuthGuardService {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (localStorage.getItem('userId') != null) {
+    if (localStorage.getItem('userId') == null) {
       return true;
     } else {
       Swal.fire({
         title: 'Sorry for the inconvenience!',
         html: `
             <div>
-              <p>You need to sign in with google to continue.</p>
+              <p>You need to logout to acess the home page.</p>
               <div id="google-signin-button"></div>
             </div>
           `,

@@ -31,6 +31,7 @@ import {
 import { FooterComponent } from './components/footer/footer.component';
 import { EditUserProfileComponent } from './components/editUserProfile/edit-user-profile/edit-user-profile.component';
 import { EditPortfolioComponent } from './components/editPortfolio/edit-portfolio/edit-portfolio.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -60,10 +61,11 @@ import { EditPortfolioComponent } from './components/editPortfolio/edit-portfoli
     SharedModule,
     ReactiveFormsModule,
     FormsModule,
+    Ng2SearchPipeModule,
     SocialLoginModule,
     GoogleSigninButtonModule,
   ],
-  exports: [ProjectDetailsComponent],
+  exports: [ProjectDetailsComponent,NgxPaginationModule],
   providers: [
     SocialAuthService,
 

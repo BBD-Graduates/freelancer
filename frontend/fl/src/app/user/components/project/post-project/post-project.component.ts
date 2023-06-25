@@ -17,6 +17,7 @@ export class PostProjectComponent {
   projectdata: any = [];
   skillName: any = [];
   submitted: boolean | null = null;
+
   insertProject = new FormGroup({
     projectName: new FormControl('', [Validators.required]),
     projectDescription: new FormControl('', [Validators.required]),
@@ -26,6 +27,7 @@ export class PostProjectComponent {
     minPrice: new FormControl('', [Validators.required]),
     maxPrice: new FormControl('', [Validators.required]),
   });
+
   skillList: any;
   errorMessage: string;
 
@@ -142,8 +144,8 @@ export class PostProjectComponent {
     }
     console.log(this.selectedSkills);
   }
-
   isSelected(skillId: number) {
     return this.selectedSkills.includes(skillId);
   }
+
 }

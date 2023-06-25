@@ -1,7 +1,7 @@
 <section class="lg:py-52 sm:py-36 sm:px-2 md:px-5 py-36 bg-slate-100">
   <div class="w-full lg:container">
     <div
-      class="bg-emerald-500 items-center border rounded-xl shadow-md hover:bg-emerald-500 transition duration-300 ease-in-out flex justify-between">
+      class="bg-emerald-500 items-center border rounded-xl shadow-md hover:bg-emerald-500 transition duration-300 ease-in-out flex justify-between ">
       <div class="ml-3 text-white flex-auto py-2 inline-block ">
         <ng-container *ngIf="skillName;else elseTemplate">
           <span class="text-2xl font-medium text">{{skillName}}</span>
@@ -10,22 +10,12 @@
           <span class="text-2xl font-medium text">All Projects</span>
         </ng-template>
       </div>
-      <div class="p-2">
-        <form class="bg-white rounded-md ">
-          <div class="flex items-center p-1">
+      <div class="p-2 w-96" >
+        <div class="bg-white rounded-md h-12 p-3">
             <input
-              class="appearance-none bg-transparent border-none w-full text-gray-700 leading-tight focus:outline-none"
-              type="text" placeholder="Search Projects" aria-label="Full name">
-            <button
-              class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-              type="button">
-              Search
-            </button>
-            <input type="reset"
-              class="flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-1 px-2 rounded"
-              value="Cancel">
-          </div>
-        </form>
+              class="appearance-none bg-transparent border-none  text-gray-700 leading-tight focus:outline-none text-xl"
+              type="text" placeholder="Search Projects" aria-label="Full name" [(ngModel)]="searchValue" on>
+        </div>
       </div>
     </div>
     <div class="grid grid-flow-row md:grid-cols-5 gap-3">
@@ -47,12 +37,12 @@
                   </div>
                   <div class="overflow-y-scroll h-40 w-full rounded-md bg-white shadow-lg mt-1">
                     <ul>
-                      <li *ngFor="let option of options" class="p-2">
+                      <li *ngFor="let skill of skillOptions " class="p-2">
                         <label class="inline-flex items-center">
                           <input type="checkbox"
                             class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                            [checked]="isSelected(option)" (change)="toggleOption(option)">
-                          <span class="ml-2">{{ option }}</span>
+                            [checked]="isSelected(skill.skillId)" (change)="toggleOption(skill.skillName,skill.skillId)">
+                          <span class="ml-2">{{ skill.skillName }}</span>
                         </label>
                       </li>
                     </ul>
@@ -67,13 +57,16 @@
                   </ul>
                 </div>
               </div>
+              <div class="flex flex-col items-center my-8" >
+                <fl-button type="ngSubmit" name="Search" size="M" shade="W" animation="F" (click)="getProjectsBySkills()" />
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="md:col-span-4 lg:col-span-4 mt-12">
         <div class="grid grid-cols-4 group mt-2 bg-white border rounded-lg "
-          *ngFor="let item of data | paginate: { itemsPerPage: 5, currentPage: p }">
+          *ngFor="let item of data | paginate: { itemsPerPage: 10, currentPage: p } | filter:searchValue">
           <div class="col-span-3 group-hover:bg-slate-200 rounded-sm">
             <div class="grid grid-rows-3 items-center ml-5">
               <div class="inline-block text-emerald-500  text-xl">
@@ -88,7 +81,6 @@
                 <p class="text-clip overflow-hidden h-12">{{item.projectDescription}}
                 </p>
               </div>
-
               <div class="flex text-emerald-500 gap-3 my-2">
                 <div class="" *ngFor="let projectSkill of item.skills">
                   <p>{{projectSkill.skillName}}</p>

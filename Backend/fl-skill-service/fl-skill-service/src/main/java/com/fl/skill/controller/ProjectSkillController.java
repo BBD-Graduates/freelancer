@@ -36,11 +36,11 @@ public class ProjectSkillController {
     @GetMapping
     public ResponseEntity<FlResponse<List<ProjectSkillsResponse>>> getProjectSkills(
             @RequestParam(defaultValue = "0", required = false,name="projectId") Integer projectId,
-            @RequestParam(defaultValue = "0", required = false,name="skillId") Integer skillId,
+            @RequestParam(defaultValue = "", required = false,name="skillIds") List<Integer> skillIds,
             @RequestParam(defaultValue = "0", required = false,name="categoryId") Integer categoryId
             ) {
         try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectSkillsService.getProjectSkills(projectId,skillId,categoryId), String.format("%s" + FETCHED_SUCCESSFULLY, PROJECT_SKILLS));
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectSkillsService.getProjectSkills(projectId,skillIds,categoryId), String.format("%s" + FETCHED_SUCCESSFULLY, PROJECT_SKILLS));
         } catch (Exception e) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + NO_RECORD_FOUND));
         }

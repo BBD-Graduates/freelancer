@@ -13,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Service;
 
 import java.sql.PreparedStatement;
@@ -24,7 +27,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ProjectSkillsServiceImpl implements ProjectSkillsService {
-
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final JdbcTemplate jdbcTemplate;
     private final DbQueries dbQueries;
 
@@ -57,7 +60,7 @@ public class ProjectSkillsServiceImpl implements ProjectSkillsService {
     }
 
     @Override
-    public List<ProjectSkillsResponse> getProjectSkills(Integer projectId,Integer skilltId,Integer categoryId) {
+    public List<ProjectSkillsResponse> getProjectSkills(Integer projectId,List<Integer> skillIds,Integer categoryId) {
 
         try {
             List<ProjectSkillsResponse> projectSkillDetails = new ArrayList<>();
@@ -66,8 +69,9 @@ public class ProjectSkillsServiceImpl implements ProjectSkillsService {
             if (!projectId.equals(0)) {
                 query = dbQueries.getProjectSkillDetailsByProjectId();
                 projectSkills = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ProjectSkills.class), projectId);
-            } else if (!skilltId.equals(0)) {
-                projectSkills = jdbcTemplate.query(dbQueries.getProjectSkillDetailsBySkillId(), BeanPropertyRowMapper.newInstance(ProjectSkills.class), skilltId);
+            } else if (skillIds != null) {
+                SqlParameterSource parameters=new MapSqlParameterSource("skillId",skillIds);
+                projectSkills = namedParameterJdbcTemplate.query(dbQueries.getProjectSkillDetailsBySkillId(),parameters, BeanPropertyRowMapper.newInstance(ProjectSkills.class));
             } else if (!categoryId.equals(0)) {
                 projectSkills = jdbcTemplate.query(dbQueries.getProjectSkillDetailsByCategoryId(), BeanPropertyRowMapper.newInstance(ProjectSkills.class), categoryId);
             } else {

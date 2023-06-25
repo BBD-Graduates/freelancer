@@ -10,6 +10,7 @@ import com.fl.project.model.response.ProjectResponse;
 import com.fl.project.model.response.ProjectSkillsResponse;
 import com.fl.project.repository.DbQueries;
 import com.fl.project.service.serviceInterface.ProjectService;
+import jakarta.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -86,10 +87,10 @@ public class ProjectImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectResponse> getProject(Integer projectId, Integer skillId, Integer categoryId, Integer clientId, Integer freelancerId, List<String> status) {
+    public List<ProjectResponse> getProject(Integer projectId, List<Integer> skillIds, Integer categoryId, Integer clientId, Integer freelancerId, List<String> status) {
         List<ProjectResponse> projects;
         try {
-            if (projectId.equals(0) && skillId.equals(0) && categoryId.equals(0) && clientId.equals(0) && freelancerId.equals(0)) {
+            if (projectId.equals(0) && skillIds.isEmpty() && categoryId.equals(0) && clientId.equals(0) && freelancerId.equals(0) && status.isEmpty()){
                 projects = jdbcTemplate.query(dbQueries.getSelectAllProject(),
                         BeanPropertyRowMapper.newInstance(ProjectResponse.class));
             } else if (!freelancerId.equals(0) && !status.isEmpty()) {
@@ -103,9 +104,9 @@ public class ProjectImpl implements ProjectService {
                         .addValue("status", status);
                 projects = namedParameterJdbcTemplate.query(dbQueries.getAssignedProjectsByProjectIds(), parameters,
                         BeanPropertyRowMapper.newInstance(ProjectResponse.class));
-            } else if (!skillId.equals(0)) {
+            } else if (!skillIds.isEmpty()) {
                 FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService.getProjectSkill(0,
-                        skillId, 0);
+                        skillIds, 0);
                 if (!skillList.getResponse().isEmpty()) {
                     List<Integer> projectIds = skillList.getResponse().stream().map(ProjectSkillsResponse::getProjectId)
                             .toList();
@@ -135,7 +136,7 @@ public class ProjectImpl implements ProjectService {
                 projects = namedParameterJdbcTemplate.query(dbQueries.getSelectProjectsByClientIdAndStatus(), parameters, BeanPropertyRowMapper.newInstance(ProjectResponse.class));
             } else if (!categoryId.equals(0)) {
                 FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService.getProjectSkill(0,
-                        0, categoryId);
+                        null, categoryId);
                 List<Integer> projectIds;
                 if (!skillList.getResponse().isEmpty()) {
                     projectIds = skillList.getResponse().stream().map(project -> project.getProjectId()).toList();
@@ -165,7 +166,7 @@ public class ProjectImpl implements ProjectService {
             if (!projects.isEmpty()) {
                 projects.forEach(project -> {
                     FlResponse<List<ProjectSkillsResponse>> skillList = projectSkillService
-                            .getProjectSkill(project.getProjectId(), 0, 0);
+                            .getProjectSkill(project.getProjectId(), null, 0);
                     if (!skillList.getResponse().isEmpty()) {
                         project.setSkills(skillList.getResponse().get(0).getSkills());
                     }

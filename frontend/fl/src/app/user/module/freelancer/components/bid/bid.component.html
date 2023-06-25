@@ -1,5 +1,5 @@
 <ng-container *ngIf="bids && bids.length > 0;else noBids">
-  <div class="grid grid-cols-4 group mt-2 bg-white border rounded-lg" *ngFor="let bid of bids">
+  <div class="grid grid-cols-4 group mt-2 bg-white border rounded-lg" *ngFor="let bid of bids | paginate: { itemsPerPage: 5, currentPage: p }">
     <div class="col-span-3 group-hover:bg-slate-200 rounded-sm">
       <div class="grid grid-rows-3 items-center ml-5">
         <div class="inline-block text-emerald-500  text-l">
@@ -30,6 +30,9 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="grid justify-items-center mt-2">
+    <pagination-controls class="custom-pagination" (pageChange)="p = $event"></pagination-controls>
   </div>
 </ng-container>
 <ng-template #noBids>
