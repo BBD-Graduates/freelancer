@@ -39,13 +39,13 @@ public class ProjectController {
     @GetMapping
     public ResponseEntity<FlResponse<List<ProjectResponse>>> getProject(
             @RequestParam(defaultValue = "0", required = false, name = "projectId") Integer projectId,
-            @RequestParam(defaultValue = "0", required = false, name = "skillId") Integer skillId,
+            @RequestParam(defaultValue = "", required = false, name = "skillIds") List<Integer> skillIds,
             @RequestParam(defaultValue = "0", required = false, name = "clientId") Integer clientId,
             @RequestParam(defaultValue = "0", required = false, name = "freelancerId") Integer freelancerId,
             @RequestParam(defaultValue = "", required = false, name = "status") List<String> status,
             @RequestParam(defaultValue = "0", required = false, name = "categoryId") Integer categoryId) {
         try {
-            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.getProject(projectId,skillId,categoryId,clientId,freelancerId,status),
+            return flResponseUtil.getResponseEntity(HttpStatus.OK, projectService.getProject(projectId,skillIds,categoryId,clientId,freelancerId,status),
                     String.format("%s" + FETCHED_SUCCESSFULLY, PROJECT));
         } catch (Exception e) {
             return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,

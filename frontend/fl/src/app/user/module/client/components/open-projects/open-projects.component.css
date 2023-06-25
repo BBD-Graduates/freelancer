@@ -1,0 +1,10 @@
+.custom-pagination ::ng-deep .current {
+  padding: 0.1875rem 0.625rem;
+  background: #26b981;
+  color: #fefefe;
+  cursor: default;
+}
+
+:host ::ng-deep .custom-pagination .pagination-btn:hover {
+  background-color: #26b981;
+}

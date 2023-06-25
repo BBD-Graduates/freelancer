@@ -109,7 +109,7 @@ public class BidServiceImpl implements BidService {
     @Override
     public List<Bid> getBids(Integer bidId, Integer projectId, Integer freelancerId,String status) {
         try {
-            List<Bid> bids=new ArrayList<>();
+            List<Bid> bids;
             if(!freelancerId.equals(0) && !status.isEmpty())
             {
                 if(status.equals(PENDING.toString())){
@@ -136,7 +136,7 @@ public class BidServiceImpl implements BidService {
                 bids.forEach(bid -> {
                     Integer bidFreelancerId=bid.getFreelancerId();
                     FlResponse<List<UserResponse>> freelancerDetailsResponse= bidUserClient.getFreelancerById(bidFreelancerId);
-                    UserResponse freelancerDetails=freelancerDetailsResponse.getResponse().get(0);
+                    UserResponse freelancerDetails = freelancerDetailsResponse.getResponse().get(0);
                     bid.setFreelancerDetails(freelancerDetails);
                 });
                 return bids;

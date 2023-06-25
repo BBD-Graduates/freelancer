@@ -53,7 +53,7 @@ public class BidController {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, bidService.updateBidStatusToApprove(bidId,projectId), String.format("%s" +APPROVED.toString(), BID));
         } catch (Exception e) {
-            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + CANT_APPROVE_BID));
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, CANT_APPROVE_BID);
         }
     }
     @GetMapping
@@ -65,7 +65,7 @@ public class BidController {
         try {
             return flResponseUtil.getResponseEntity(HttpStatus.OK, bidService.getBids(bidId,projectId,freelancerId,status),String.format("%s" + FETCHED_SUCCESSFULLY, BID));
         } catch (Exception e) {
-            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null, String.format("%s " + NO_RECORD_FOUND));
+            return flResponseUtil.getResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, null,  NO_RECORD_FOUND);
         }
     }
 }

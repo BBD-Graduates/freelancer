@@ -1,5 +1,5 @@
 <ng-container *ngIf="projects && projects.length > 0;else noProject">
-  <div class="grid grid-cols-4 group mt-2 bg-white border rounded-lg" *ngFor="let projects of projects">
+  <div class="grid grid-cols-4 group mt-2 bg-white border rounded-lg" *ngFor="let projects of projects | paginate: { itemsPerPage: 5, currentPage: p }">
     <div class="col-span-3 group-hover:bg-slate-200 rounded-sm">
       <div class="grid grid-rows-3 items-center ml-5">
         <div class="inline-block text-emerald-500  text-xl">
@@ -36,12 +36,14 @@
       </div>
     </div>
   </div>
+  <div class="grid justify-items-center mt-2">
+    <pagination-controls class="custom-pagination" (pageChange)="p = $event"></pagination-controls>
+  </div>
 </ng-container>
 <ng-template #noProject>
   <div class="grid justify-items-center py-20 bg-white">
     <img src="../../../../../../assets/images/project.svg" class="h-24" alt="No Bids">
-    <p class="text-xl mt-5">You don't have any Current Project.</p>
-    <p><a class="text-emerald-500 cursor-pointer" routerLink="/home/project-list">Browse projects and start bidding now
-        to get a job.</a></p>
+    <p class="text-xl mt-5">Your tasklist looks empty.</p>
+    <p><a class="text-emerald-500 cursor-pointer" routerLink="/home/project-list">Browse projects and get yourself a suitable job.</a></p>
   </div>
 </ng-template>

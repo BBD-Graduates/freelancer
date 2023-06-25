@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { BidComponent } from './components/bid/bid.component';
 import { CurrentProjectComponent } from './components/current-project/current-project.component';
 import { CompletedProjectComponent } from './components/completed-project/completed-project.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -17,7 +18,7 @@ import { CompletedProjectComponent } from './components/completed-project/comple
   ],
   imports: [
     CommonModule,
-    FreelancerRoutingModule
+    FreelancerRoutingModule,NgxPaginationModule,
   ],
   exports:[
     HomeComponent

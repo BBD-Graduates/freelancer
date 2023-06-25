@@ -37,7 +37,6 @@ public class UserResponse {
     private String address1;
     private String address2;
 
-
     @Builder.Default
     List<LanguageResponse> languages = new ArrayList<>();
     @Builder.Default

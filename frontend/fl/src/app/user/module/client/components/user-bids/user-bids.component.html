@@ -9,7 +9,7 @@
       <div *ngFor="let bid of bids">
         <div class="flex h-46 ">
           <div class="p-3 w-40 h-40">
-            <img [src]="bid.freelancerDetails" referrerpolicy="no-referrer" class="rounded-md w-full" alt=""
+            <img [src]="bid.freelancerDetails.photoUrl" referrerpolicy="no-referrer" class="rounded-md w-full" alt=""
               onerror="this.src='./assets/images/UserAltImage.jpg'" />
           </div>
           <div class="p-2 w-auto space-y-2 flex-auto">
@@ -26,7 +26,6 @@
             </div>
             <div class="flex justify-left">
               <p class="text-slate-600 text-md"><fl-rating [value]="4.0" /></p>
-              <p class="text-slate-600 text-md"></p>
             </div>
             <div class="max-w-xl h-12">
               <p class=" overflow-hidden truncate"> {{bid.description}}</p>
