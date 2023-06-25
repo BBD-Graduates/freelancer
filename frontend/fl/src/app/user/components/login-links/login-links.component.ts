@@ -12,6 +12,7 @@ export class LoginLinksComponent {
   profileUrl: any;
   firstName: any;
   lastName: any;
+  userId: number = 0;
   sessionStatus = localStorage.getItem('userEmail') == null;
 
   ngOnInit() {
