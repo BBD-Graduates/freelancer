@@ -68,6 +68,7 @@ export class ProjectDetailsComponent implements OnInit {
       this.data && this.data[0]?.bidStartDate
         ? new Date(this.data[0].bidStartDate)
         : null;
+        
     const diffTimestamp =
       (this.bidEndDate?.getTime() ?? 0) - (this.bidStartDate?.getTime() ?? 0);
     this.projectDaysLeft = Math.ceil(diffTimestamp / (1000 * 60 * 60 * 24));
@@ -76,8 +77,8 @@ export class ProjectDetailsComponent implements OnInit {
     if (this.data && this.data.length > 0) {
       console.log(this.data[0]?.status ?? 'No status available');
     }
-    else{
-      
+    else {
+
     }
   }
   async getClientLocation(clientId: number) {
