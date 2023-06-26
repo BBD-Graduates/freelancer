@@ -76,10 +76,18 @@ export class BrowseFreelancersComponent implements OnInit{
       }
     });
   }
+
   async getUsersBySkills()
   {
-    this.userData = await this.userApiService.getAllUsers({skillIds :this.selectedSkills});
-   // console.log('filtered users',this.userData);
+
+    if(this.selectedSkills.length>0){
+      this.userDetailsList = this.userDetailsList.filter((userData:any) => {
+        const userSkills = userData.skills.map((skill:any) => skill.skillId);
+        return this.selectedSkills.some(skill => userSkills.includes(skill));
+      });
+    }else{
+      this.ngOnInit();
+    }
   }
 
   options:any = [];

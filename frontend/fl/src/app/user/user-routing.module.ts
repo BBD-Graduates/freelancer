@@ -12,7 +12,6 @@ import { MyProjectsComponent } from './components/myProjects/my-projects/my-proj
 import { AuthGuardService } from './service/auth-gaurd.service';
 import { EditUserProfileComponent } from './components/editUserProfile/edit-user-profile/edit-user-profile.component';
 import { EditPortfolioComponent } from './components/editPortfolio/edit-portfolio/edit-portfolio.component';
-import { AuthGuard2Service } from './service/auth-gaurd2.service';
 
 const routes: Routes = [
   {

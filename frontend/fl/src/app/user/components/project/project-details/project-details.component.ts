@@ -21,6 +21,7 @@ export class ProjectDetailsComponent implements OnInit {
   projectDaysLeft: number = 0;
   bidEndDate: Date | null = null;
   bidStartDate: Date | null = null;
+  currentDate:Date=new Date();
   freelancerId: number = 0;
   isRejected: boolean = false;
   btnText: String = 'Place Bid';
@@ -58,6 +59,7 @@ export class ProjectDetailsComponent implements OnInit {
     }
   }
 
+
   async getProjectById(projectId: number) {
     this.data = await this.projectService.getProjects({ projectId: projectId });
     this.bidEndDate =
@@ -68,9 +70,11 @@ export class ProjectDetailsComponent implements OnInit {
       this.data && this.data[0]?.bidStartDate
         ? new Date(this.data[0].bidStartDate)
         : null;
-        
+
+
+
     const diffTimestamp =
-      (this.bidEndDate?.getTime() ?? 0) - (this.bidStartDate?.getTime() ?? 0);
+      (this.bidEndDate?.getTime() ?? 0) - (this.currentDate?.getTime() ?? 0);
     this.projectDaysLeft = Math.ceil(diffTimestamp / (1000 * 60 * 60 * 24));
     this.getClientLocation((this.data && this.data[0]?.clientId) || 0);
 

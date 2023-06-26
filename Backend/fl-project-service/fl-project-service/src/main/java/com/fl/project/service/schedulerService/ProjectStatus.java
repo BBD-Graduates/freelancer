@@ -24,7 +24,7 @@ public class ProjectStatus {
     @Autowired
     ProjectImpl projectImpl;
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 0 * * * *")
     public void updateProjectStatus() {
         List<String> status = new ArrayList<>();
         status.add(POSTED.toString());

@@ -17,6 +17,7 @@ export class PostProjectComponent {
   projectdata: any = [];
   skillName: any = [];
   submitted: boolean | null = null;
+  currentDate:String=new Date().toLocaleString();
 
   insertProject = new FormGroup({
     projectName: new FormControl('', [Validators.required]),
@@ -63,6 +64,8 @@ export class PostProjectComponent {
         this.closeAlert();
         if (projectData.maxPrice > projectData.minPrice) {
           this.closeAlert();
+          if(projectData.bidStartDate.toLocaleString() >= this.currentDate){
+            this.closeAlert();
           if (projectData.bidEndDate > projectData.bidStartDate) {
             this.closeAlert();
             Swal.fire({
@@ -90,7 +93,12 @@ export class PostProjectComponent {
             this.errorMessage =
               'Bid end date must be greater than bid start date!';
           }
-        } else {
+        }
+        else{
+          this.errorMessage =
+          'Bid start date must be greater than or equal to current date!';
+        }
+       } else {
           this.errorMessage =
             'Maximum budget price must be greater than minimum budget price!';
         }

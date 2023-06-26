@@ -13,7 +13,7 @@
                 <p class="text-xl font-medium">Bidding closes in <span> {{projectDaysLeft}} days!</span></p>
               </ng-container>
               <ng-template #bidClosed>
-                <p class="text-xl font-medium">Bidding Closed</p>
+                <p class="text-xl font-medium">Bidding Closed !</p>
               </ng-template>
             </div>
           </div>
@@ -82,13 +82,13 @@
           </div>
         </ng-container>
         <ng-template #cantBid>
-          <div class="bg-white rounded text-center p-2 shadow-lg">
-            <p class="text-xl mt-5">bid closed.</p>
-    <p><a class="text-emerald-500 cursor-pointer" routerLink="/home/project-list">Browse projects and start bidding now
+          <div class="bg-white rounded text-center p-2 shadow-lg ">
+            <p class="text-xl mt-10">Bidding  Closed !</p>
+    <p><a class="text-emerald-500 cursor-pointer mt-10 " routerLink="/home/project-list">Browse projects and start bidding now
         to get a job.</a></p>
           </div>
         </ng-template>
-        
+
       </div>
 
 
