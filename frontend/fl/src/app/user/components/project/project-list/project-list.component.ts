@@ -7,6 +7,7 @@ import { ProjectApiService } from 'src/app/user/service/project-api.service';
 import { SkillApiService } from 'src/app/user/service/skill-api.service';
 import { async } from 'rxjs';
 import { skillResponse } from 'src/app/shared/model/skillResponse';
+import { ProjectModel } from 'src/app/shared/model/projectModel';
 
 @Component({
   selector: 'fl-project-list',
@@ -47,6 +48,7 @@ export class ProjectListComponent implements OnInit {
   locationData: any = [];
   http: any;
   searchValue: string = '';
+  projectData: ProjectModel[]=[];
   async ngOnInit(): Promise<void> {
     let curDate = new Date().toISOString().slice(0, 10).toString();
 
@@ -96,10 +98,17 @@ export class ProjectListComponent implements OnInit {
 
 
   async getProjectsBySkills() {
-    this.data = await this.projectApiService.getProjects({
-      skillIds: this.selectedSkills,
-    });
-    console.log('filtered projects', this.selectedSkills);
+
+    if(this.selectedSkills.length>0){
+      this.data = this.data.filter((project:any) => {
+        const projectSkills = project.skills.map((skill:any) => skill.skillId);
+        return this.selectedSkills.some(skill => projectSkills.includes(skill));
+      });
+    }else{
+      this.data=await this.projectApiService.getProjects({});
+    }
+
+
   }
 
   countAvgBid(bid: any): number {
